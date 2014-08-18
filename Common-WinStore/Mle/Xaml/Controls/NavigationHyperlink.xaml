@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="Mle.Xaml.Controls.NavigationHyperlink" 
+    Name="nav"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Mle.Xaml.Controls"
+    xmlns:ctrl="using:Mle.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Tapped="nav_Tapped">
+
+    <HyperlinkButton Margin="10,0,10,0" DataContext="{Binding ElementName=nav}">
+        <HyperlinkButton.Template>
+            <ControlTemplate>
+                <Grid Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" 
+                        Height="34" 
+                        Margin="10,0,10,-6"
+                        Source="{Binding ImageSource}"/>
+                    <HyperlinkButton Grid.Column="1" 
+                                    Content="{Binding ButtonContent}" 
+                                    Style="{StaticResource LargeHyperlinkButtonStyle}"/>
+                </Grid>
+            </ControlTemplate>
+        </HyperlinkButton.Template>
+    </HyperlinkButton>
+</UserControl>

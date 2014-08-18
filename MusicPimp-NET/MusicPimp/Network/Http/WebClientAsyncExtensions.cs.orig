@@ -1,0 +1,143 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using System.IO;
+using System.ComponentModel;
+using Mle.Phone.Util;
+using RestSharp;
+using Mle.ViewModels;
+using Mle.Phone.Audio;
+using Mle.Mle.Phone.Pimp;
+
+namespace Mle.Phone.Network.Http {
+    public static class AsyncExtensions {
+        public static Task<string> UploadAsync(this RestClient client, string file) {
+            var request = new RestRequest(Method.POST);
+            request.AddParameter("title", Path.GetFileName(file));
+            request.AddIsoFile(file);
+            return UploadAsync(client, request);
+        }
+        public static Task<string> UploadAsync(this IRestClient client, IRestRequest request) {
+            var tcs = new TaskCompletionSource<string>();
+            client.ExecuteAsync(request, resp => {
+                if(resp.ErrorException != null) {
+                    tcs.SetException(resp.ErrorException);
+                } else {
+                    tcs.SetResult(resp.Content);
+                }
+            });
+            return tcs.Task;
+        }
+<<<<<<< HEAD
+        public static Task<string> UploadAsync(this IRestClient client, Uri uri, MusicItemViewModel song) {
+=======
+        public static Task<string> UploadAsync(this IRestClient client, MusicItemViewModel song) {
+>>>>>>> 3d4e1816416d731342dad0cd04443ea55048d6a3
+            var request = new RestRequest(Method.POST);
+            request.AddParameter("title", song.Name);
+            request.AddParameter("artist", song.Artist);
+            request.AddParameter("album", song.Album);
+            request.AddIsoFile(song.AbsolutePath);
+            return UploadAsync(client, request);
+        }
+        public static async Task<string> DownloadThenUploadAsync(RestClient client, MusicItemViewModel song) {
+            if(!song.IsAvailableOffline) {
+                await Downloader.CompletionOfDownload(song);
+            }
+            return await client.UploadAsync(song);
+        }
+        /// <summary>
+        /// Adds a file from isolated storage to the request.
+        /// </summary>
+        /// <param name="request">rest request</param>
+        /// <param name="isoFilePath">path to file in isolated storage</param>
+        private static void AddIsoFile(this RestRequest request, string isoFilePath) {
+            var fileName = Path.GetFileName(isoFilePath);
+            request.AddFile(fileName, writer => {
+                FileUtils.WithFileRead<long>(isoFilePath, stream => {
+                    stream.CopyTo(writer);
+                    return stream.Length;
+                });
+            }, fileName);
+        }
+        
+        // enables <code>webClient.DownloadStringTask(myUri)</code>
+        public static Task<string> DownloadStringTask(this WebClient client, Uri address) {
+            var tcs = new TaskCompletionSource<string>();
+
+            DownloadStringCompletedEventHandler handler = null;
+            handler = (sender, e) => {
+                client.DownloadStringCompleted -= handler;
+
+                if(e.Error != null) {
+                    tcs.SetException(e.Error);
+                } else {
+                    tcs.SetResult(e.Result);
+                }
+            };
+
+            client.DownloadStringCompleted += handler;
+            client.DownloadStringAsync(address);
+
+            return tcs.Task;
+        }
+        public static Task<Stream> OpenReadTaskAsync(this WebClient client, Uri address) {
+            var tcs = new TaskCompletionSource<Stream>();
+
+            OpenReadCompletedEventHandler handler = null;
+            handler = (sender, e) => {
+                client.OpenReadCompleted -= handler;
+                if(e.Error != null) {
+                    tcs.SetException(e.Error);
+                } else {
+                    tcs.SetResult(e.Result);
+                }
+            };
+
+            client.OpenReadCompleted += handler;
+            client.OpenReadAsync(address);
+
+            return tcs.Task;
+        }
+        /// <summary>
+        /// Uploads the specified file by POSTing to the destination URI.
+        /// 
+        /// http://chriskoenig.net/2011/08/19/upload-files-from-windows-phone/
+        /// </summary>
+        /// <param name="client">web client</param>
+        /// <param name="destination">server to upload to</param>
+        /// <param name="file">file from isolated storage to upload</param>
+        /// <returns>number of bytes uploaded</returns>
+        [Obsolete("use RestSharp for uploads")]
+        public static Task<long> UploadAsync(this WebClient client, Uri destination, string file) {
+            var tcs = new TaskCompletionSource<long>();
+            // handler called when the write stream is open
+            OpenWriteCompletedEventHandler handler = null;
+            client.AllowReadStreamBuffering = true;
+            client.AllowWriteStreamBuffering = true;
+            handler = (sender, e) => {
+                client.OpenWriteCompleted -= handler;
+                if(e.Error != null) {
+                    tcs.SetException(e.Error);
+                } else {
+                    // write file to stream
+                    long bytesUploaded = FileUtils.WithFileRead<long>(file, stream => {
+                        using(var writeStream = e.Result) {
+                            stream.CopyTo(writeStream);
+                        }
+                        return stream.Length;
+                    });
+                    tcs.SetResult(bytesUploaded);
+                }
+            };
+            client.OpenWriteCompleted += handler;
+            client.OpenWriteAsync(destination, "POST");
+            return tcs.Task;
+        }
+
+    }
+
+}

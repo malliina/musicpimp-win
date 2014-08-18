@@ -1,0 +1,112 @@
+﻿<local:AsyncPhoneApplicationPage
+    x:Class="MusicPimp.Xaml.Endpoints"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Mle.MusicPimp.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:ctrl="clr-namespace:Mle.MusicPimp.Xaml.Controls"
+    xmlns:ctrl2="clr-namespace:Mle.Xaml.Controls;assembly=Common-WP"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" 
+    Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+    <local:AsyncPhoneApplicationPage.Resources>
+        <DataTemplate x:Key="EndpointItemTemplate">
+            <StackPanel Margin="0,0,0,17">
+                <TextBlock Text="{Binding Name}" 
+                           TextWrapping="NoWrap" 
+                           Margin="12,0,0,0" 
+                           Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding Server}" 
+                           TextWrapping="NoWrap" 
+                           Margin="12,0,0,0" 
+                           Style="{StaticResource PhoneTextSubtleStyle}"/>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu>
+                        <toolkit:MenuItem Header="remove endpoint" 
+                                        Command="{Binding DataContext.RemoveCommand, ElementName=EndpointsListSelector}" 
+                                        CommandParameter="{Binding}"/>
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="PasswordTemplate">
+            <PasswordBox x:Name="passwordBox"/>
+        </DataTemplate>
+    </local:AsyncPhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="MUSICPIMP" 
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="endpoints" Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ctrl:SearchAndAddEndpointsGrid/>
+                <!--<ctrl2:LabeledProgressBar Label="Searching..."
+                                          Visibility="{Binding IsSearching,Converter={StaticResource booleanVisibility}}"/>
+                <Button Grid.Row="1" 
+                        Command="{Binding SearchAnyServer}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <ctrl2:IconTwoRowsButton LeftImage="/Assets/Icons/appbar.network.png"
+                                         FirstRow="Search"
+                                         SecondRow="scan your LAN for endpoints"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <ctrl:AddEndpointButton Grid.Row="2"/>-->
+                <phone:LongListSelector Grid.Row="3"
+                                        x:Name="EndpointsListSelector"
+                                        ItemsSource="{Binding RemoteEndpoints}" 
+                                        ItemTemplate="{StaticResource EndpointItemTemplate}"
+                                        SelectionChanged="EndpointsListSelector_SelectionChanged"/>
+            </Grid>
+        </Grid>
+    </Grid>
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+</local:AsyncPhoneApplicationPage>

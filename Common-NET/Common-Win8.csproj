@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2C80E47C-EABD-486A-B708-7F4EE11E2CC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mle</RootNamespace>
+    <AssemblyName>Common-NET</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Mle\Collections\CollectionExtensions.cs" />
+    <Compile Include="Mle\Collections\Lists.cs" />
+    <Compile Include="Mle\Concurrent\AsyncTasks.cs" />
+    <Compile Include="Mle\Devices\BarcodeReaderBase.cs" />
+    <Compile Include="Mle\Exceptions\AudioException.cs" />
+    <Compile Include="Mle\Exceptions\BadRequestException.cs" />
+    <Compile Include="Mle\Exceptions\FriendlyException.cs" />
+    <Compile Include="Mle\Exceptions\InternalServerErrorException.cs" />
+    <Compile Include="Mle\Exceptions\NoResultsException.cs" />
+    <Compile Include="Mle\Exceptions\NotFoundException.cs" />
+    <Compile Include="Mle\Exceptions\ServerResponseException.cs" />
+    <Compile Include="Mle\Exceptions\UnauthorizedException.cs" />
+    <Compile Include="Mle\Iap\BaseIapUtils.cs" />
+    <Compile Include="Mle\Iap\IapException.cs" />
+    <Compile Include="Mle\Iap\IIapUtils.cs" />
+    <Compile Include="Mle\Iap\ProductInfo.cs" />
+    <Compile Include="Mle\IO\FileUtilsBase.cs" />
+    <Compile Include="Mle\IO\IPathHelper.cs" />
+    <Compile Include="Mle\Messaging\IMessageHandler.cs" />
+    <Compile Include="Mle\Messaging\INavigationService.cs" />
+    <Compile Include="Mle\Messaging\Messages.cs" />
+    <Compile Include="Mle\Messaging\MessagingService.cs" />
+    <Compile Include="Mle\Messaging\PageNavigationService.cs" />
+    <Compile Include="Mle\Network\Downloadable.cs" />
+    <Compile Include="Mle\Network\HttpClientExtensions.cs" />
+    <Compile Include="Mle\Network\HttpUtil.cs" />
+    <Compile Include="Mle\Network\AbstractOAuthBase.cs" />
+    <Compile Include="Mle\Network\NetworkUtils.cs" />
+    <Compile Include="Mle\Network\OAuthCredentials.cs" />
+    <Compile Include="Mle\Network\OAuthMessageHandler.cs" />
+    <Compile Include="Mle\Network\WebSocketBase.cs" />
+    <Compile Include="Mle\Network\UploadRequest.cs" />
+    <Compile Include="Mle\Util\IDateTimeHelper.cs" />
+    <Compile Include="Mle\Util\Json.cs" />
+    <Compile Include="Mle\Util\SettingsManagerBase.cs" />
+    <Compile Include="Mle\Util\StringExtensions.cs" />
+    <Compile Include="Mle\Util\Strings.cs" />
+    <Compile Include="Mle\Util\TimeSpanExtensions.cs" />
+    <Compile Include="Mle\Util\TypeHelpers.cs" />
+    <Compile Include="Mle\Util\UiService.cs" />
+    <Compile Include="Mle\Util\UiUtils.cs" />
+    <Compile Include="Mle\Util\UriInfo.cs" />
+    <Compile Include="Mle\Util\Utils.cs" />
+    <Compile Include="Mle\ViewModels\ClosingViewModel.cs" />
+    <Compile Include="Mle\ViewModels\LoadingViewModel.cs" />
+    <Compile Include="Mle\ViewModels\MessagingViewModel.cs" />
+    <Compile Include="Mle\ViewModels\NetworkedViewModel.cs" />
+    <Compile Include="Mle\ViewModels\ViewModelBase.cs" />
+    <Compile Include="Mle\ViewModels\WebAwareLoading.cs" />
+    <Compile Include="Mle\Xaml\Commands\AsyncDelegateCommand.cs" />
+    <Compile Include="Mle\Xaml\Commands\AsyncUnitCommand.cs" />
+    <Compile Include="Mle\Xaml\Commands\CommandBase.cs" />
+    <Compile Include="Mle\Xaml\Commands\DelegateCommand.cs" />
+    <Compile Include="Mle\Xaml\Commands\UnitCommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

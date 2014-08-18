@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Mle.MusicPimp.Controls.LimitsPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}">
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Offline cache size" 
+                    VerticalAlignment="Center"
+                    Style="{StaticResource PhoneTextLargeStyle}"/>
+            <TextBox Width="100" 
+                     VerticalAlignment="Center" 
+                    InputScope="Digits"
+                    Text="{Binding MaxCacheSizeGb,Mode=TwoWay}"/>
+            <TextBlock Text="GB" 
+                    VerticalAlignment="Center"
+                    Style="{StaticResource PhoneTextLargeStyle}"/>
+        </StackPanel>
+        <TextBlock Text="{Binding LimitsExplanation}"
+                TextWrapping="Wrap"
+                Style="{StaticResource PhoneTextSubtleStyle}"/>
+        <Button Content="delete offline cache" 
+                Command="{Binding DeleteLocalCache}"/>
+    </StackPanel>
+</UserControl>

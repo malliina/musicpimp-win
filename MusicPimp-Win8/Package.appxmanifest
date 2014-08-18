@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="31916SkogbergLabs.MusicPimp" Publisher="CN=F956D6BD-F615-4D77-93DB-30AB0283D47D" Version="2.1.2.20" />
+  <Properties>
+    <DisplayName>MusicPimp</DisplayName>
+    <PublisherDisplayName>Skogberg Labs</PublisherDisplayName>
+    <Logo>Assets\Store\guitar-50x50.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Mle.App">
+      <VisualElements DisplayName="MusicPimp" Logo="Assets\Store\guitar-150x150.png" SmallLogo="Assets\Store\guitar-30x30.png" Description="MusicPimp for Windows 8" ForegroundText="light" BackgroundColor="black" ToastCapable="true">
+        <LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\Store\guitar-24x24-white-transparent.png" />
+        <DefaultTile ShowName="allLogos" ShortName="MusicPimp" WideLogo="Assets\Store\guitar-310x150.png" />
+        <SplashScreen Image="Assets\Store\guitar-620x300.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="portrait" />
+          <Rotation Preference="landscape" />
+          <Rotation Preference="portraitFlipped" />
+          <Rotation Preference="landscapeFlipped" />
+        </InitialRotationPreference>
+      </VisualElements>
+      <Extensions>
+        <Extension Category="windows.backgroundTasks" EntryPoint="Mle.App">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="StoreBackgroundTask.BackgroundTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="picturesLibrary" />
+    <Capability Name="musicLibrary" />
+    <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="webcam" />
+  </Capabilities>
+</Package>

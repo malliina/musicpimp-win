@@ -1,0 +1,136 @@
+﻿using Id3;
+using Mle.Phone.Audio.Tags;
+using Mle.Phone.Util;
+using Mle.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
+<<<<<<< HEAD
+using TagLib;
+=======
+using System.Linq;
+>>>>>>> 9b77d56d74c9f26fa89a0e38cff54cf61fc2f551
+
+namespace Mle.Phone.Audio {
+    public class LocalMusicLibrary : MusicLibrary {
+        public static readonly int DEFAULT_CACHE_SIZE_GB = 1;
+        public static readonly string MUSIC_HOME = "music/";
+        public static UriInfo UriToSong(string path) {
+            var absolutePath = MUSIC_HOME + path;
+            return FileUtils.WithStorage<UriInfo>(s => {
+                if (s.FileExists(absolutePath)) {
+                    long size = -1;
+                    using (var file = s.OpenFile(absolutePath, FileMode.Open, FileAccess.Read)) {
+                        size = file.Length;
+                    }
+                    return new UriInfo(new Uri(absolutePath, UriKind.Relative), size);
+                } else {
+                    return null;
+                }
+            });
+        }
+        public static void Delete(List<string> songs) {
+            FileUtils.WithStorage(s => {
+                songs.ForEach(path => {
+                    var realPath = MUSIC_HOME + path;
+                    if (s.FileExists(realPath)) {
+                        s.DeleteFile(MUSIC_HOME + path);
+                    }
+                });
+            });
+        }
+        public override string RootFolderKey { get; protected set; }
+        public LocalMusicLibrary() {
+            RootFolderKey = "";
+        }
+        /// <summary>
+        /// loads the user-selected folder or the indexes if no folder is selected
+        /// </summary>
+        /// <param name="folderId">the selected folder identifier, or -1 if no folder is selected</param>
+        /// <returns></returns>
+        protected override async Task<ObservableCollection<MusicItemViewModel>> LoadFolderAsync(string folder) {
+            var relativeFolder = "";
+            if (folder != String.Empty) {
+                relativeFolder = folder + "/";
+            }
+            return await LoadMusicFiles(MUSIC_HOME, relativeFolder);
+        }
+        private async Task<ObservableCollection<MusicItemViewModel>> LoadMusicFiles(string root, string folder) {
+            var absoluteFolder = root + folder;
+            var ret = new ObservableCollection<MusicItemViewModel>();
+            var dirs = FileUtils.ListDirectories(absoluteFolder);
+            foreach (var dir in dirs) {
+                ret.Add(new MusicItemViewModel() { Name = dir, IsDir = true, Path = folder + dir });
+            }
+            var files = FileUtils.ListFiles(absoluteFolder);
+            foreach (var file in files) {
+                if (Path.GetExtension(file) == ".mp3") {
+                    // parses the artist and album from the file path
+                    var virtualPath = folder + file;
+<<<<<<< HEAD
+                    var songInfo = FromTags(virtualPath);
+=======
+                    var songInfo = FromId3(MUSIC_HOME + virtualPath);
+>>>>>>> 9b77d56d74c9f26fa89a0e38cff54cf61fc2f551
+                    //var songInfo = TagUtils.SongInfo(absoluteFolder + file);
+                    ret.Add(new MusicItemViewModel() {
+                        Name = songInfo.Title,
+                        Album = songInfo.Album,
+                        Artist = songInfo.Artist,
+                        IsDir = false,
+                        Path = virtualPath,
+                        SongUri = UriToSong(virtualPath).Uri,
+                        IsAvailableOffline = true
+                    });
+                }
+            }
+            return ret;
+        }
+        public override string DirectoryIdentifier(MusicItemViewModel musicDir) {
+            return musicDir.Path;
+        }
+        public static SongInfo FromTags(string filePath) {
+            try {
+                Tag tags = TagUtils.Tags(LocalMusicLibrary.MUSIC_HOME + filePath);
+                return new SongInfo(tags.Title, tags.FirstAlbumArtist, tags.Album);
+            } catch (UnsupportedFormatException e) {
+                var msg = e.Message;
+                var tmp = 0;
+                return FromFile(filePath);
+            }
+        }
+        public static SongInfo FromFile(string filePath) {
+            var dirPath = Path.GetDirectoryName(filePath);
+            var album = dirPath;
+            album = Path.GetFileName(album);
+            var artist = String.Empty;
+            if (dirPath != String.Empty)
+                artist = Path.GetDirectoryName(dirPath);
+            artist = Path.GetFileName(artist);
+            if (artist == String.Empty) {
+                artist = album;
+                //album = String.Empty;
+            }
+            var title = Path.GetFileNameWithoutExtension(filePath);
+            return new SongInfo(title, artist, album);
+        }
+        public static SongInfo FromId3(string filePath) {
+            return FileUtils.WithFile<SongInfo>(filePath, stream => {
+                using (var mp3 = new Mp3Stream(stream)) {
+                    var tags = new List<Id3Tag>(mp3.GetAllTags());
+                    if (tags.Count > 0) {
+                        var firstTag = tags.First();
+                        return new SongInfo(firstTag.Title.Value, firstTag.Artists.Value, firstTag.Album.Value);
+                    } else {
+                        return FromFile(filePath);
+                    }
+                }
+            });
+        }
+        public static long ConsumedDiskSpaceBytes() {
+            return FileUtils.SizeOfDirectory(MUSIC_HOME);
+        }
+    }
+}

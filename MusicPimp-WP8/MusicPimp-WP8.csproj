@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92EDAB67-6253-4B8F-BF90-5946BF7D167F}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mle</RootNamespace>
+    <AssemblyName>MusicPimp-WP8</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>MusicPimpWP8.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>Mle.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <ExpressionBlendVersion>5.0.31017.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;WP8</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="MusicPimp\Util\PimpMessageHandler.cs" />
+    <Compile Include="MusicPimp\ViewModels\PhoneIAP.cs" />
+    <Compile Include="MusicPimp\Xaml\AlarmClock.xaml.cs">
+      <DependentUpon>AlarmClock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Audio\AudioItemConversions.cs" />
+    <Compile Include="MusicPimp\Audio\AudioItemExtensions.cs" />
+    <Compile Include="MusicPimp\Audio\DurationHelper.cs" />
+    <Compile Include="MusicPimp\Beam\PhoneBeamPlayer.cs" />
+    <Compile Include="MusicPimp\Beam\PhoneBeamPlaylist.cs" />
+    <Compile Include="MusicPimp\Controls\AsyncPhoneApplicationPage.cs" />
+    <Compile Include="MusicPimp\Controls\PimpBasePage.cs" />
+    <Compile Include="MusicPimp\Database\PlaybackHistorian.cs" />
+    <Compile Include="MusicPimp\Iap\PimpIapUtils.cs" />
+    <Compile Include="MusicPimp\Local\Id3LocalLibraryBase.cs" />
+    <Compile Include="MusicPimp\Local\Id3Reader.cs" />
+    <Compile Include="MusicPimp\Local\PhoneLocalLibrary.cs" />
+    <Compile Include="MusicPimp\Local\PhoneLocalPlayer.cs" />
+    <Compile Include="MusicPimp\Local\PhoneLocalPlaylist.cs" />
+    <Compile Include="MusicPimp\Local\PhonePlayerElement.cs" />
+    <Compile Include="MusicPimp\Messaging\PhoneNavigationHandler.cs" />
+    <Compile Include="MusicPimp\Network\Downloader.cs" />
+    <Compile Include="MusicPimp\Network\PhoneUploadRequest.cs" />
+    <Compile Include="MusicPimp\Pimp\PhonePimpLibrary.cs" />
+    <Compile Include="MusicPimp\Pimp\PhonePimpSession.cs" />
+    <Compile Include="MusicPimp\Pimp\PushClient.cs" />
+    <Compile Include="MusicPimp\Tiles\Tiles.cs" />
+    <Compile Include="MusicPimp\Util\LifeCycleManager.cs" />
+    <Compile Include="MusicPimp\Util\LockScreenRequest.cs" />
+    <Compile Include="MusicPimp\Util\PhoneProvider.cs" />
+    <Compile Include="MusicPimp\ViewModels\AboutViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\Alarms.cs" />
+    <Compile Include="MusicPimp\ViewModels\DownloadsViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\ExceptionAwareTransferModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\LockScreen.cs" />
+    <Compile Include="MusicPimp\ViewModels\MostPlayedViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\PhoneEndpoints.cs" />
+    <Compile Include="MusicPimp\ViewModels\PhoneLibraryManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\PhoneNowPlaying.cs" />
+    <Compile Include="MusicPimp\ViewModels\PhonePlayerManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\PhoneSetting.cs" />
+    <Compile Include="MusicPimp\ViewModels\PimpDownloader.cs" />
+    <Compile Include="MusicPimp\ViewModels\PimpViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\SettingsOverview.cs" />
+    <Compile Include="MusicPimp\ViewModels\TestViewModel.cs" />
+    <Compile Include="MusicPimp\Xaml\AboutFeedback.xaml.cs">
+      <DependentUpon>AboutFeedback.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\BarcodePage.xaml.cs">
+      <DependentUpon>BarcodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\ConfigureEndpoint.xaml.cs">
+      <DependentUpon>ConfigureEndpoint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\AddEndpointButton.xaml.cs">
+      <DependentUpon>AddEndpointButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\EndpointItemPanel.xaml.cs">
+      <DependentUpon>EndpointItemPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\IconAndTextNavigateButton.xaml.cs">
+      <DependentUpon>IconAndTextNavigateButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\JumpListItemPanel.xaml.cs">
+      <DependentUpon>JumpListItemPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\LibraryFeedbackPanel.xaml.cs">
+      <DependentUpon>LibraryFeedbackPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\LimitsPanel.xaml.cs">
+      <DependentUpon>LimitsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\LockPanel.xaml.cs">
+      <DependentUpon>LockPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\LockScreenPanel.xaml.cs">
+      <DependentUpon>LockScreenPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\MainSettingsPanel.xaml.cs">
+      <DependentUpon>MainSettingsPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\MusicItemGrid.xaml.cs">
+      <DependentUpon>MusicItemGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\MusicItemGroupHeader.xaml.cs">
+      <DependentUpon>MusicItemGroupHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\PlayerViewer.xaml.cs">
+      <DependentUpon>PlayerViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\PlaylistFeedbackPanel.xaml.cs">
+      <DependentUpon>PlaylistFeedbackPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\PlaylistItemPanel.xaml.cs">
+      <DependentUpon>PlaylistItemPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Controls\SearchAndAddEndpointsGrid.xaml.cs">
+      <DependentUpon>SearchAndAddEndpointsGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Downloads.xaml.cs">
+      <DependentUpon>Downloads.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\EndpointPage.cs" />
+    <Compile Include="MusicPimp\Xaml\Endpoints.xaml.cs">
+      <DependentUpon>Endpoints.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\IapPage.xaml.cs">
+      <DependentUpon>IapPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\LimitsPage.xaml.cs">
+      <DependentUpon>LimitsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\LockScreenPage.xaml.cs">
+      <DependentUpon>LockScreenPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\MainSettingsPage.xaml.cs">
+      <DependentUpon>MainSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\MusicFiles.xaml.cs">
+      <DependentUpon>MusicFiles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="MusicPimp\Controls\PimpMainPage.cs" />
+    <Compile Include="MusicPimp\Xaml\EditAlarm.xaml.cs">
+      <DependentUpon>EditAlarm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\TemplatePage.xaml.cs">
+      <DependentUpon>TemplatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\VolumeSlider.xaml.cs">
+      <DependentUpon>VolumeSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AppResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="Resources\PimpResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MusicPimp\Xaml\AlarmClock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\AddEndpointButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <ApplicationDefinition Include="MusicPimp\Xaml\Controls\JumpListItemPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <ApplicationDefinition Include="MusicPimp\Xaml\Controls\IconAndTextNavigateButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MusicPimp\Xaml\Controls\LibraryFeedbackPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\AboutFeedback.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\BarcodePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\ConfigureEndpoint.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\EndpointItemPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\LimitsPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\LockPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\LockScreenPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\MusicItemGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\PlayerViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\PlaylistFeedbackPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\PlaylistItemPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\SearchAndAddEndpointsGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Downloads.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Endpoints.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\MusicItemGroupHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\MainSettingsPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\IapPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\LimitsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\LockScreenPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\MainSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\PimpResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\EditAlarm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\TemplatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\TestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\VolumeSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Win8_CheckBox_Radio_Styles.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\MusicFiles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\AppBar\add.png" />
+    <Content Include="Assets\AppBar\appbar.delete.png" />
+    <Content Include="Assets\AppBar\save.png" />
+    <Content Include="Assets\Icons\add.png" />
+    <Content Include="Assets\Icons\appbar.disk.png" />
+    <Content Include="Assets\Icons\appbar.image.portrait.png" />
+    <Content Include="Assets\Icons\appbar.network.png" />
+    <Content Include="Assets\AppBar\appbar.sound.0.png" />
+    <Content Include="Assets\AppBar\appbar.sound.1.png" />
+    <Content Include="Assets\AppBar\appbar.sound.2.png" />
+    <Content Include="Assets\AppBar\appbar.sound.3.png" />
+    <Content Include="Assets\AppBar\ApplicationBar.Cancel.png" />
+    <Content Include="Assets\AppBar\ApplicationBar.Check.png" />
+    <Content Include="Assets\AppBar\ApplicationBar.Select.png" />
+    <Content Include="Assets\AppBar\delete.png" />
+    <Content Include="Assets\AppBar\feature.settings.png" />
+    <Content Include="Assets\AppBar\folder.png" />
+    <Content Include="Assets\AppBar\transport.play.png" />
+    <Content Include="Assets\AppBar\transport.rew.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.add.rest.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.transport.ff.rest.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.transport.pause.rest.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.transport.play.rest.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.transport.rew.rest.png" />
+    <Content Include="Assets\AppBar\WP7\ApplicationBar.Select.png" />
+    <Content Include="Assets\AppBar\WP7\download.png" />
+    <Content Include="Assets\guitar-1080x1440-white.png" />
+    <Content Include="Assets\guitar-336x336-white.png" />
+    <Content Include="Assets\Icons\browser.png" />
+    <Content Include="Assets\Icons\cart.png" />
+    <Content Include="Assets\Icons\email.png" />
+    <Content Include="Assets\Icons\link.png" />
+    <Content Include="Assets\Icons\marketplace.png" />
+    <Content Include="Assets\Icons\music.png" />
+    <Content Include="Assets\Tiles\guitar-110x110-small-iconic.png" />
+    <Content Include="Assets\Tiles\guitar-159x159-small.png" />
+    <Content Include="Assets\Tiles\guitar-159x159.png" />
+    <Content Include="Assets\Tiles\guitar-202x202-medium-iconic.png" />
+    <Content Include="Assets\Tiles\guitar-336x336-medium.png" />
+    <Content Include="Assets\Tiles\guitar-336x336.png" />
+    <Content Include="Assets\Tiles\guitar-48x48.png" />
+    <Content Include="Assets\Tiles\guitar-691x336-wide.png" />
+    <Content Include="DefaultLockScreen.png" />
+    <Content Include="Meta\sample-json.txt" />
+    <Content Include="Meta\todo.txt" />
+    <Content Include="Meta\VersionHistory.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Id3, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ID3.0.3.0\lib\sl4-wp71\Id3.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\wp8\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp8\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.WindowsPhone, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.4.0\lib\sl4-wp71\RestSharp.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\wp8\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.wp8.0, Version=0.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\wp8\zxing.wp8.0.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AudioPlaybackAgent2\AudioPlaybackAgent.csproj">
+      <Project>{77E305CF-0D43-437C-9D82-ACF434094AF0}</Project>
+      <Name>AudioPlaybackAgent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common-NET\Common-Win8.csproj">
+      <Project>{2C80E47C-EABD-486A-B708-7F4EE11E2CC6}</Project>
+      <Name>Common-Win8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common-WP\Common-WP.csproj">
+      <Project>{2E7F201B-D225-4F83-A1AA-234EFF3E4A3D}</Project>
+      <Name>Common-WP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonAudio-NET\CommonAudio-NET.csproj">
+      <Project>{A9EAD083-DC12-4F2F-B203-2672730ACC07}</Project>
+      <Name>CommonAudio-NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonAudio-WP71\CommonAudio-WP.csproj">
+      <Project>{49AC96C0-71EB-4A08-ACC3-8079385A040F}</Project>
+      <Name>CommonAudio-WP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonBase-WP\CommonBase-WP.csproj">
+      <Project>{04539694-DCA6-49EF-BC14-3D876B3D129A}</Project>
+      <Name>CommonBase-WP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\mock-iap\C#\MockIAPLib\MockIAPLib.csproj">
+      <Project>{015E3DFE-EB56-429F-95EF-BAB5D41B23BE}</Project>
+      <Name>MockIAPLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicPimp-NET\MusicPimp-NET.csproj">
+      <Project>{9B9D4F9E-3192-49B0-9C98-AEADC2FAA3C6}</Project>
+      <Name>MusicPimp-NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicPimp-WP-Base\MusicPimp-WP-Base.csproj">
+      <Project>{74EF056A-260B-450D-9FE0-246EB86148EA}</Project>
+      <Name>MusicPimp-WP-Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneScheduledTask\PhoneScheduledTask.csproj">
+      <Project>{9D6845CE-D55B-47CD-B4DD-DD35AE097AB9}</Project>
+      <Name>PhoneScheduledTask</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+</Project>

@@ -1,0 +1,22 @@
+﻿1.8.0
+- fast application resume
+- live tile improvements for WP8: wide tile support
+1.7.1
+- unlimited downloads, previously only 25 downloads could be queued
+1.0.0.2 (WP8)
+- bugfixes
+1.0.0.1 (WP7)
+- initial WP7 version, on par with 1.0.0.2
+1.0.0.0 (WP8)
+- initial, certified version
+
+
+API compatibility
+
+client - server
+1.8.0 - 1.8.0 and newer
+1.7.1 - 1.7.0, 1.8.0
+1.5.0 - 1.5.0
+1.2.0+ - 1.1.0
+
+

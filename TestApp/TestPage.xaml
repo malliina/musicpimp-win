@@ -1,0 +1,110 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Mle.PivotPage1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrl="clr-namespace:Mle.TestApp"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:ctrl2="clr-namespace:Mle.Xaml.Controls;assembly=Common-WP"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <phone:Pivot Title="MY APPLICATION">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="item1" 
+                             DataContext="{Binding}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="76"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Test" 
+                            Command="{Binding RunTest}"/>
+                    <TextBlock Grid.Row="1"
+                               Style="{StaticResource PhoneTextLargeStyle}"
+                               TextWrapping="Wrap"
+                               Text="{Binding Output}"/>
+                    <HyperlinkButton Grid.Row="2" 
+                                     NavigateUri ="/Page1.xaml" 
+                                     HorizontalContentAlignment="Stretch">
+                        <HyperlinkButton.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                                    <TextBlock Text="Hey" 
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </HyperlinkButton.Template>
+                    </HyperlinkButton>
+                    <HyperlinkButton Grid.Row="3" Margin="0,24,0,0" 
+                                     NavigateUri="/Page1.xaml"
+                                     HorizontalContentAlignment="Stretch">
+                        <HyperlinkButton.Template>
+                            <ControlTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                                    <Rectangle Fill="{StaticResource PhoneForegroundBrush}"
+                                               Height="76"
+                                               Width="76">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="/Assets/Icons/music.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <StackPanel>
+                                        <TextBlock Text="first" 
+                                                   Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                                        <TextBlock Text="second" 
+                                                   Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </HyperlinkButton.Template>
+                    </HyperlinkButton>
+                    <HyperlinkButton Grid.Row="4" Margin="0,24,0,96" 
+                                     NavigateUri="/Page1.xaml">
+                        <HyperlinkButton.Template>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.RowSpan="2" Fill="{StaticResource PhoneForegroundBrush}"
+                                               Height="76"
+                                               Width="76">
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="/Assets/Icons/music.png"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="first" 
+                                                   Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="second" 
+                                                   Style="{StaticResource PhoneTextSubtleStyle}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </HyperlinkButton.Template>
+                    </HyperlinkButton>
+                </Grid>
+            </phone:PivotItem>
+            <!--Pivot item two-->
+        </phone:Pivot>
+    </Grid>
+</phone:PhoneApplicationPage>

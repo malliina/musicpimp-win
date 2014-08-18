@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="Mle.MusicPimp.Xaml.MainSettingsPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:src="clr-namespace:Mle.Xaml.Converters;assembly=Common-WP"
+    xmlns:pimp="clr-namespace:Mle.Xaml.Controls;assembly=Common-WP"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="720" d:DesignWidth="480">
+    <UserControl.Resources>
+        <src:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+        <src:InvertedBooleanToVisibilityConverter x:Key="invertedBooleanVisibility"/>
+
+        <DataTemplate x:Key="NameItemTemplate">
+            <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FullNameItemTemplate">
+            <TextBlock Text="{Binding Name}" 
+                       Style="{StaticResource PhoneTextLargeStyle}"
+                       Padding="18" />
+        </DataTemplate>
+        <DataTemplate x:Key="PlayerItemTemplate">
+            <TextBlock Text="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="FullPlayerItemTemplate">
+            <TextBlock Text="{Binding}"
+                       Style="{StaticResource PhoneTextLargeStyle}"
+                       Padding="18"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <toolkit:ListPicker Header="Music source" 
+                                ItemTemplate="{StaticResource NameItemTemplate}"
+                                FullModeItemTemplate="{StaticResource FullNameItemTemplate}"
+                                IsEnabled="{Binding PlaybackDevices.ActiveEndpoint.CanReceiveMusic}"
+                                ItemsSource="{Binding AudioSources.Endpoints}" 
+                                SelectedIndex="{Binding AudioSources.Index, Mode=TwoWay}"/>
+            <toolkit:ListPicker Grid.Row="1" Header="Play music on" 
+                                ItemTemplate="{StaticResource PlayerItemTemplate}"
+                                FullModeItemTemplate="{StaticResource FullPlayerItemTemplate}"
+                                ItemsSource="{Binding PlaybackDevices.PlayerEndpoints}" 
+                                SelectedIndex="{Binding PlaybackDevices.Index, Mode=TwoWay}"/>
+            <HyperlinkButton Grid.Row="2" Margin="0,12,0,0"
+                             NavigateUri="/MusicPimp-WP8;component/MusicPimp/Xaml/Endpoints.xaml">
+                <HyperlinkButton.Template>
+                    <ControlTemplate>
+                        <pimp:IconTwoRowsButton FirstRow="endpoints"
+                                    SecondRow="manage your music endpoints"
+                                    LeftImage="/Assets/Icons/appbar.network.png"/>
+                    </ControlTemplate>
+                </HyperlinkButton.Template>
+            </HyperlinkButton>
+            <HyperlinkButton Grid.Row="3" Margin="0,24,0,0" 
+                             NavigateUri="/MusicPimp-WP8;component/MusicPimp/Xaml/LimitsPage.xaml">
+                <HyperlinkButton.Template>
+                    <ControlTemplate>
+                        <pimp:IconTwoRowsButton FirstRow="offline cache"
+                                    SecondRow="{Binding Limits.ConsumedSummary}"
+                                    LeftImage="/Assets/Icons/appbar.disk.png"/>
+                    </ControlTemplate>
+                </HyperlinkButton.Template>
+            </HyperlinkButton>
+            <HyperlinkButton Grid.Row="4" Margin="0,24,0,0"
+                             NavigateUri="/MusicPimp-WP8;component/MusicPimp/Xaml/LockScreenPage.xaml">
+                <HyperlinkButton.Template>
+                    <ControlTemplate>
+                        <pimp:IconTwoRowsButton FirstRow="lock screen"
+                                    SecondRow="{Binding LockScreenSummary}"
+                                    LeftImage="/Assets/Icons/appbar.image.portrait.png"/>
+                    </ControlTemplate>
+                </HyperlinkButton.Template>
+            </HyperlinkButton>
+            <HyperlinkButton Grid.Row="5" Margin="0,24,0,96"
+                             NavigateUri="/MusicPimp-WP8;component/MusicPimp/Xaml/AlarmClock.xaml">
+                <HyperlinkButton.Template>
+                    <ControlTemplate>
+                        <pimp:IconTwoRowsButton 
+                                    FirstRow="alarm clock"
+                                    SecondRow="set up a remote alarm clock"
+                                    LeftImage="/Assets/Icons/music.png"/>
+                    </ControlTemplate>
+                </HyperlinkButton.Template>
+            </HyperlinkButton>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

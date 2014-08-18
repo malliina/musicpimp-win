@@ -1,0 +1,169 @@
+﻿using System;
+using System.Net;
+using System.IO;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using Mle.Phone.Audio.Tags;
+using Id3;
+
+namespace tests {
+
+    [TestClass]
+    public class UnitTest1 {
+        [TestMethod]
+        public void TestMethod2() {
+            Debug.WriteLine("Running tests...");
+            var filePath = "Eric Johnson - Cliffs Of Dover.mp3";
+            var filePath2 = "Aikakone - Odota.mp3";
+            //testId3(filePath);
+            testId3(filePath2);
+            Debug.WriteLine("Done running tests.");
+        }
+<<<<<<< HEAD
+        private void testId3() {
+            Debug.WriteLine("id3");
+            var filePath = "Eric Johnson - Cliffs Of Dover.mp3";
+=======
+        private void testId3(string filePath) {
+            if (!File.Exists(filePath)) {
+                Debug.WriteLine(filePath + " does not exist");
+                return;
+            } else {
+                Debug.WriteLine(filePath + " exists");
+            }
+>>>>>>> 9b77d56d74c9f26fa89a0e38cff54cf61fc2f551
+            using (var file = new FileStream(filePath, FileMode.Open)) {
+                using (var mp3 = new Mp3Stream(file)) {
+                    //var t = mp3.GetTag(Id3TagFamily.Version2x);
+                    //Debug.WriteLine(t.Title.Value);
+
+                    var tags = new List<Id3Tag>(mp3.GetAllTags());
+                    var tagCount = tags.Count;
+                    tags.ForEach(tag => {
+                        Debug.WriteLine(tag.Title.Value);
+                    });
+                    Debug.WriteLine("tags: " + tagCount);
+
+                    //if (tags != null) {
+                    //    var tagList = new List<Id3Tag>(tags);
+                    //    tagList.ForEach(tag => {
+                    //        Debug.WriteLine("title: " + tag.Title.Value + ", album: " + tag.Album.Value);
+                    //    });
+                    //    Debug.WriteLine("tags: " + tagList.Count);
+                    //} else {
+                    //    Debug.WriteLine("tag is null");
+                    //}
+                    //var t1 = mp3.GetVersions();
+                    //Debug.WriteLine("versions: " + t1.Length);
+                }
+            };
+        }
+        private void printNullStatus(string label, object param) {
+            if (param == null) {
+                Debug.WriteLine(label + "is null");
+            } else {
+                Debug.WriteLine(label + " is not null");
+            }
+        }
+        private void testTagLib() {
+            Debug.WriteLine("Taglib");
+            var filePath = "Eric Johnson - Cliffs Of Dover.mp3";
+            TagLib.Tag tags = null;
+            using (var fileStream = new FileStream(filePath, FileMode.Open)) {
+                using (var tagFile = TagLib.File.Create(new TaggedFileAbstraction(fileStream,filePath))) {
+                    tags = tagFile.Tag;
+                }
+            }
+            Debug.WriteLine(tags.Title + ", " + tags.FirstAlbumArtist + ", " + tags.Album);
+        }
+        private void testTime() {
+            var time = TimeSpan.FromSeconds(200.42);
+            var time2 = TimeSpan.FromSeconds(3600.31);
+
+            Debug.WriteLine(time.ToString("c"));
+            Debug.WriteLine(time.ToString("hh\\:mm\\:ss"));
+            //Debug.WriteLine(time.ToMyFormat());
+            //Debug.WriteLine(time2.ToMyFormat());
+        }
+        private void testPaths() {
+            Debug.WriteLine("Hello");
+            var list = new List<string> { 
+                "shared/media/hoohhoo/hoo.mp3", 
+                "/shared/media/hoohhoo/hoo.mp3",
+                "shared/media/hoohhoo/",
+                "shared/media/hoohhoo"
+            };
+            list.ForEach(path => Debug.WriteLine(Path.GetDirectoryName(path)));
+            var pathList = new List<string> { "a/b/c/d.mp3", "j/k/l.mp3", "f/g.mp3", "e.mp3" };//, 
+            pathList.ForEach(analyze);
+        }
+        private void analyze(string path) {
+            var dirPath = Path.GetDirectoryName(path);
+            var album = dirPath;
+            album = Path.GetFileName(album);
+            var artist = String.Empty;
+            if (dirPath != String.Empty)
+                artist = Path.GetDirectoryName(dirPath);
+            artist = Path.GetFileName(artist);
+            if (artist == String.Empty) {
+                artist = album;
+                album = String.Empty;
+            }
+            Debug.WriteLine(
+                "artist: " + artist + ", " +
+                "album: " + album + ", " +
+                "name: " + Path.GetFileName(path) + ", bye!"
+                );
+        }
+        private async Task TestDelays() {
+            var cts = new CancellationTokenSource();
+            var token = cts.Token;
+            var task1 = Task.Delay(2000, token);
+            var task2 = Task.Delay(10000, token);
+            var firstTask = await Task.WhenAny(task1, task2);
+            cts.Cancel();
+        }
+        //[TestMethod]
+        //public void TestMethod1() {
+        //    //string fileToUpload = @"C:\Stuff\Mp3\Kent\1997 - Isola\Kent - 03 - Saker man ser.mp3";
+        //    //string url = "http://localhost:9000/playData";
+        //    //using (var client = new WebClient()) {
+        //    //    byte[] result = client.UploadFile(url, fileToUpload);
+        //    //    string responseAsString = Encoding.Default.GetString(result);
+        //    //    Console.WriteLine("Response: " + responseAsString);
+        //    //}
+        //    var tmp = new List<string>();
+        //    var size0 = tmp.Count;
+        //    tmp.Add(null);
+        //    var size1 = tmp.Count;
+        //    Console.WriteLine("init size: " + size0 + ", later size: " + size1);
+        //    Console.WriteLine("Bye!");
+        //}
+        private string baseUrl = "http://192.168.137.230:4040/rest/{0}.view?u=admin&p=testa&v=1.8.0&c=wp8app&f=json";
+        public string Html(string uri) {
+            var req = WebRequest.Create(uri);
+            var resp = req.GetResponse();
+            var stream = resp.GetResponseStream();
+            var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
+        }
+        private string UriFor(string methodName) {
+            return String.Format(baseUrl, methodName);
+        }
+        public void Html2(string uriString) {
+            var webClient = new WebClient();
+            webClient.DownloadStringCompleted += OnComplete;
+            webClient.DownloadStringAsync(new Uri(uriString));
+        }
+        private void OnComplete(object o, DownloadStringCompletedEventArgs a) {
+            var response = a.Result;
+            Console.WriteLine(response);
+        }
+        public enum ApiMethod { ping };
+
+
+    }
+}

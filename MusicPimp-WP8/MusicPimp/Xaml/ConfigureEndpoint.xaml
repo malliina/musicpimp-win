@@ -1,0 +1,162 @@
+﻿<pages:AsyncPhoneApplicationPage
+    x:Class="MusicPimp.Xaml.ConfigureEndpoint"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:pages="clr-namespace:Mle.MusicPimp.Controls"
+    xmlns:src="clr-namespace:Mle.Xaml.Converters;assembly=Common-WP"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrl="clr-namespace:Mle.Xaml.Controls;assembly=Common-WP"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+    <pages:AsyncPhoneApplicationPage.Resources>
+        <src:EnumBooleanConverter x:Key="enumConverter"/>
+        <src:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+    </pages:AsyncPhoneApplicationPage.Resources>
+    <pages:AsyncPhoneApplicationPage.Background>
+        <ImageBrush Stretch="Uniform" 
+                        ImageSource="/Assets/guitar-1920x1920-white-compressed.png" 
+                        Opacity="0.1"/>
+    </pages:AsyncPhoneApplicationPage.Background>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="EDIT ENDPOINT" Style="{StaticResource PhoneTextNormalStyle}"
+                       toolkit:TurnstileFeatherEffect.FeatheringIndex="0"/>
+            <!--<TextBlock Text="add source" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>-->
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ScrollViewer>
+                <StackPanel>
+                    <!--Visibility="{Binding MusicFolder.ShowHelp,Converter={StaticResource booleanVisibility}}"-->
+                    <Button Content="What is this?" 
+                            Command="{Binding DisplayHelp}"
+                            toolkit:TurnstileFeatherEffect.FeatheringIndex="1"/>
+                    <TextBlock Text="Server type" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="2"/>
+                    <StackPanel Orientation="Horizontal"
+                                toolkit:TurnstileFeatherEffect.FeatheringIndex="3">
+                        <RadioButton Content="MusicPimp"
+                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}"/>
+                        <RadioButton Content="Subsonic"
+                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=Subsonic, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <TextBlock Text="Description" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="4"/>
+                    <toolkit:PhoneTextBox x:Name="nameTextBox"
+                                          Text="{Binding EndpointItem.Name, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
+                                          TextChanged="PhoneTextBox_TextChanged_1"
+                                          Hint="my audio computer"
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="5"/>
+                    <TextBlock Text="IP address or hostname" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="6"/>
+                    <toolkit:PhoneTextBox x:Name="serverTextBox"
+                                          Text="{Binding EndpointItem.Server, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
+                                          Hint="192.168.1.2"
+                                          TextChanged="serverTextBox_TextChanged_1"
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="7"/>
+                    <TextBlock Text="Port" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="8"/>
+                    <toolkit:PhoneTextBox x:Name="portTextBox"
+                                          Text="{Binding EndpointItem.Port, Mode=TwoWay}" 
+                                          InputScope="Digits"
+                                          Hint="8456"
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="9"/>
+                    <TextBlock Text="Username" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="10"/>
+                    <toolkit:PhoneTextBox x:Name="userTextBox"
+                                          Text="{Binding EndpointItem.Username, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
+                                          Hint="karolina"
+                                          TextChanged="userTextBox_TextChanged_1"
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="11"/>
+                    <TextBlock Text="Password" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="12"/>
+                    <PasswordBox x:Name="passwordTextBox"
+                                 Password="{Binding EndpointItem.Password, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
+                                 PasswordChanged="PasswordBox_PasswordChanged_1"
+                                 toolkit:TurnstileFeatherEffect.FeatheringIndex="13"/>
+                    <TextBlock Text="Protocol" 
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="14"/>
+                    <StackPanel Orientation="Horizontal"
+                                toolkit:TurnstileFeatherEffect.FeatheringIndex="15">
+                        <RadioButton Content="HTTP"
+                                     IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource enumConverter}, ConverterParameter=http, Mode=TwoWay}"/>
+                        <RadioButton Content="HTTPS"
+                                     IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource enumConverter}, ConverterParameter=https, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <CheckBox Content="Set as active music source" 
+                              IsChecked="{Binding MakeActiveLibrary,Mode=TwoWay}"
+                              toolkit:TurnstileFeatherEffect.FeatheringIndex="16"/>
+                    <TextBlock Text="{Binding Tester.FeedbackMessage}" 
+                               TextWrapping="Wrap"
+                               Style="{StaticResource PhoneTextAccentStyle}"
+                               Visibility="{Binding Tester.ShowFeedback,Converter={StaticResource booleanVisibility}}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="17"/>
+                    <ctrl:LabeledProgressBar Visibility="{Binding Tester.IsLoading,Converter={StaticResource booleanVisibility}}"
+                                             Label="Connecting..."
+                                             toolkit:TurnstileFeatherEffect.FeatheringIndex="18"/>
+                    <Button Content="Test Connectivity"
+                            Command="{Binding Tester.TestEndpoint}"
+                            CommandParameter="{Binding EndpointItem}"
+                            toolkit:TurnstileFeatherEffect.FeatheringIndex="19"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+    <pages:AsyncPhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/ApplicationBar.Check.png" 
+                                            IsEnabled="True" 
+                                            Text="save" 
+                                            Click="SaveApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/ApplicationBar.Cancel.png" 
+                                            IsEnabled="True" 
+                                            Text="cancel" 
+                                            Click="CancelApplicationBar_Click"/>
+        </shell:ApplicationBar>
+    </pages:AsyncPhoneApplicationPage.ApplicationBar>
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileFeatherTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileFeatherTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+</pages:AsyncPhoneApplicationPage>

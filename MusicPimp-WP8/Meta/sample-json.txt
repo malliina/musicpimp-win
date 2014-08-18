@@ -1,0 +1,280 @@
+﻿Pimp:
+
+{"duration":"05:35","state":"Started","pos":"00:14","mute":false,"duration_seconds":335.988,"gain":40,"artist":"unknown","album":"unknown","title":"ABBA - I Have A Dream.mp3","pos_seconds":14.280000000000001}
+
+Subsonic:
+
+{"subsonic-response": {
+ "error": {
+  "message": "The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details.",
+  "code": 60
+ },
+ "status": "failed",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+{"subsonic-response": {
+ "error": {
+  "message": "For input string: \"0,1\"",
+  "code": 0
+ },
+ "status": "failed",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+http://localhost:4040/rest/ping.view?u=jukebox&p=jukebox&v=1.8.0&c=wp8app&f=json
+
+{"subsonic-response": {
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+http://localhost:4040/rest/jukeboxControl.view?u=jukebox&p=jukebox&v=1.8.0&c=wp8app&f=json&action=start
+
+{"subsonic-response": {
+ "jukeboxStatus": {
+  "position": 0,
+  "playing": false,
+  "currentIndex": -1,
+  "gain": 0.5
+ },
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+http://localhost:4040/rest/jukeboxControl.view?u=jukebox&p=jukebox&v=1.8.0&c=wp8app&f=json&action=add&id=14
+playing is true although it's not playing but added to the playlist
+
+{"subsonic-response": {
+ "jukeboxStatus": {
+  "position": 0,
+  "playing": true,
+  "currentIndex": 0,
+  "gain": 0.5
+ },
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+http://localhost:4040/rest/jukeboxControl.view?u=jukebox&p=jukebox&v=1.8.0&c=wp8app&f=json&action=start
+
+{"subsonic-response": {
+ "jukeboxStatus": {
+  "position": 0,
+  "playing": true,
+  "currentIndex": 0,
+  "gain": 0.5
+ },
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+http://localhost:4040/rest/jukeboxControl.view?u=admin&p=test&v=1.8.0&c=wp8app&f=json&action=status
+currentIndex: current index in playlist
+position: seconds into song
+
+{"subsonic-response": {
+ "jukeboxStatus": {
+  "position": 29,
+  "playing": true,
+  "currentIndex": 0,
+  "gain": 0.5
+ },
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+http://localhost:4040/rest/jukeboxControl.view?u=admin&p=test&v=1.8.0&c=wp8app&f=json&action=get
+
+{"subsonic-response": {
+ "jukeboxPlaylist": {
+  "position": 206,
+  "playing": true,
+  "currentIndex": 0,
+  "entry": [
+   {
+    "genre": "Other",
+    "album": "Dream Theater",
+    "parent": 49,
+    "isDir": false,
+    "contentType": "audio/mpeg",
+    "type": "music",
+    "suffix": "mp3",
+    "isVideo": false,
+    "size": 9879115,
+    "id": 48,
+    "title": "Images And Words 01 - Pull Me",
+    "duration": 494,
+    "created": "2012-05-13T15:08:36",
+    "path": "Dream Theater/1992 - Images & Words/Dream Theater - 01 - Pull Me Under.mp3",
+    "artist": "Dream Theater",
+    "bitRate": 160
+   },
+   {
+    "genre": "Soundtrack",
+    "albumId": 1,
+    "album": "Guitar Hero 3",
+    "track": 43,
+    "contentType": "audio/mpeg",
+    "isDir": false,
+    "type": "music",
+    "suffix": "mp3",
+    "discNumber": 1,
+    "isVideo": false,
+    "size": 6726805,
+    "id": 13,
+    "title": "Cliffs Of Dover",
+    "duration": 250,
+    "artistId": 1,
+    "created": "2012-05-13T15:10:56",
+    "path": "Eric Johnson - Cliffs Of Dover.mp3",
+    "year": 1990,
+    "artist": "Guitar Hero 3",
+    "bitRate": 205
+   }
+  ],
+  "gain": 0.5
+ },
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.8.0"
+}}
+
+getIndexes: 
+
+{"subsonic-response": {
+        "status": "ok",
+        "indexes": {
+        "child": [
+        {
+        "genre": "Synthpop",
+        "albumId": 58,
+        "album": "We Are Pilots",
+        "track": 1,
+        "contentType": "audio/mpeg",
+        "isDir": false,
+        "type": "music",
+        "suffix": "mp3",
+        "isVideo": false,
+        "size": 6344838,
+        "id": 365,
+        "title": "dont cry out",
+        "duration": 252,
+        "artistId": 58,
+        "created": "2012-05-13T15:10:56",
+        "path": "Shiny Toy Guns - Don't Cry Out.mp3",
+        "year": 2005,
+        "artist": "Shiny Toy Guns",
+        "bitRate": 200
+        },
+        {
+        "genre": "Indie",
+        "albumId": 46,
+        "album": "Float On-(CDS)",
+        "track": 1,
+        "contentType": "audio/mpeg",
+        "isDir": false,
+        "type": "music",
+        "suffix": "mp3",
+        "isVideo": false,
+        "size": 6044438,
+        "id": 262,
+        "title": "Float On",
+        "duration": 209,
+        "artistId": 45,
+        "created": "2012-05-13T15:11:04",
+        "path": "Modest Mouse - Float On.mp3",
+        "year": 2004,
+        "artist": "Modest Mouse",
+        "bitRate": 230
+        },
+        {
+        "genre": "Metal",
+        "albumId": 62,
+        "album": "Stone",
+        "track": 1,
+        "contentType": "audio/mpeg",
+        "isDir": false,
+        "type": "music",
+        "suffix": "mp3",
+        "isVideo": false,
+        "size": 6280173,
+        "id": 383,
+        "title": "Get Stoned",
+        "duration": 262,
+        "artistId": 63,
+        "created": "2012-05-13T15:10:44",
+        "path": "Stone - Get Stoned.mp3",
+        "artist": "Stone",
+        "bitRate": 192
+        }, ...
+	],
+  "index": [
+   {
+    "name": "A",
+    "artist": [
+     {
+      "id": 12,
+      "name": "ABBA"
+     },
+     {
+      "id": 13,
+      "name": "Above and Beyond"
+     }, ...
+
+
+getMusicDirectory:
+
+note how directories and tracks are merged in the same json array
+
+{"subsonic-response": {
+	 "status": "ok",
+	 "directory": {
+	  "child": [
+	   {
+		"id": 577,
+		"title": "1990 - No Prayer for the Dying",
+		"created": "2013-02-07T17:01:03",
+		"album": "1990 - No Prayer For The Dying",
+		"parent": 191,
+		"isDir": true,
+		"artist": "Iron Maiden"
+	   },
+	   {
+		"id": 587,
+		"title": "2003 - Dance of Death",
+		"created": "2013-02-07T17:02:29",
+		"album": "2003 - Dance Of Death",
+		"parent": 191,
+		"isDir": true,
+		"artist": "Iron Maiden"
+	   },
+	   {
+		"genre": "Other",
+		"albumId": 476,
+		"album": "Iron Maiden",
+		"track": 1,
+		"parent": 191,
+		"contentType": "audio/mpeg",
+		"isDir": false,
+		"type": "music",
+		"suffix": "mp3",
+		"isVideo": false,
+		"size": 2426378,
+		"id": 606,
+		"title": "Stairway To Heaven",
+		"duration": 121,
+		"artistId": 206,
+		"created": "2012-05-13T14:23:29",
+		"path": "Iron Maiden/Iron Maiden - Stairway To Heaven.mp3",
+		"artist": "Iron Maiden",
+		"bitRate": 160
+	},
+	...

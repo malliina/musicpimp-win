@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9B9D4F9E-3192-49B0-9C98-AEADC2FAA3C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mle</RootNamespace>
+    <AssemblyName>MusicPimp-NET</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="MusicPimp\AlphaKeyGroup.cs" />
+    <Compile Include="MusicPimp\Audio\AudioConversions.cs" />
+    <Compile Include="MusicPimp\Audio\MasterChildLibrary.cs" />
+    <Compile Include="MusicPimp\Audio\MultiLibrary.cs" />
+    <Compile Include="MusicPimp\Audio\MusicItemComparer.cs" />
+    <Compile Include="MusicPimp\Audio\WebSocketPlayer.cs" />
+    <Compile Include="MusicPimp\Beam\BeamBarcodeHandler.cs" />
+    <Compile Include="MusicPimp\Beam\PersistentBeamPlaylist.cs" />
+    <Compile Include="MusicPimp\Network\EndpointScanner.cs" />
+    <Compile Include="MusicPimp\Pimp\IAlarmClient.cs" />
+    <Compile Include="MusicPimp\Pimp\SimpleAlarmClient.cs" />
+    <Compile Include="MusicPimp\Pimp\SimplePimpPlaylist.cs" />
+    <Compile Include="MusicPimp\Pimp\SimplePimpSession.cs" />
+    <Compile Include="MusicPimp\Iap\IapStrings.cs" />
+    <Compile Include="MusicPimp\Iap\PremiumHelper.cs" />
+    <Compile Include="MusicPimp\Iap\UsageController.cs" />
+    <Compile Include="MusicPimp\Local\LocalBasePlayer.cs" />
+    <Compile Include="MusicPimp\Audio\BasePlayer.cs" />
+    <Compile Include="MusicPimp\Audio\BasePlaylist.cs" />
+    <Compile Include="MusicPimp\Audio\MlePlayer.cs" />
+    <Compile Include="MusicPimp\Audio\MlePlaylist.cs" />
+    <Compile Include="MusicPimp\Audio\MusicLibrary.cs" />
+    <Compile Include="MusicPimp\Audio\PlaybackStatus.cs" />
+    <Compile Include="MusicPimp\Audio\PlayerState.cs" />
+    <Compile Include="MusicPimp\Audio\SongInfo.cs" />
+    <Compile Include="MusicPimp\Database\PlaybackHistorianBase.cs" />
+    <Compile Include="MusicPimp\Exceptions\ConnectivityException.cs" />
+    <Compile Include="MusicPimp\Exceptions\PimpException.cs" />
+    <Compile Include="MusicPimp\Exceptions\TimeoutPimpException.cs" />
+    <Compile Include="MusicPimp\Grouping.cs" />
+    <Compile Include="MusicPimp\Local\LocalBasePlaylist.cs" />
+    <Compile Include="MusicPimp\Local\LocalDeviceEndpoint.cs" />
+    <Compile Include="MusicPimp\Local\LocalLibraryBase.cs" />
+    <Compile Include="MusicPimp\Local\LocalMusicLibrary.cs" />
+    <Compile Include="MusicPimp\Local\MultiFolderLibraryBase.cs" />
+    <Compile Include="MusicPimp\Local\PimpPlayerElement.cs" />
+    <Compile Include="MusicPimp\Local\PlayerElement.cs" />
+    <Compile Include="MusicPimp\Messaging\Pages.cs" />
+    <Compile Include="MusicPimp\Network\Http\RemoteBase.cs" />
+    <Compile Include="MusicPimp\Network\IDownloader.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpWebSocket.cs" />
+    <Compile Include="MusicPimp\Network\SessionBase.cs" />
+    <Compile Include="MusicPimp\PimpProvider.cs" />
+    <Compile Include="MusicPimp\Beam\BeamPlayer.cs" />
+    <Compile Include="MusicPimp\Beam\BeamPlaylist.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpBasePlayer.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpJson.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpLibrary.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpPlayer.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpPlaylist.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpSession.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpSessionBase.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpWebPlayer.cs" />
+    <Compile Include="MusicPimp\Pimp\PimpWebPlaylist.cs" />
+    <Compile Include="MusicPimp\Beam\TimeBasedPlaylist.cs" />
+    <Compile Include="MusicPimp\Pimp\WebPlaylistBase.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicBase.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicException.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicJson.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicLibrary.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicPlayer.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicPlaylist.cs" />
+    <Compile Include="MusicPimp\Subsonic\SubsonicSession.cs" />
+    <Compile Include="MusicPimp\Tiles\CoverService.cs" />
+    <Compile Include="MusicPimp\Util\HttpUtils.cs" />
+    <Compile Include="MusicPimp\Util\IPimpMessageHandler.cs" />
+    <Compile Include="MusicPimp\Util\Provider.cs" />
+    <Compile Include="MusicPimp\Util\Settings.cs" />
+    <Compile Include="MusicPimp\Beam\BeamEndpoint.cs" />
+    <Compile Include="MusicPimp\Tiles\TileAndToastManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\AlarmModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\EditEndpoint.cs" />
+    <Compile Include="MusicPimp\ViewModels\EndManagerBase.cs" />
+    <Compile Include="MusicPimp\ViewModels\EndpointsData.cs" />
+    <Compile Include="MusicPimp\ViewModels\EndpointEditorViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\EndpointTester.cs" />
+    <Compile Include="MusicPimp\ViewModels\MusicItemFolder.cs" />
+    <Compile Include="MusicPimp\ViewModels\FolderViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\IapVM.cs" />
+    <Compile Include="MusicPimp\ViewModels\LimitsViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\MusicEndpoint.cs" />
+    <Compile Include="MusicPimp\ViewModels\MusicItemsBase.cs" />
+    <Compile Include="MusicPimp\ViewModels\MusicItem.cs" />
+    <Compile Include="MusicPimp\ViewModels\LibraryManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\NewEndpoint.cs" />
+    <Compile Include="MusicPimp\ViewModels\NowPlayingInfo.cs" />
+    <Compile Include="MusicPimp\ViewModels\PimpDownloadManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\BaseViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\PlayerManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\PlaylistMusicItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common-NET\Common-Win8.csproj">
+      <Project>{2c80e47c-eabd-486a-b708-7f4ee11e2cc6}</Project>
+      <Name>Common-Win8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonAudio-NET\CommonAudio-NET.csproj">
+      <Project>{a9ead083-dc12-4f2f-b203-2672730acc07}</Project>
+      <Name>CommonAudio-NET</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net40+sl4+win8+wp71+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx">
+      <HintPath>..\packages\Nito.AsyncEx.2.1.3\lib\portable-net40+win8+sl4+wp71+MonoTouch+MonoAndroid\Nito.AsyncEx.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLWebUtility">
+      <HintPath>..\packages\PCLWebUtility.1.0.2\Lib\portable-net4+sl4+wp7+win8\PCLWebUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.portable">
+      <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\portable-win+net40+sl4+sl5+wp7+wp71+wp8\zxing.portable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

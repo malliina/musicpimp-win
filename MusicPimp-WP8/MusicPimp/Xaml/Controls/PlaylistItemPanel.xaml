@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Mle.MusicPimp.Controls.PlaylistItemPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrl="clr-namespace:Mle.Xaml.Controls;assembly=Common-WP"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:src="clr-namespace:Mle.Xaml.Converters;assembly=Common-WP"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}">
+
+    <UserControl.Resources>
+        <src:BooleanStyleConverter x:Key="booleanAccentBrush"/>
+    </UserControl.Resources>
+    <ctrl:TapCommandControl TapCommand="{Binding DataContext.MusicPlayer.PlayPlaylistItem,ElementName=PlaylistLongListSelector}"
+                            TapCommandParameter="{Binding}">
+        <StackPanel>
+            <TextBlock Text="{Binding Song.Name}" 
+                    TextWrapping="NoWrap" 
+                    Style="{StaticResource PhoneTextLargeStyle}"
+                    Foreground="{Binding IsSelected,Converter={StaticResource booleanAccentBrush}}"/>
+            <TextBlock Text="{Binding Song.Artist}"
+                    Style="{StaticResource PhoneTextSubtleStyle}"/>
+        </StackPanel>
+        <toolkit:ContextMenuService.ContextMenu>
+            <toolkit:ContextMenu>
+                <toolkit:MenuItem Header="remove from playlist" 
+                                Command="{Binding DataContext.MusicPlayer.Playlist.RemoveFromPlaylistCommand,ElementName=PlaylistLongListSelector}" 
+                                CommandParameter="{Binding}"/>
+            </toolkit:ContextMenu>
+        </toolkit:ContextMenuService.ContextMenu>
+    </ctrl:TapCommandControl>
+</UserControl>

@@ -1,0 +1,190 @@
+﻿<xaml:PopupUserControl
+    x:Class="Mle.MusicPimp.Xaml.AddEndpointPopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Mle.MusicPimp.WinStore.Xaml"
+    xmlns:xaml="using:Mle.Xaml"
+    xmlns:ctrl="using:Mle.MusicPimp.WinStore.Controls"
+    xmlns:rtctrl="using:WinRTXamlToolkit.Controls"
+    xmlns:calctrl="using:Callisto.Controls"
+    xmlns:i="using:System.Windows.Interactivity"
+    xmlns:julbeh="using:JulMar.Windows.Interactivity.Interactivity"
+    xmlns:common="using:Mle.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <common:EndpointEnumConverter x:Key="endpointConverter"/>
+            <common:ProtocolEnumConverter x:Key="protocolConverter"/>
+            <common:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/CustomStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/FlyoutRadioButton.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightTextBox.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/PrimaryFlyoutButton.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightCheckBox.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="White"
+          VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <!-- Header area -->
+        <Grid Background="{StaticResource AppColor}" 
+              Grid.Row="0">
+            <Grid Margin="40,32,17,13" Width="312" Height="50">
+                <Grid.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="50"/>
+                    </TransitionCollection>
+                </Grid.Transitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock  Grid.Column="0" 
+                            Text="Add an endpoint" 
+                            HorizontalAlignment="Left"
+                            FontFamily="Segoe UI" 
+                            FontWeight="SemiLight" 
+                            FontSize="24.6667"
+                            VerticalAlignment="Center" Style="{StaticResource CaptionTextStyle}" Width="186"/>
+                <Image Source="/Assets/SmallLogo.png" 
+                        HorizontalAlignment="Right" 
+                        Grid.Column="2" 
+                        Margin="0,0,12,0" />
+            </Grid>
+        </Grid>
+        <!-- Form area -->
+        <StackPanel Grid.Row="1" 
+                    Grid.Column="0" 
+                    HorizontalAlignment="Center" 
+                    Width="300">
+            <TextBlock Text="Type"
+                       Style="{StaticResource LightBasicTextStyle}"
+                       Margin="3,0,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <!-- Need to use group names because there are multiple radio groups on this page -->
+                <RadioButton Content="MusicPimp"
+                             GroupName="EndType"
+                            IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}" 
+                            Style="{StaticResource FlyoutRadioButton}"/>
+                <RadioButton Content="Subsonic"
+                             GroupName="EndType"
+                            IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=Subsonic, Mode=TwoWay}" 
+                            Style="{StaticResource FlyoutRadioButton}"/>
+            </StackPanel>
+            <TextBlock Text="Description"
+                       Style="{StaticResource LightBasicTextStyle}" 
+                       Margin="3,0,0,0"/>
+            <TextBox Text="{Binding EndpointItem.Name, Mode=TwoWay}"
+                     Margin="3,0,0,0" 
+                     Style="{StaticResource LightTextBoxStyle}">
+                <i:Interaction.Behaviors>
+                    <julbeh:WatermarkTextBehavior WatermarkText="my home computer" 
+                                                  WatermarkColor="Gray"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <TextBlock Text="IP address or hostname" 
+                       Style="{StaticResource LightBasicTextStyle}"
+                       Margin="3,0,0,0"/>
+            <TextBox Text="{Binding EndpointItem.Server, Mode=TwoWay}"
+                    Style="{StaticResource LightTextBoxStyle}"
+                    Margin="3,0,0,0">
+                <i:Interaction.Behaviors>
+                    <julbeh:WatermarkTextBehavior WatermarkText="192.168.0.1" 
+                                                  WatermarkColor="Gray"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <TextBlock Text="Port" 
+                    Style="{StaticResource LightBasicTextStyle}" 
+                       Margin="3,0,0,0"/>
+            <TextBox Text="{Binding EndpointItem.Port, Mode=TwoWay}"
+                     InputScope="NumberFullWidth" 
+                     Style="{StaticResource LightTextBoxStyle}"
+                     Margin="3,0,0,0"/>
+            <TextBlock Text="Username" 
+                    Style="{StaticResource LightBasicTextStyle}"
+                       Margin="3,0,0,0"/>
+            <TextBox Text="{Binding EndpointItem.Username, Mode=TwoWay}" 
+                     Style="{StaticResource LightTextBoxStyle}"
+                     Margin="3,0,0,0"/>
+            <TextBlock Text="Password" 
+                    Style="{StaticResource LightBasicTextStyle}"
+                    Margin="3,0,0,0"/>
+            <PasswordBox Password="{Binding EndpointItem.Password, Mode=TwoWay}"
+                         Margin="3,0,0,0" 
+                         Style="{StaticResource LightPasswordBoxStyle}"/>
+            <TextBlock Text="Protocol"
+                       Style="{StaticResource LightBasicTextStyle}"
+                       Margin="3,0,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="HTTP"
+                             GroupName="Proto"
+                            IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=http, Mode=TwoWay}" 
+                            Style="{StaticResource FlyoutRadioButton}"/>
+                <RadioButton Content="HTTPS"
+                             GroupName="Proto"
+                            IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=https, Mode=TwoWay}" 
+                            Style="{StaticResource FlyoutRadioButton}"/>
+            </StackPanel>
+            <CheckBox Content="Set as active music source"
+                      IsChecked="{Binding MakeActiveLibrary,Mode=TwoWay}" 
+                      Style="{StaticResource LightCheckBoxStyle}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="90"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Test Connectivity"
+                        Command="{Binding Tester.TestEndpoint}"
+                        CommandParameter="{Binding EndpointItem}" 
+                        Style="{StaticResource LightButtonStyle}"/>
+                <Button Grid.Column="1" 
+                        Content="Save" 
+                        Style="{StaticResource PrimaryFlyoutButton}" 
+                        Command="{Binding Add}" 
+                        HorizontalAlignment="Stretch"/>
+                <Button Grid.Column="2" 
+                        Content="Cancel" 
+                        Style="{StaticResource LightButtonStyle}" 
+                        Command="{Binding Cancel}"
+                        HorizontalAlignment="Right"/>
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="3" 
+                            HorizontalAlignment="Center" 
+                            Visibility="{Binding Tester.IsLoading,Converter={StaticResource booleanVisibility}}">
+                    <ProgressBar IsIndeterminate="True"/>
+                    <TextBlock HorizontalAlignment="Center"
+                               Text="Connecting..."
+                               Style="{StaticResource LightBasicTextStyle}"/>
+                </StackPanel>
+                <TextBlock Grid.Row="2" 
+                           Grid.ColumnSpan="3" 
+                           Text="{Binding Tester.FeedbackMessage}"
+                           Style="{StaticResource LightBasicTextStyle}"
+                           Margin="3,0,0,0"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+    <!--<Popup.ChildTransitions>
+        <TransitionCollection>
+            <PaneThemeTransition />
+        </TransitionCollection>
+    </Popup.ChildTransitions>-->
+
+</xaml:PopupUserControl>

@@ -1,0 +1,129 @@
+﻿System.Runtime.InteropServices.SEHException: External component has thrown an exception.
+   at Microsoft.Phone.BackgroundTransfer.BtsApi.BtsNotificationCallback
+
+bug: state is not properly updated when resuming using FAR
+- repro: show the player pivot and let the screen go dark, then resume -> playback is not updated
+-- at least when pimp server is playing (websockets)
+
+change logo colors to all-white on the same background in some places
+
+add secondary tile to WP
+- that launches MusicBeamer camera
+- plays favorite playlist
+
+most/latest/random playlists
+
+play random track, play album, artist, ...
+
+bugs:
+- when subsonic is the server and the playback device is local, some tracks cause a SystemException
+-- for example AC/DC - Money Talks
+- on WP7, Subsonic server playback is not updated properly; the server appears to cache responses after a couple of seconds therefore playback stalls
+
+make the musicbeamer approach the default for adding new endpoints
+
+search
+speech input: "play katy perry", "play hot & cold"
+http://msdn.microsoft.com/en-us/library/windowsphone/develop/jj206940%28v=vs.105%29.aspx#BKMK_Media
+http://stackoverflow.com/questions/4385834/api-to-add-playlists-in-zune/14117264#14117264
+
+upload files to musicpimp using backgroundtransferservice
+
+pictures, background, colors
+
+fast application resume
+
+explore telerik controls
+
+gamification:
+- become a "champion" of a track by playing it more than anyone else
+- easy fun
+- hard fun
+- people fun
+- serious fun
+
+
+---
+
+research:
+Sockets support in Windows Phone 8
+
+add playlist to azure
+
+NFC:
+tap to share the app with NFC and PublishURI... API
+tap to play music on another NFC device
+
+---
+
+background transfer considerations: use range requests to support resume 
+- incompatibility with subsonic not resolved, lame constraints when the file is >5MB, bad API
+- difficult to download & stream simultaneously, tempfile needs to go to shared/transfers, then be moved
+- Downloading a file over 5 MB from Subsonic fails with:
+"The http network provider returned an error related to content-range request or response"
+
+WP8 policies:
+
+The content-length header is required on the server side for files greater than 5 MB. 
+Servers should always return the content-length in responses. 
+Failing to do so can result in severely degraded transfer performance.
+
+Range headers are required on the server side for files greater than 5 MB. 
+Servers should always support range request headers. 
+Failing to do so can result in severely degraded transfer performance.
+
+abandoned:
+
+taglib to read mp3 metadata:
+- the library is incompatible with WP8: class Tag extends ICloneable which is not available in WP8
+-- this fails at runtime at the latest
+
+read duration of local mp3:
+- taglib does not work on WP8
+- id3.net duration parser is slow and buggy
+- solution: use MediaElementExtensions.TrackDuration(...)
+
+---
+
+design:
+
+appbar
+- play/enqueue
+
+settings
+- idv3 / directory-based results
+
+--- 
+
+implementation:
+
+starting playback:
+user clicks play -> Playlist.SetPlaylist() -> PlayIndex(0)
+PlayIndex(0): skipTo(0) -> playPlaylist()
+local playPlaylist(): ... -> PlayerControl.SetTrack() -> get local uri if available -> BackgroundAudioPlayer.Track = track 
+
+---
+
+copyright matters:
+
+icons: creative commons
+
+about page:
+RestSharp is Apache 2.0 licensed, see http://stackoverflow.com/questions/1007338/can-i-use-a-library-under-the-apache-software-license-2-0-in-a-commercial-applic
+- so include the license in the about page
+
+--- 
+
+versioning:
+
+fourth digit
+- odd = WP7
+- even = WP8
+
+e.g. 1.0.0.1 is WP7, 1.0.0.1 is WP8
+
+-- 
+
+errors:
+
+Unable to start WinStore app -> delete app.config, it's not needed

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Mle.MusicPimp.Controls.PlaylistFeedbackPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:src="clr-namespace:Mle.Xaml.Converters;assembly=Common-WP"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}">
+
+    <UserControl.Resources>
+        <src:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+    </UserControl.Resources>
+    
+    <StackPanel>
+        <StackPanel Visibility="{Binding PlaybackDevices.Player.Playlist.IsLoading,Converter={StaticResource booleanVisibility}}">
+            <ProgressBar IsIndeterminate="True"/>
+            <TextBlock HorizontalAlignment="Center" 
+                    Text="Loading..." 
+                    Style="{StaticResource PhoneTextAccentStyle}"/>
+        </StackPanel>
+        <TextBlock Text="the playlist is empty"
+                TextWrapping="Wrap" 
+                Visibility="{Binding PlaybackDevices.Player.Playlist.IsPlaylistEmpty,Converter={StaticResource booleanVisibility}}"
+                Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
+        <TextBlock Text="{Binding PlaybackDevices.Player.Playlist.FeedbackMessage}"
+                TextWrapping="Wrap" 
+                Visibility="{Binding PlaybackDevices.Player.Playlist.ShowFeedback,Converter={StaticResource booleanVisibility}}"
+                Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
+    </StackPanel>
+    
+</UserControl>

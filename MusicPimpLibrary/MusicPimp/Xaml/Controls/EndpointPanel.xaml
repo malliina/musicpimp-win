@@ -1,0 +1,118 @@
+﻿<UserControl
+    x:Class="Mle.MusicPimp.Xaml.Controls.EndpointPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Mle.MusicPimp.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:Mle.Common"
+    xmlns:rttoolkit="using:WinRTXamlToolkit.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="768"
+    d:DesignWidth="346">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <common:EndpointEnumConverter x:Key="endpointConverter"/>
+            <common:ProtocolEnumConverter x:Key="protocolConverter"/>
+            <common:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/CustomStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/FlyoutRadioButton.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightTextBox.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Width="260">
+        <TextBlock Text="Type" 
+                Style="{StaticResource LightBasicTextStyle}"/>
+        <StackPanel Orientation="Horizontal" >
+            <RadioButton Content="MusicPimp"
+                         GroupName="EndType"
+                        IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}" 
+                        Style="{StaticResource FlyoutRadioButton}"
+                        Click="EndpointChanged" />
+            <RadioButton Content="Subsonic"
+                         GroupName="EndType"
+                        IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=Subsonic, Mode=TwoWay}" 
+                        Style="{StaticResource FlyoutRadioButton}"
+                        Click="EndpointChanged"/>
+        </StackPanel>
+        <TextBlock Text="Description" Margin="3"
+                Style="{StaticResource LightBasicTextStyle}"/>
+        <TextBox Text="{Binding EndpointItem.Name, Mode=TwoWay}" 
+                 Margin="3"
+                 Style="{StaticResource LightTextBoxStyle}"
+                 LostFocus="EndpointChanged"/>
+        <TextBlock Text="IP address or hostname" Margin="3"
+                Style="{StaticResource LightBasicTextStyle}"/>
+        <TextBox Text="{Binding EndpointItem.Server, Mode=TwoWay}" 
+                 Margin="3"
+                LostFocus="EndpointChanged"
+                Style="{StaticResource LightTextBoxStyle}"/>
+        <TextBlock Text="Port" Margin="3"
+                Style="{StaticResource LightBasicTextStyle}"/>
+        <TextBox Text="{Binding EndpointItem.Port, Mode=TwoWay}" 
+                 Margin="3"
+                InputScope="NumberFullWidth" 
+                LostFocus="EndpointChanged"
+                Style="{StaticResource LightTextBoxStyle}"/>
+        <TextBlock Text="Username"  
+                   Margin="3"
+                   Style="{StaticResource LightBasicTextStyle}"/>
+        <TextBox Text="{Binding EndpointItem.Username, Mode=TwoWay}"  
+                 Margin="3"
+                 LostFocus="EndpointChanged"
+                 Style="{StaticResource LightTextBoxStyle}"/>
+        <TextBlock Text="Password"  
+                   Margin="3"
+                Style="{StaticResource LightBasicTextStyle}"
+                LostFocus="EndpointChanged"/>
+        <PasswordBox x:Name="passwordBox"  Margin="3"
+                     Password="{Binding EndpointItem.Password, Mode=TwoWay}"
+                     LostFocus="EndpointChanged"
+                     Style="{StaticResource LightPasswordBoxStyle}"/>
+        <TextBlock Text="Protocol"
+                    Style="{StaticResource LightBasicTextStyle}"
+                    Margin="3"/>
+        <StackPanel Orientation="Horizontal">
+            <RadioButton Content="HTTP"
+                         GroupName="Proto"
+                        IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=http, Mode=TwoWay}" 
+                        Style="{StaticResource FlyoutRadioButton}"
+                        Click="EndpointChanged"/>
+            <RadioButton Content="HTTPS"
+                         GroupName="Proto"
+                         IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=https, Mode=TwoWay}" 
+                         Style="{StaticResource FlyoutRadioButton}"
+                         Click="EndpointChanged"/>
+        </StackPanel>
+        <Button Content="Test connectivity"
+                Command="{Binding Tester.TestEndpoint}"
+                CommandParameter="{Binding EndpointItem}" 
+                Style="{StaticResource LightButtonStyle}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="Auto" MinHeight="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Visibility="{Binding Tester.IsLoading,Converter={StaticResource booleanVisibility}}">
+                <ProgressBar IsIndeterminate="True"/>
+                <TextBlock HorizontalAlignment="Center" 
+                        Text="Connecting..." 
+                        Style="{StaticResource LightBasicTextStyle}"/>
+            </StackPanel>
+            <TextBlock Grid.Row="1" 
+                       Text="{Binding Tester.FeedbackMessage}" 
+                       TextWrapping="Wrap"
+                       Margin="3"
+                       Style="{StaticResource LightBasicTextStyle}"/>
+            <Button Grid.Row="2" 
+                    Content="Remove endpoint" 
+                    Command="{Binding Remove}"
+                    CommandParameter="{Binding EndpointItem}"
+                    Style="{StaticResource LightButtonStyle}"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

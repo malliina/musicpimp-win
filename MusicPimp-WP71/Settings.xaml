@@ -1,0 +1,88 @@
+﻿<local:AsyncPhoneApplicationPage
+    x:Class="Pages.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Mle.MusicPimp.Phone.Controls;assembly=MusicPimp-WP"
+    xmlns:pimpctrl="clr-namespace:Mle.MusicPimp.Phone.Controls;assembly=MusicPimp-WP"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+    
+    <local:AsyncPhoneApplicationPage.Resources>
+        <DataTemplate x:Key="EndpointItemTemplate">
+            <!--<local:EndpointItemPanel/>-->
+            <StackPanel Margin="0,0,0,17">
+                <TextBlock Text="{Binding Name}" 
+                           TextWrapping="NoWrap" 
+                           Margin="12,0,0,0" 
+                           Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding Server}" 
+                               TextWrapping="NoWrap" 
+                               Margin="12,0,0,0" 
+                               Style="{StaticResource PhoneTextSubtleStyle}"/>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu>
+                        <toolkit:MenuItem Header="remove endpoint" 
+                            Command="{Binding DataContext.EndpointsData.RemoveCommand, ElementName=EndpointsListSelector}" 
+                            CommandParameter="{Binding}"/>
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
+            </StackPanel>
+        </DataTemplate>
+    </local:AsyncPhoneApplicationPage.Resources>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Title="Settings">
+            <controls:PivotItem Header="endpoints">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <pimpctrl:AddEndpointButton/>
+                    <!--LayoutMode="List"-->
+                    <toolkit:LongListSelector Grid.Row="1"
+                                            x:Name="EndpointsListSelector" 
+                                            ItemsSource="{Binding EndpointsData.Endpoints}" 
+                                            ItemTemplate="{StaticResource EndpointItemTemplate}"
+                                            SelectionChanged="EndpointsListSelector_SelectionChanged"
+                                            IsFlatList="True"/>
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem Header="limits">
+                <local:LimitsPanel/>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+</local:AsyncPhoneApplicationPage>

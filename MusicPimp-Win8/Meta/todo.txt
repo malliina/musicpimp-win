@@ -1,0 +1,12 @@
+﻿error handling: "A general error occurred" if unable to connect; easily repro by adding a bogus remote endpoint
+
+folder is in user view (+- 3 items) -> load contents before click!
+
+research:
+
+control playback with push notifications
+- wtf?
+
+see if "play to" can be used under the "devices" charm
+
+BlankPageDoNotDelete exists because navigation fails if all the pages are in library assemblies

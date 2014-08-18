@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="TestApp_Store.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestApp_Store"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <!-- Background="{StaticResource ApplicationPageBackgroundThemeBrush}" -->
+    <Grid Background="LightCyan">
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Assets/music.png" Stretch="UniformToFill" Opacity="0.1"/>
+            </Grid.Background>
+            <StackPanel>
+                <Button Content="Test"
+                Command="{Binding RunTest}"/>
+                <Button Content="Close"
+                Command="{Binding CloseCommand}"/>
+                <TextBlock Text="{Binding Output}" FontSize="24"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Page>

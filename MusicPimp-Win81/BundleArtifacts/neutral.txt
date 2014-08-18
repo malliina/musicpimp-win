@@ -1,0 +1,4 @@
+MainPackage=F:\Stuff\Programming\projects\musicpimp-win\MusicPimp-Win81\bin\Release\MusicPimp-Win81_4.8.1.19_Bundle\MusicPimp-Win81_4.8.1.19_AnyCPU.appx
+SymbolPackage=F:\Stuff\Programming\projects\musicpimp-win\MusicPimp-Win81\AppPackages\MusicPimp-Win81_4.8.1.19_Test\MusicPimp-Win81_4.8.1.19_AnyCPU.appxsym
+ResourcePack=F:\Stuff\Programming\projects\musicpimp-win\MusicPimp-Win81\bin\Release\MusicPimp-Win81_4.8.1.19_Bundle\MusicPimp-Win81_4.8.1.19_scale-140.appx
+ResourcePack=F:\Stuff\Programming\projects\musicpimp-win\MusicPimp-Win81\bin\Release\MusicPimp-Win81_4.8.1.19_Bundle\MusicPimp-Win81_4.8.1.19_scale-180.appx

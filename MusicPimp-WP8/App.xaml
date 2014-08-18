@@ -1,0 +1,35 @@
+﻿<Application
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    x:Class="Mle.App">
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <!-- -->
+        <ResourceDictionary>
+            <!--<local:LocalizedStrings xmlns:local="clr-namespace:Mle" x:Key="LocalizedStrings"/>-->
+            
+            <MediaElement x:Key="mediaElement" AutoPlay="False"/>
+
+            <ImageBrush x:Key="MainBackground" 
+                        ImageSource="Assets/guitar-1080x1440-white.png"
+                        Stretch="Uniform"
+                        Opacity="0.1"
+                        AlignmentY="Top"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/PimpResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService
+    		Launching="Application_Launching" 
+            Closing="Application_Closing"
+    		Activated="Application_Activated" 
+            Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+</Application>

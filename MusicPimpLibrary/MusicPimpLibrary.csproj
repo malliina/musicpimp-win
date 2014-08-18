@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FFEECBCE-877F-4C1B-A53D-D1E40C614F38}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mle</RootNamespace>
+    <AssemblyName>MusicPimpLibrary</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\AddEndpointPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\BarcodePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Controls\EndpointPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Downloads.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\GroupedNewHome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\IapPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\MusicItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Player.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\PrivacyPolicy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\CustomStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\FlyoutButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\FlyoutComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\FlyoutRadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightAppBarButtons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightCheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightListBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\LightWatermarkTextBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\OldStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Resources\PrimaryFlyoutButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="MusicPimp\Xaml\RootPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\SplashPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Common\BooleanNegationConverter.cs" />
+    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Common\EndpointEnumConverter.cs" />
+    <Compile Include="Common\EnumBooleanConverter.cs" />
+    <Compile Include="Common\LayoutAwarePage.cs" />
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\RichTextColumns.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="MusicPimp\Beam\StoreBeamPlayer.cs" />
+    <Compile Include="MusicPimp\Beam\StoreBeamPlaylist.cs" />
+    <Compile Include="MusicPimp\Iap\PimpIapUtils.cs" />
+    <Compile Include="MusicPimp\Local\AppLocalFolderLibrary.cs" />
+    <Compile Include="MusicPimp\Local\Id3Reader.cs" />
+    <Compile Include="MusicPimp\Local\MediaControlHelper.cs" />
+    <Compile Include="MusicPimp\Local\MediaPlayerElement.cs" />
+    <Compile Include="MusicPimp\Local\MultiFolderLibrary.cs" />
+    <Compile Include="MusicPimp\Local\RoamingPlaylist.cs" />
+    <Compile Include="MusicPimp\Local\StoreFolderLocalLibrary.cs" />
+    <Compile Include="MusicPimp\Local\StoreLocalLibraryBase.cs" />
+    <Compile Include="MusicPimp\Local\StoreLocalPlayer.cs" />
+    <Compile Include="MusicPimp\Network\DownloadSample.cs" />
+    <Compile Include="MusicPimp\Network\PimpStoreDownloader.cs" />
+    <Compile Include="MusicPimp\Network\PimpUploadRequest.cs" />
+    <Compile Include="MusicPimp\Pimp\StorePimpLibrary.cs" />
+    <Compile Include="MusicPimp\Pimp\StorePimpSession.cs" />
+    <Compile Include="MusicPimp\Tiles\StoreCoverService.cs" />
+    <Compile Include="MusicPimp\Tiles\TileAndToastBase.cs" />
+    <Compile Include="MusicPimp\Tiles\Tiles.cs" />
+    <Compile Include="MusicPimp\Tiles\Tiles8.cs" />
+    <Compile Include="MusicPimp\Tiles\TilesAndToastsUpdater8.cs" />
+    <Compile Include="MusicPimp\Tiles\Toasts.cs" />
+    <Compile Include="MusicPimp\Util\AppLocalMusicFolderFileUtils.cs" />
+    <Compile Include="MusicPimp\Util\BackgroundTaskManager.cs" />
+    <Compile Include="MusicPimp\Util\FileUtil.cs" />
+    <Compile Include="MusicPimp\Util\LifeCycleManager.cs" />
+    <Compile Include="MusicPimp\Util\Singletons.cs" />
+    <Compile Include="MusicPimp\Util\WinStoreProvider.cs" />
+    <Compile Include="MusicPimp\ViewModels\HelpModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\MusicItemsModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\Navigable.cs" />
+    <Compile Include="MusicPimp\ViewModels\RootPageViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\SettingsViewModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\SplashModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\StartSettings.cs" />
+    <Compile Include="MusicPimp\ViewModels\StoreBarcodeReader.cs" />
+    <Compile Include="MusicPimp\ViewModels\StoreEditEndpoint.cs" />
+    <Compile Include="MusicPimp\ViewModels\StoreEndpoints.cs" />
+    <Compile Include="MusicPimp\ViewModels\StoreLibraryManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\StoreNowPlaying.cs" />
+    <Compile Include="MusicPimp\ViewModels\StorePlayerManager.cs" />
+    <Compile Include="MusicPimp\Xaml\AddEndpointPopup.xaml.cs">
+      <DependentUpon>AddEndpointPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\BarcodePage.xaml.cs">
+      <DependentUpon>BarcodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\BasePage.cs" />
+    <Compile Include="MusicPimp\Xaml\Controls\EndpointPanel.xaml.cs">
+      <DependentUpon>EndpointPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Converters\EndpointTypeToVisibilityConverter.cs" />
+    <Compile Include="MusicPimp\Xaml\Downloads.xaml.cs">
+      <DependentUpon>Downloads.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\GroupedNewHome.xaml.cs">
+      <DependentUpon>GroupedNewHome.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\IapPage.xaml.cs">
+      <DependentUpon>IapPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\MusicItems.xaml.cs">
+      <DependentUpon>MusicItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Player.xaml.cs">
+      <DependentUpon>Player.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\PrivacyPolicy.xaml.cs">
+      <DependentUpon>PrivacyPolicy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\RootPage.xaml.cs">
+      <DependentUpon>RootPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\SplashPage.xaml.cs">
+      <DependentUpon>SplashPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NavigationHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Callisto, Version=1.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Callisto.1.3.1\lib\winrt45\Callisto.dll</HintPath>
+    </Reference>
+    <Reference Include="Id3">
+      <HintPath>..\..\musicpimp-win\packages\ID3.0.3.0\lib\winrt45\Id3.dll</HintPath>
+    </Reference>
+    <Reference Include="JulMar.Metro.Behaviors">
+      <HintPath>..\packages\MVVMHelpers.Metro.2013.2.00.00\lib\NetCore45\JulMar.Metro.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="JulMar.Metro.Helpers">
+      <HintPath>..\packages\MVVMHelpers.Metro.2013.2.00.00\lib\NetCore45\JulMar.Metro.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="JulMar.Windows.Interactivity">
+      <HintPath>..\packages\MVVMHelpers.Metro.2013.2.00.00\lib\NetCore45\JulMar.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\win8\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.AttributedModel">
+      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Convention">
+      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Hosting">
+      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Runtime">
+      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts">
+      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\win8\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.22.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\win8\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRTXamlToolkit">
+      <HintPath>..\packages\winrtxamltoolkit.1.6.1.3\lib\netcore45\WinRTXamlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing">
+      <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\windows8\ZXing.winmd</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\musicpimp-win\Common-NET\Common-Win8.csproj">
+      <Project>{2c80e47c-eabd-486a-b708-7f4ee11e2cc6}</Project>
+      <Name>Common-Win8</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\musicpimp-win\Common-WinStore\Common-WinStore.csproj">
+      <Project>{703e9e2d-a2c9-49c9-9d02-4813e9c098fd}</Project>
+      <Name>Common-WinStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\musicpimp-win\CommonAudio-NET\CommonAudio-NET.csproj">
+      <Project>{a9ead083-dc12-4f2f-b203-2672730acc07}</Project>
+      <Name>CommonAudio-NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\musicpimp-win\MusicPimp-NET\MusicPimp-NET.csproj">
+      <Project>{9b9d4f9e-3192-49b0-9c98-aeadc2faa3c6}</Project>
+      <Name>MusicPimp-NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MusicPimp-Store\MusicPimpCommon8.csproj">
+      <Project>{fbfc5ef1-df16-4af8-9df4-cd775035e0ba}</Project>
+      <Name>MusicPimpCommon8</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\add.png" />
+    <Content Include="Assets\appbar.sound.0.png" />
+    <Content Include="Assets\appbar.sound.1.png" />
+    <Content Include="Assets\appbar.sound.2.png" />
+    <Content Include="Assets\appbar.sound.3.png" />
+    <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\desktop-red-1024.png" />
+    <Content Include="Assets\download-alt-blue-1024.png" />
+    <Content Include="Assets\download-alt-lightgreen-128.png" />
+    <Content Include="Assets\download-alt.png" />
+    <Content Include="Assets\download.png" />
+    <Content Include="Assets\folder-open-cyan-1024.png" />
+    <Content Include="Assets\folder-open-ffcc66-48.png" />
+    <Content Include="Assets\folder-open-foldercolor-1024.png" />
+    <Content Include="Assets\folder-open-indigo-1024.png" />
+    <Content Include="Assets\folder-open-indigo.png" />
+    <Content Include="Assets\folder-open-purple-1024.png" />
+    <Content Include="Assets\folder-open.png" />
+    <Content Include="Assets\folder.png" />
+    <Content Include="Assets\home-brown-1024.png" />
+    <Content Include="Assets\home-brown-48.png" />
+    <Content Include="Assets\LightGray.png" />
+    <Content Include="Assets\list-1024.png" />
+    <Content Include="Assets\list-blue-1024.png" />
+    <Content Include="Assets\list-cyan-1024.png" />
+    <Content Include="Assets\list-indigo-1024.png" />
+    <Content Include="Assets\list-lightblue-1024.png" />
+    <Content Include="Assets\list-magenta-1024.png" />
+    <Content Include="Assets\list.png" />
+    <Content Include="Assets\list2.png" />
+    <Content Include="Assets\location-arrow-blue-128.png" />
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\MediumGray.png" />
+    <Content Include="Assets\music-green-1024.png" />
+    <Content Include="Assets\music-green-128.png" />
+    <Content Include="Assets\music-green-256.png" />
+    <Content Include="Assets\music-green-48.png" />
+    <Content Include="Assets\music-green-512.png" />
+    <Content Include="Assets\music-green.png" />
+    <Content Include="Assets\music.png" />
+    <Content Include="Assets\play-green-48.png" />
+    <Content Include="Assets\play-green.png" />
+    <Content Include="Assets\play.png" />
+    <Content Include="Assets\play2.png" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SmallLogo.scale-100.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\stop.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Store\guitar-150x150.png" />
+    <Content Include="Assets\Store\guitar-24x24-monochrome-bw.png" />
+    <Content Include="Assets\Store\guitar-24x24-white-transparent.png" />
+    <Content Include="Assets\Store\guitar-24x24.scale-100.png" />
+    <Content Include="Assets\Store\guitar-30x30.png" />
+    <Content Include="Assets\Store\guitar-310x150.scale-100.png" />
+    <Content Include="Assets\Store\guitar-50x50.png" />
+    <Content Include="Assets\Store\guitar-558x558.png" />
+    <Content Include="Assets\Store\guitar-620x300.png" />
+    <Content Include="Assets\upload-alt-blue-128.png" />
+    <Content Include="Assets\wrench-gray-1024.png" />
+    <Content Include="Assets\wrench-gray.png" />
+    <Content Include="Assets\wrench-white.png" />
+    <Content Include="Assets\wrench.png" />
+    <Content Include="Common\ReadMe.txt" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
