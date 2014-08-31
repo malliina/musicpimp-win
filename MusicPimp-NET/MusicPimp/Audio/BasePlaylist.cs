@@ -45,7 +45,6 @@ namespace Mle.MusicPimp.Audio {
             get { return autoPlayOnSet; }
             set { this.SetProperty(ref this.autoPlayOnSet, value); }
         }
-        //public event Action<IEnumerable<MusicItem>> PlaylistModified;
         public event Action<int> IndexChanged;
 
         public bool IsPlaylistEmpty {

@@ -43,6 +43,8 @@ namespace Mle.MusicPimp.Local {
         public override Task Upload(MusicItem song, string resource, PimpSession destSession) {
             return destSession.Upload(song, resource);
         }
-        
+        public override Task<IEnumerable<DataTrack>> Search(string term) {
+            return TaskEx.FromResult<IEnumerable<DataTrack>>(new List<DataTrack>());
+        }
     }
 }

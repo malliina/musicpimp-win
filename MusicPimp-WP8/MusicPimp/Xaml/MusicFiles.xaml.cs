@@ -19,6 +19,7 @@ namespace MusicPimp.Xaml {
         protected ApplicationBarIconButton addToPlaylistAppBarButton;
         protected ApplicationBarIconButton playAllAppBarButton;
         protected ApplicationBarIconButton downloadAppBarButton;
+        protected ApplicationBarIconButton searchAppBarButton;
 
         public MusicFiles() {
             InitializeComponent();
@@ -55,13 +56,15 @@ namespace MusicPimp.Xaml {
             downloadAppBarButton = NewAppBarButton(assetHome + "download.png", "download", DownloadMulti);
             addToPlaylistAppBarButton = NewAppBarButton(assetHome + "appbar.add.rest.png", "to playlist", AddToPlaylistMulti);
             playAllAppBarButton = NewAppBarButton(assetHome + "appbar.transport.play.rest.png", "play", PlayMulti);
+            searchAppBarButton = NewAppBarButton(assetHome + "feature.search.png", "search", Search_Click);
             multiSelectButtons = new List<ApplicationBarIconButton>(new ApplicationBarIconButton[] { 
                 selectAppBarButton, downloadAppBarButton, playAllAppBarButton, addToPlaylistAppBarButton 
             });
         }
         protected override List<ApplicationBarIconButton> SingleSelectButtons() {
             var ret = base.SingleSelectButtons();
-            ret.Insert(0, selectAppBarButton);
+            //ret.Insert(0, selectAppBarButton);
+            ret.Add(searchAppBarButton);
             return ret;
         }
 
@@ -129,7 +132,9 @@ namespace MusicPimp.Xaml {
         private void Settings_Click(object sender, EventArgs e) {
             GoToProjectPage("MusicPimp-WP8", typeof(MainSettingsPage).Name);
         }
-
+        private void Search_Click(object sender, EventArgs e) {
+            GoToProjectPage("MusicPimp-WP8", typeof(Search).Name);
+        }
         private void Beam_Click(object sender, EventArgs e) {
             GoToProjectPage("MusicPimp-WP8", typeof(BarcodePage).Name);
         }

@@ -142,6 +142,7 @@
     <Compile Include="MusicPimp\Beam\BeamEndpoint.cs" />
     <Compile Include="MusicPimp\Tiles\TileAndToastManager.cs" />
     <Compile Include="MusicPimp\ViewModels\AlarmModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\DataTrack.cs" />
     <Compile Include="MusicPimp\ViewModels\EditEndpoint.cs" />
     <Compile Include="MusicPimp\ViewModels\EndManagerBase.cs" />
     <Compile Include="MusicPimp\ViewModels\EndpointsData.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="MusicPimp\ViewModels\BaseViewModel.cs" />
     <Compile Include="MusicPimp\ViewModels\PlayerManager.cs" />
     <Compile Include="MusicPimp\ViewModels\PlaylistMusicItem.cs" />
+    <Compile Include="MusicPimp\ViewModels\SearchVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

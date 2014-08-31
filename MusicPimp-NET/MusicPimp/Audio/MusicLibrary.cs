@@ -17,7 +17,18 @@ namespace Mle.MusicPimp.Audio {
         /// Triggers when folder from a sub-library (or the whole library) have been loaded. UIs may wish to update themselves at this point.
         /// </summary>
         public event Action<IEnumerable<MusicItem>> NewItemsLoaded;
+        public Dictionary<string, IEnumerable<MusicItem>> Folders { get; private set; }
+        public string RootFolderKey { get; protected set; }
+        public virtual string RootEmptyMessage { get; protected set; }
         public abstract Task Ping();
+        protected abstract Task<IEnumerable<MusicItem>> LoadFolderAsync(string id);
+        public abstract Task<IEnumerable<DataTrack>> Search(string term);
+        public abstract Task Upload(MusicItem song, string resource, PimpSession destSession);
+        public MusicLibrary() {
+            Folders = new Dictionary<string, IEnumerable<MusicItem>>();
+            RootEmptyMessage = "the library is empty";
+            RootFolderKey = String.Empty;
+        }
         /// <summary>
         /// Non-recursively loads the user-selected folder or the root folder if no folder is selected.
         /// 
@@ -32,21 +43,11 @@ namespace Mle.MusicPimp.Audio {
             var items = await LoadFolderAsync(folderId);
             AddDistinct(items, to);
         }
-        protected abstract Task<IEnumerable<MusicItem>> LoadFolderAsync(string id);
-        public Dictionary<string, IEnumerable<MusicItem>> Folders { get; private set; }
-        public abstract Task Upload(MusicItem song, string resource, PimpSession destSession);
-        public string RootFolderKey { get; protected set; }
-        public virtual string RootEmptyMessage { get; protected set; }
         public virtual string DirectoryIdentifier(MusicItem musicDir) {
             return musicDir.Id;
         }
         public virtual Uri DownloadUriFor(MusicItem track) {
             return track.Source;
-        }
-        public MusicLibrary() {
-            Folders = new Dictionary<string, IEnumerable<MusicItem>>();
-            RootEmptyMessage = "the library is empty";
-            RootFolderKey = String.Empty;
         }
         /// <summary>
         /// It is sufficient for this method to only inspect the contents of the cache, 

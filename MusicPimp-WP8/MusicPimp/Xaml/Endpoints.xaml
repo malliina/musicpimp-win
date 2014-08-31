@@ -68,19 +68,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <ctrl:SearchAndAddEndpointsGrid/>
-                <!--<ctrl2:LabeledProgressBar Label="Searching..."
-                                          Visibility="{Binding IsSearching,Converter={StaticResource booleanVisibility}}"/>
-                <Button Grid.Row="1" 
-                        Command="{Binding SearchAnyServer}">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <ctrl2:IconTwoRowsButton LeftImage="/Assets/Icons/appbar.network.png"
-                                         FirstRow="Search"
-                                         SecondRow="scan your LAN for endpoints"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <ctrl:AddEndpointButton Grid.Row="2"/>-->
                 <phone:LongListSelector Grid.Row="3"
                                         x:Name="EndpointsListSelector"
                                         ItemsSource="{Binding RemoteEndpoints}" 

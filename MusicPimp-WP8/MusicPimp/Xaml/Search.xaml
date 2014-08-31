@@ -1,0 +1,124 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Mle.MusicPimp.Xaml.Search"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="MusicItemDataTemplate">
+            <Grid Margin="0,-12,0,24" Tap="OnMusicItemTap">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Rectangle Fill="{StaticResource PhoneForegroundBrush}"
+                           Grid.RowSpan="2" 
+                            Height="76"
+                            Width="76">
+                    <Rectangle.OpacityMask>
+                        <ImageBrush ImageSource="/Assets/AppBar/transport.play.png"/>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <TextBlock Grid.Column="1"
+                    Text="{Binding Track}"
+                    TextWrapping="NoWrap"
+                    Style="{StaticResource PhoneTextLargeStyle}"
+                    VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1"
+                           Grid.Row="1"
+                           Text="{Binding Artist}"
+                           TextWrapping="NoWrap"
+                           Style="{StaticResource PhoneTextSubtleStyle}"
+                           VerticalAlignment="Center"/>
+                <!--<ProgressBar Grid.Column="1" Grid.Row="1" 
+                             Value="{Binding BytesReceived}" 
+                             Maximum="{Binding Size}"
+                             Visibility="{Binding IsDownloading,Converter={StaticResource booleanVisibility}}"/>-->
+                <!-- the ElementName= references prevent us from moving this control to its own file -->
+                <!--<toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu>
+                        <toolkit:MenuItem Header="add to playlist" 
+                            Command="{Binding DataContext.PlaybackDevices.Player.Playlist.AddToPlaylistCommand, ElementName=musicPivot}" 
+                            CommandParameter="{Binding}"/>
+                        <toolkit:MenuItem Header="download" 
+                                          Visibility="{Binding DataContext.IsLibraryLocal,Converter={StaticResource invertedBooleanVisibility},ElementName=musicPivot}"
+                                          Command="{Binding DataContext.Downloader.DownloadMusicItem, ElementName=musicPivot}" 
+                                          CommandParameter="{Binding}"/>
+                        <toolkit:MenuItem Header="delete from phone"
+                                          Command="{Binding DataContext.DeleteLocally,ElementName=musicPivot}"
+                                          CommandParameter="{Binding}"
+                                          Visibility="{Binding DataContext.IsLibraryLocal,Converter={StaticResource booleanVisibility},ElementName=musicPivot}"/>
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>-->
+            </Grid>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <!--<StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="MUSICPIMP" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="search" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>-->
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <toolkit:PhoneTextBox x:Name="searchTextBox" 
+                                  Text="{Binding Term, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                                  TextChanged="OnTermChanged"
+                                  Hint="track, artist or album..."/>
+            <toolkit:LongListMultiSelector Grid.Row="1"
+                            x:Name="MusicItemLongListSelector"
+                            Margin="0,12,-12,0"
+                            LayoutMode="List"
+                            ItemsSource="{Binding SearchResults}"
+                            ItemTemplate="{StaticResource MusicItemDataTemplate}"
+                            IsSelectionEnabledChanged="OnMultiSelectionEnabledChanged"/>
+        </Grid>
+    </Grid>
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideUpFadeIn" />
+            </toolkit:NavigationInTransition.Forward>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideUpFadeIn" />
+            </toolkit:NavigationInTransition.Backward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideDownFadeOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideDownFadeOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+</phone:PhoneApplicationPage>

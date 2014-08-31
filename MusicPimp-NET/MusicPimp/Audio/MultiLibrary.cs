@@ -45,6 +45,13 @@ namespace Mle.MusicPimp.Audio {
                 }
             }
         }
+        public override async Task<IEnumerable<DataTrack>> Search(string term) {
+            List<DataTrack> results = new List<DataTrack>();
+            foreach(var lib in Libraries) {
+                results.AddRange(await lib.Search(term));
+            }
+            return results;
+        }
         public override void Reset() {
             base.Reset();
             foreach(var lib in Libraries) {
