@@ -7,6 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:ctrl="clr-namespace:Mle.Xaml.Controls;assembly=Common-WP"
+    xmlns:conv="clr-namespace:Mle.Xaml.Converters;assembly=Common-WP"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -14,13 +16,15 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
     toolkit:TiltEffect.IsTiltEnabled="True">
-
     <phone:PhoneApplicationPage.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="booleanConverter"/>
+
         <DataTemplate x:Key="MusicItemDataTemplate">
             <Grid Margin="0,-12,0,24" Tap="OnMusicItemTap">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -35,7 +39,7 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
                 <TextBlock Grid.Column="1"
-                    Text="{Binding Track}"
+                    Text="{Binding Name}"
                     TextWrapping="NoWrap"
                     Style="{StaticResource PhoneTextLargeStyle}"
                     VerticalAlignment="Center"/>
@@ -45,26 +49,26 @@
                            TextWrapping="NoWrap"
                            Style="{StaticResource PhoneTextSubtleStyle}"
                            VerticalAlignment="Center"/>
-                <!--<ProgressBar Grid.Column="1" Grid.Row="1" 
+                <ProgressBar Grid.Column="1" Grid.Row="2" 
                              Value="{Binding BytesReceived}" 
                              Maximum="{Binding Size}"
-                             Visibility="{Binding IsDownloading,Converter={StaticResource booleanVisibility}}"/>-->
-                <!-- the ElementName= references prevent us from moving this control to its own file -->
-                <!--<toolkit:ContextMenuService.ContextMenu>
+                             Visibility="{Binding IsDownloading,Converter={StaticResource booleanVisibility}}"/>
+                <!--the ElementName= references prevent us from moving this control to its own file-->
+                <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu>
                         <toolkit:MenuItem Header="add to playlist" 
-                            Command="{Binding DataContext.PlaybackDevices.Player.Playlist.AddToPlaylistCommand, ElementName=musicPivot}" 
+                            Command="{Binding DataContext.AddToPlaylist, ElementName=ContentPanel}" 
                             CommandParameter="{Binding}"/>
                         <toolkit:MenuItem Header="download" 
-                                          Visibility="{Binding DataContext.IsLibraryLocal,Converter={StaticResource invertedBooleanVisibility},ElementName=musicPivot}"
-                                          Command="{Binding DataContext.Downloader.DownloadMusicItem, ElementName=musicPivot}" 
+                                          Visibility="{Binding DataContext.IsLibraryLocal,Converter={StaticResource invertedBooleanVisibility},ElementName=ContentPanel}"
+                                          Command="{Binding DataContext.Download, ElementName=ContentPanel}" 
                                           CommandParameter="{Binding}"/>
-                        <toolkit:MenuItem Header="delete from phone"
-                                          Command="{Binding DataContext.DeleteLocally,ElementName=musicPivot}"
+                        <!--<toolkit:MenuItem Header="delete from phone"
+                                          Command="{Binding DataContext.DeleteLocally,ElementName=ContentPanel}"
                                           CommandParameter="{Binding}"
-                                          Visibility="{Binding DataContext.IsLibraryLocal,Converter={StaticResource booleanVisibility},ElementName=musicPivot}"/>
+                                          Visibility="{Binding DataContext.IsLibraryLocal,Converter={StaticResource booleanVisibility},ElementName=ContentPanel}"/>-->
                     </toolkit:ContextMenu>
-                </toolkit:ContextMenuService.ContextMenu>-->
+                </toolkit:ContextMenuService.ContextMenu>
             </Grid>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
@@ -85,21 +89,32 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <toolkit:PhoneTextBox x:Name="searchTextBox" 
                                   Text="{Binding Term, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                                   TextChanged="OnTermChanged"
                                   Hint="track, artist or album..."/>
-            <toolkit:LongListMultiSelector Grid.Row="1"
+            <ctrl:LabeledProgressBar Grid.Row="1"
+                                     Label="Searching..."
+                                    Visibility="{Binding IsLoading,Converter={StaticResource booleanConverter}}"/>
+            <toolkit:LongListMultiSelector Grid.Row="2"
                             x:Name="MusicItemLongListSelector"
                             Margin="0,12,-12,0"
                             LayoutMode="List"
                             ItemsSource="{Binding SearchResults}"
                             ItemTemplate="{StaticResource MusicItemDataTemplate}"
-                            IsSelectionEnabledChanged="OnMultiSelectionEnabledChanged"/>
+                            IsSelectionEnabledChanged="OnMultiSelectionEnabledChanged"
+                            Visibility="{Binding ShowResult, Converter={StaticResource booleanVisibility}}"/>
         </Grid>
     </Grid>
+    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" Opacity="1">
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+    
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Forward>

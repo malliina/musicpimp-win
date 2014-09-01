@@ -22,7 +22,7 @@ namespace Mle.ViewModels {
                 feedback => FeedbackMessage = feedback,
                 async () => { await code(); return 42; });
         }
-        protected async Task<T> WebAware<T>(Func<Task<T>> code) {
+        protected async Task<T> WebAwareT<T>(Func<Task<T>> code) {
             return await WebAware(
                 async progressState => await OnUiThread(() => IsLoading = progressState),
                 feedback => FeedbackMessage = feedback,

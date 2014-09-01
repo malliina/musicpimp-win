@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using Mle.MusicPimp.Audio;
 
 namespace Mle.MusicPimp.Pimp {
 
@@ -51,8 +53,10 @@ namespace Mle.MusicPimp.Pimp {
         public Task<FoldersPimpResponse> ContentsIn(string folderId) {
             return ToJson<FoldersPimpResponse>("/folders/" + folderId);
         }
-        public Task<IEnumerable<DataTrack>> Search(string term) {
-            return ToJson<IEnumerable<DataTrack>>("/search?term=" + term);
+        public async Task<IEnumerable<MusicItem>> Search(string term) {
+            return (await ToJson<IEnumerable<PimpTrack>>("/search?term=" + term + "&limit=100"))
+                .Select(item => AudioConversions.PimpTrackToMusicItem(item, PlaybackUriFor(item.id)))
+                .ToList();
         }
         public Task<VersionResponse> PingAuth(CancellationToken token) {
             return Ping<VersionResponse>("/pingauth", token);

@@ -34,7 +34,7 @@ namespace Mle.MusicPimp.Pimp {
             }
             return Itemize(response);
         }
-        public override Task<IEnumerable<DataTrack>> Search(string term) {
+        public override Task<IEnumerable<MusicItem>> Search(string term) {
             return session.Search(term);
         }
         /// <summary>

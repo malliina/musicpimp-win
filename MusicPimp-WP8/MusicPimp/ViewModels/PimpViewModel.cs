@@ -1,6 +1,7 @@
 ﻿using Mle.IO;
 using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Local;
+using Mle.MusicPimp.Network;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ namespace Mle.MusicPimp.ViewModels {
             : base(PhoneLocalLibrary.Instance) {
 
             NowPlayingModel = PhoneNowPlaying.Instance;
-            Downloader = new PimpDownloader();
+            Downloader = PimpDownloader.Instance;
             PhoneLibraryManager.Instance.ActiveEndpointChanged += async e => {
                 await ResetAndRefreshRoot();
                 OnPropertyChanged("IsLibraryLocal");

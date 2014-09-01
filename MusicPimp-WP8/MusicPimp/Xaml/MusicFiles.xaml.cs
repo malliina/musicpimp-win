@@ -1,7 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Mle.MusicPimp.Controls;
-using Mle.MusicPimp.ViewModels;
 using Mle.MusicPimp.Xaml;
 using Mle.Util;
 using System;
@@ -12,18 +11,12 @@ using System.Windows.Navigation;
 
 namespace MusicPimp.Xaml {
     public partial class MusicFiles : PimpMainPage {
-        private ApplicationBarIconButton selectAppBarButton;
-        private List<ApplicationBarIconButton> multiSelectButtons;
-
-        // library browsing
-        protected ApplicationBarIconButton addToPlaylistAppBarButton;
-        protected ApplicationBarIconButton playAllAppBarButton;
-        protected ApplicationBarIconButton downloadAppBarButton;
         protected ApplicationBarIconButton searchAppBarButton;
 
         public MusicFiles() {
             InitializeComponent();
             InitializeMultiSelectButtons();
+            appBars.Init(MusicItemLongListSelector, ApplicationBar);
         }
         protected override async void OnNavigatedTo(NavigationEventArgs args) {
             AppModel.FolderLoaded += AppModel_FolderLoaded;
@@ -52,14 +45,7 @@ namespace MusicPimp.Xaml {
             return musicPivot;
         }
         protected void InitializeMultiSelectButtons() {
-            selectAppBarButton = NewAppBarButton(assetHome + "ApplicationBar.Select.png", "select", SelectApplicationBar_Click);
-            downloadAppBarButton = NewAppBarButton(assetHome + "download.png", "download", DownloadMulti);
-            addToPlaylistAppBarButton = NewAppBarButton(assetHome + "appbar.add.rest.png", "to playlist", AddToPlaylistMulti);
-            playAllAppBarButton = NewAppBarButton(assetHome + "appbar.transport.play.rest.png", "play", PlayMulti);
-            searchAppBarButton = NewAppBarButton(assetHome + "feature.search.png", "search", Search_Click);
-            multiSelectButtons = new List<ApplicationBarIconButton>(new ApplicationBarIconButton[] { 
-                selectAppBarButton, downloadAppBarButton, playAllAppBarButton, addToPlaylistAppBarButton 
-            });
+            searchAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "feature.search.png", "search", Search_Click);
         }
         protected override List<ApplicationBarIconButton> SingleSelectButtons() {
             var ret = base.SingleSelectButtons();
@@ -69,33 +55,9 @@ namespace MusicPimp.Xaml {
         }
 
         protected override void UpdateMusicLibraryAppBarButtons() {
-            var appBarButtons = MusicItemLongListSelector.IsSelectionEnabled ? multiSelectButtons : SingleSelectButtons();
-            SetAppBarButtons(appBarButtons);
+            var appBarButtons = MusicItemLongListSelector.IsSelectionEnabled ? appBars.multiSelectButtons : SingleSelectButtons();
+            appBars.SetAppBarButtons(appBarButtons);
         }
-        private void DownloadMulti(object sender, EventArgs e) {
-            WithMulti(async items => {
-                foreach(var item in items) {
-                    await AppModel.Downloader.ValidateThenSubmitDownload(item);
-                }
-            });
-        }
-        private void SelectApplicationBar_Click(object sender, EventArgs e) {
-            MusicItemLongListSelector.IsSelectionEnabled = !MusicItemLongListSelector.IsSelectionEnabled;
-        }
-        protected void AddToPlaylistMulti(object sender, EventArgs e) {
-            WithMulti(async items => await AppModel.AddToPlaylistRecursively(items));
-        }
-        protected void PlayMulti(object sender, EventArgs e) {
-            WithMulti(async items => await AppModel.PlayAll(items));
-        }
-        private void WithMulti(Action<IEnumerable<MusicItem>> code) {
-            var items = MusicItemLongListSelector.SelectedItems;
-            if(items != null) {
-                var musicItems = TypeHelpers.CollectionOf<MusicItem>(items);
-                code(musicItems);
-            }
-        }
-
         private void OnMultiSelectionEnabledChanged(object sender, DependencyPropertyChangedEventArgs e) {
             UpdateMusicLibraryAppBarButtons();
         }

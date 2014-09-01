@@ -29,7 +29,7 @@ namespace Mle.MusicPimp.Controls {
                         await OnPlaylistNavigatedTo();
                         break;
                     case Pivots.Settings:
-                        SetAppBarButtons(PlayerButtons());
+                        appBars.SetAppBarButtons(PlayerButtons());
                         break;
                 }
             });

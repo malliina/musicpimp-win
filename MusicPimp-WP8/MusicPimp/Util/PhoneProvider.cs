@@ -7,7 +7,6 @@ using Mle.MusicPimp.Iap;
 using Mle.MusicPimp.Local;
 using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Pimp;
-using Mle.MusicPimp.Subsonic;
 using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using Mle.Util;
@@ -15,6 +14,9 @@ using System;
 
 namespace Mle.MusicPimp.Util {
     public class PhoneProvider : Provider {
+        public IDownloader Downloader {
+            get { return PimpViewModel.Instance.Downloader; }
+        }
         public MusicItemsBase MusicItemsBase {
             get { return PimpViewModel.Instance; }
         }

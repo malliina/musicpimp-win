@@ -29,7 +29,7 @@ namespace Mle.MusicPimp.Pimp {
             return MapList<AlarmModel, MusicAlarm>(alarmsResource, ToModel);
         }
         public Task<IEnumerable<MusicItem>> Tracks() {
-            return MapList<MusicItem, PimpTrack>(tracksResource, AudioConversions.PimpTrackToMusicItem);
+            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item));
         }
         private async Task<IEnumerable<T>> MapList<T, U>(string resource, Func<U, T> mapper) {
             IEnumerable<U> items = await Session.ToJson<IEnumerable<U>>(resource);

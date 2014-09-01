@@ -21,7 +21,7 @@ namespace Mle.MusicPimp.Controls {
             public const int Settings = 3;
         }
         protected const string SharedProjectName = "MusicPimp-WP8";
-        protected string assetHome = "/Assets/AppBar/WP7/";
+        
 
         public PimpViewModel AppModel {
             get { return PimpViewModel.Instance; }
@@ -47,13 +47,16 @@ namespace Mle.MusicPimp.Controls {
 
         protected List<ApplicationBarIconButton> currentButtons;
 
+        protected AppBarHelper appBars;
+
         // hack to prevent multiple page instances from triggering xaml-specified callbacks
         protected static string latestPageId;
         protected string pageId;
-
+       
         public PimpBasePage() {
             pageId = Guid.NewGuid().ToString();
             latestPageId = pageId;
+            appBars = new AppBarHelper();
             InitializeAppBarButtons();
         }
         private void SetSeekability(BasePlayer player) {
@@ -156,10 +159,10 @@ namespace Mle.MusicPimp.Controls {
             }
         }
         protected virtual void InitializeAppBarButtons() {
-            prevAppBarButton = NewAppBarButton(assetHome + "appbar.transport.rew.rest.png", "previous", PrevApplicationBar_Click);
-            playAppBarButton = NewAppBarButton(assetHome + "appbar.transport.play.rest.png", "play/pause", PlayPauseApplicationBar_Click);
-            pauseAppBarButton = NewAppBarButton(assetHome + "appbar.transport.pause.rest.png", "pause", PlayPauseApplicationBar_Click);
-            nextAppBarButton = NewAppBarButton(assetHome + "appbar.transport.ff.rest.png", "next", NextApplicationBar_Click);
+            prevAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.rew.rest.png", "previous", PrevApplicationBar_Click);
+            playAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.play.rest.png", "play/pause", PlayPauseApplicationBar_Click);
+            pauseAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.pause.rest.png", "pause", PlayPauseApplicationBar_Click);
+            nextAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.ff.rest.png", "next", NextApplicationBar_Click);
             refreshMenuItem = new ApplicationBarMenuItem("refresh");
             refreshMenuItem.Click += (sender, args) => { Refresh_Click(sender, args); };
         }
@@ -198,13 +201,7 @@ namespace Mle.MusicPimp.Controls {
                 buttons.Insert(victimIndex, replacement);
             }
         }
-        protected ApplicationBarIconButton NewAppBarButton(string iconUri, string text, EventHandler clickHandler) {
-            var btn = new ApplicationBarIconButton();
-            btn.IconUri = new Uri(iconUri, UriKind.Relative);
-            btn.Text = text;
-            btn.Click += clickHandler;
-            return btn;
-        }
+        
 
         protected async void Refresh_Click(object sender, EventArgs e) {
             var wasUpdated = await EndpointScanner.Instance.SyncIfUnreachable(libraryManager.ActiveEndpoint);
@@ -225,18 +222,12 @@ namespace Mle.MusicPimp.Controls {
             return AsyncTasks.Noop();
         }
         protected virtual void UpdateMusicLibraryAppBarButtons() {
-            SetAppBarButtons(SingleSelectButtons());
+            appBars.SetAppBarButtons(SingleSelectButtons());
         }
         protected void SetDefaultAppBarButtons() {
-            SetAppBarButtons(SingleSelectButtons());
+            appBars.SetAppBarButtons(SingleSelectButtons());
         }
-        protected void SetAppBarButtons(List<ApplicationBarIconButton> buttons) {
-            if(buttons != currentButtons) {
-                ApplicationBar.Buttons.Clear();
-                buttons.ForEach(btn => ApplicationBar.Buttons.Add(btn));
-                currentButtons = buttons;
-            }
-        }
+        
         protected void ManageRefreshMenuItem(int pivotIndex) {
             if(pivotIndex == Pivots.Music) {
                 if(!ApplicationBar.MenuItems.Contains(refreshMenuItem)) {
@@ -255,13 +246,13 @@ namespace Mle.MusicPimp.Controls {
             await AppModel.OnSingleMusicItemSelected(musicItem);
         }
         protected virtual async Task OnPlaylistNavigatedTo() {
-            SetAppBarButtons(PlayerButtons());
+            appBars.SetAppBarButtons(PlayerButtons());
             if(!MusicPlayer.IsEventBased) {
                 await MusicPlayer.Playlist.Load();
             }
         }
         protected async Task OnPlayerNavigatedTo() {
-            SetAppBarButtons(PlayerButtons());
+            appBars.SetAppBarButtons(PlayerButtons());
             if(!MusicPlayer.IsEventBased) {
                 await MusicPlayer.UpdateNowPlaying();
                 AppModel.NowPlayingModel.StartPolling();

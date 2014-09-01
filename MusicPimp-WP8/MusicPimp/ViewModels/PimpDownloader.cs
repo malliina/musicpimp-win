@@ -16,6 +16,14 @@ using System.Windows.Input;
 
 namespace Mle.MusicPimp.ViewModels {
     public class PimpDownloader : ExceptionAwareTransferModel, IDownloader {
+        private static PimpDownloader instance = null;
+        public static PimpDownloader Instance {
+            get {
+                if(instance == null)
+                    instance = new PimpDownloader();
+                return instance;
+            }
+        }
         private PhoneLocalLibrary LocalLibrary {
             get { return PhoneLocalLibrary.Instance; }
         }
@@ -24,8 +32,9 @@ namespace Mle.MusicPimp.ViewModels {
         }
 
         public ICommand DownloadMusicItem { get; private set; }
+        public ICommand Download { get { return DownloadMusicItem; } }
 
-        public PimpDownloader() {
+        protected PimpDownloader() {
             DownloadMusicItem = new AsyncDelegateCommand<MusicItem>(ValidateThenSubmitDownload);
             var t = Init();
         }

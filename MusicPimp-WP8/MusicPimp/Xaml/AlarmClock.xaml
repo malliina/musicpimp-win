@@ -49,24 +49,23 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <ctrl:TapCommandControl 
-                                                    TapCommand="{Binding NavigateToAlarm}"
+                            <ctrl:TapCommandControl TapCommand="{Binding NavigateToAlarm}"
                                                     TapCommandParameter="{Binding}">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
                                         <ContentControl HorizontalAlignment="Left" 
-                                                           FontSize="{StaticResource PhoneFontSizeSmall}" 
-                                                           Content="{Binding OnOrOffText}"/>
+                                                    FontSize="{StaticResource PhoneFontSizeSmall}" 
+                                                    Content="{Binding OnOrOffText}"/>
                                         <TextBlock Text=": " 
-                                                            FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                                FontSize="{StaticResource PhoneFontSizeSmall}"/>
                                         <TextBlock Text="{Binding Track.Name}" 
-                                                           TextWrapping="Wrap"
-                                                           FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                                TextWrapping="Wrap"
+                                                FontSize="{StaticResource PhoneFontSizeSmall}"/>
                                     </StackPanel>
                                     <TextBlock Text="{Binding DaysReadable}"
-                                                               TextWrapping="Wrap"
-                                                               FontSize="{StaticResource PhoneFontSizeSmall}" 
-                                                               Foreground="{StaticResource PhoneSubtleBrush}"/>
+                                            TextWrapping="Wrap"
+                                            FontSize="{StaticResource PhoneFontSizeSmall}" 
+                                            Foreground="{StaticResource PhoneSubtleBrush}"/>
                                 </StackPanel>
                             </ctrl:TapCommandControl>
                         </Grid>

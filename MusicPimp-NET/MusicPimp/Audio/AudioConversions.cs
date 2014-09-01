@@ -7,7 +7,7 @@ using System;
 
 namespace Mle.MusicPimp.Audio {
     public class AudioConversions {
-        public static MusicItem PimpTrackToMusicItem(PimpTrack track) {
+        public static MusicItem PimpTrackToMusicItem(PimpTrack track, Uri source = null) {
             string path = null;
             var maybeId = track.id;
             if(maybeId != null) {
@@ -21,7 +21,8 @@ namespace Mle.MusicPimp.Audio {
                 Path = path,
                 Duration = TimeSpan.FromSeconds(track.duration),
                 IsDir = false,
-                Size = track.size
+                Size = track.size,
+                Source = source
             };
         }
         public static MusicItem FolderToMusicItem(PimpFolder folder) {

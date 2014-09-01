@@ -18,8 +18,8 @@ namespace Mle.MusicPimp.Audio {
             RootEmptyMessage = "Successfully connected to Subsonic at " + session.Describe + ", however the music library is empty. Follow the Subsonic server documentation to add MP3s to the library. Refresh the library of this app when you're done.";
             var t = Utils.SuppressAsync<Exception>(Ping);
         }
-        public override async Task<IEnumerable<DataTrack>> Search(string term) {
-            return new List<DataTrack>();
+        public override async Task<IEnumerable<MusicItem>> Search(string term) {
+            return new List<MusicItem>();
         }
         /// <summary>
         /// We cannot use the 'download' functionality of Subsonic, because it does not

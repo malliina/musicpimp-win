@@ -1,5 +1,6 @@
 ﻿using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Local;
+using Mle.MusicPimp.Network;
 using Mle.Util;
 using Mle.Xaml.Commands;
 using System;

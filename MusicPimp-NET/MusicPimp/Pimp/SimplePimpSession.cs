@@ -43,8 +43,12 @@ namespace Mle.MusicPimp.Pimp {
         public Task<T> ToJson<T>(string resource) {
             return Client.GetJson<T>(resource);
         }
-        public Task<StatusPimpResponse> StatusCall() {
-            return ToJson<StatusPimpResponse>("/playback");
+        public async Task<StatusPimpResponse> StatusCall() {
+            var ret = await ToJson<StatusPimpResponse>("/playback");
+            //foreach(var item in ret.playlist) {
+            //    item.
+            //}
+            return ret;
         }
         public Task<VersionResponse> PingAuth() {
             return ToJson<VersionResponse>("/pingauth");

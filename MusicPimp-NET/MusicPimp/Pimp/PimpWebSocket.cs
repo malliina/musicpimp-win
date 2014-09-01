@@ -72,9 +72,9 @@ namespace Mle.MusicPimp.Network {
         private void socket_MessageReceived(string msg) {
             var json = JObject.Parse(msg);
             var eventTypeToken = json[EVENT];
-            if (eventTypeToken != null) {
+            if(eventTypeToken != null) {
                 string eventType = eventTypeToken.Value<string>();
-                switch (eventType) {
+                switch(eventType) {
                     case STATUS:
                         var pimpStatus = Deserialize<StatusPimpResponse>(msg);
                         var status = PimpBasePlayer.ToPlaybackStatus(pimpStatus);
@@ -109,7 +109,7 @@ namespace Mle.MusicPimp.Network {
                         break;
                     case PLAYLIST_MODIFIED:
                         var pme = Deserialize<PlaylistModifiedEvent>(msg);
-                        var playlist = pme.playlist.Select(AudioConversions.PimpTrackToMusicItem).ToList();
+                        var playlist = pme.playlist.Select(item2 => AudioConversions.PimpTrackToMusicItem(item2)).ToList();
                         OnPlaylistModified(playlist);
                         break;
                     case PLAYLIST_INDEX_CHANGED:
@@ -131,7 +131,7 @@ namespace Mle.MusicPimp.Network {
             }
         }
         public static PlayerState FromName(string stateName) {
-            switch (stateName) {
+            switch(stateName) {
                 case "Started":
                 case "Playing":
                     return PlayerState.Playing;
@@ -157,57 +157,57 @@ namespace Mle.MusicPimp.Network {
         }
 
         private void OnTimeUpdated(double newTime) {
-            if (TimeUpdated != null) {
+            if(TimeUpdated != null) {
                 TimeUpdated(newTime);
             }
         }
         private void OnPlayStateChanged(PlayerState state) {
-            if (PlayStateChanged != null) {
+            if(PlayStateChanged != null) {
                 PlayStateChanged(state);
             }
         }
         private void OnTrackChanged(MusicItem track) {
-            if (TrackChanged != null) {
+            if(TrackChanged != null) {
                 TrackChanged(track);
             }
         }
         private void OnVolumeChanged(int newVolume) {
-            if (VolumeChanged != null) {
+            if(VolumeChanged != null) {
                 VolumeChanged(newVolume);
             }
         }
         private void OnMuteToggled(bool isMute) {
-            if (MuteToggled != null) {
+            if(MuteToggled != null) {
                 MuteToggled(isMute);
             }
         }
         private void OnPlaylistModified(IEnumerable<MusicItem> playlist) {
-            if (PlaylistModified != null) {
+            if(PlaylistModified != null) {
                 PlaylistModified(playlist);
             }
         }
         private void OnPlaylistIndexChanged(int index) {
-            if (PlaylistIndexChanged != null) {
+            if(PlaylistIndexChanged != null) {
                 PlaylistIndexChanged(index);
             }
         }
         private void OnStatusUpdateReceived(PlaybackStatus status) {
-            if (StatusUpdateReceived != null) {
+            if(StatusUpdateReceived != null) {
                 StatusUpdateReceived(status);
             }
         }
         private void OnShortStatusUpdateReceived(ShortStatusJsonEvent status) {
-            if (ShortStatusUpdateReceived != null) {
+            if(ShortStatusUpdateReceived != null) {
                 ShortStatusUpdateReceived(status);
             }
         }
         private void OnWelcomed() {
-            if (Welcomed != null) {
+            if(Welcomed != null) {
                 Welcomed();
             }
         }
         private void OnDisconnected(string user) {
-            if (Disconnected != null) {
+            if(Disconnected != null) {
                 Disconnected(user);
             }
         }

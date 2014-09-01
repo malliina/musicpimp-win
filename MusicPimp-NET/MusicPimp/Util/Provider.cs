@@ -53,6 +53,7 @@ namespace Mle.MusicPimp.Util {
         public AbstractOAuthBase NewOAuthBase() {
             return impl.NewOAuthBase();
         }
+        public IDownloader Downloader { get { return impl.Downloader; } }
     }
     public interface Provider {
         MusicItemsBase MusicItemsBase { get; }
@@ -64,8 +65,8 @@ namespace Mle.MusicPimp.Util {
         LocalMusicLibrary LocalLibrary { get; }
         ISettingsManager SettingsManager { get; }
         IPathHelper PathHelper { get; }
-        //FileUtilsBase FileUtils { get; }
         IIapUtils IapHelper { get; }
+        IDownloader Downloader { get; }
         MusicLibrary NewPimpLibrary(MusicEndpoint e);
         BasePlayer NewBeamPlayer(PimpSession session, PimpWebSocket socket);
         PimpSession NewPimpSession(MusicEndpoint e);

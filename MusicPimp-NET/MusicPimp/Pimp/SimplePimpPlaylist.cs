@@ -32,7 +32,7 @@ namespace Mle.MusicPimp.Pimp {
         }
         public override async Task LoadData() {
             var status = await session.StatusCall();
-            var items = status.playlist.Select(AudioConversions.PimpTrackToMusicItem).ToList();
+            var items = status.playlist.Select(item => AudioConversions.PimpTrackToMusicItem(item, null)).ToList();
             Sync(items, status.index);
         }
     }

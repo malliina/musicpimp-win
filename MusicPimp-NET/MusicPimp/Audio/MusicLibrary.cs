@@ -22,7 +22,7 @@ namespace Mle.MusicPimp.Audio {
         public virtual string RootEmptyMessage { get; protected set; }
         public abstract Task Ping();
         protected abstract Task<IEnumerable<MusicItem>> LoadFolderAsync(string id);
-        public abstract Task<IEnumerable<DataTrack>> Search(string term);
+        public abstract Task<IEnumerable<MusicItem>> Search(string term);
         public abstract Task Upload(MusicItem song, string resource, PimpSession destSession);
         public MusicLibrary() {
             Folders = new Dictionary<string, IEnumerable<MusicItem>>();

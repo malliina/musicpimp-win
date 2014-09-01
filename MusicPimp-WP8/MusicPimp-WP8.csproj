@@ -91,6 +91,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MusicPimp\Util\AppBarHelper.cs" />
     <Compile Include="MusicPimp\Util\PimpMessageHandler.cs" />
     <Compile Include="MusicPimp\ViewModels\PhoneIAP.cs" />
     <Compile Include="MusicPimp\Xaml\AlarmClock.xaml.cs">
