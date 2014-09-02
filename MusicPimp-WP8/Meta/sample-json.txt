@@ -4,6 +4,60 @@
 
 Subsonic:
 
+No hits:
+
+{"subsonic-response": {
+ "status": "ok",
+ "searchResult2": "",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.9.0"
+}}
+
+Hits:
+
+{"subsonic-response": {
+ "status": "ok",
+ "searchResult2": {
+  "song": [
+   {
+    "genre": "Other",
+    "albumId": 503,
+    "album": "1980 - Iron Maiden",
+    "parent": 5781,
+    "contentType": "audio/mpeg",
+    "isDir": false,
+    "type": "music",
+    "suffix": "mp3",
+    "isVideo": false,
+    "size": 4197386,
+    "id": 5836,
+    "title": "09 - Iron Maiden",
+    "duration": 262,
+    "artistId": 226,
+    "created": "2012-05-13T15:17:59",
+    "path": "Iron Maiden/1980 - Iron Maiden/Iron Maiden - 09 - Iron Maiden.mp3",
+    "artist": "Iron Maiden",
+    "bitRate": 128
+   },
+   ...
+  ],
+  "album": [
+   {
+    "id": 201,
+    "title": "Iron Maiden",
+    "created": "2013-02-07T18:07:31",
+    "album": "Iron Maiden",
+    "isDir": true,
+    "artist": "Iron Maiden"
+   },
+   ...
+  ]
+ },
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.9.0"
+}}
+
+
 {"subsonic-response": {
  "error": {
   "message": "The trial period for the Subsonic server is over. Please donate to get a license key. Visit subsonic.org for details.",

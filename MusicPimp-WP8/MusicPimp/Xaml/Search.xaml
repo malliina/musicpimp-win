@@ -95,7 +95,7 @@
             <toolkit:PhoneTextBox x:Name="searchTextBox" 
                                   Text="{Binding Term, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                                   TextChanged="OnTermChanged"
-                                  Hint="track, artist or album..."/>
+                                  Hint="track or artist..."/>
             <ctrl:LabeledProgressBar Grid.Row="1"
                                      Label="Searching..."
                                     Visibility="{Binding IsLoading,Converter={StaticResource booleanConverter}}"/>

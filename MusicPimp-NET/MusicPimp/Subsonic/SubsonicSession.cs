@@ -18,7 +18,6 @@ namespace Mle.MusicPimp.Subsonic {
         public virtual Task<string> ApiCall(Uri uri) {
             return Client.GetString(uri);
         }
-
         public override async Task TestConnectivity() {
             var response = await WebTask<SubsonicResponse>(pingAsync(), timeout: TimeSpan.FromMilliseconds(5000));
             if(response.status == "ok") {
@@ -27,7 +26,6 @@ namespace Mle.MusicPimp.Subsonic {
                 throw new ServerResponseException("The server returned the following error: " + response.error.message + ".");
             }
         }
-
         public Task<SubsonicResponse> pingAsync() {
             return jsonCallAsync<SubsonicResponse, SubsonicResponseContainer>("ping");
         }
@@ -68,6 +66,9 @@ namespace Mle.MusicPimp.Subsonic {
         }
         public Task<JukeboxStatusResponse> serverStatus() {
             return jsonCallAsync<JukeboxStatusResponse, JukeboxStatusContainer>("jukeboxControl", "&action=status");
+        }
+        public Task<SearchResponse> Search(string term, int limit) {
+            return jsonCallAsync<SearchResponse, SearchContainer>("search2", "&query=" + term + "&songCount=" + limit + "&artistCount=0&albumCount=0");
         }
         public Task<string> serverSetVolumeAsync(double newVolume) {
             var formattedVolume = newVolume.ToString().Replace(',', '.');

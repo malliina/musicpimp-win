@@ -3,9 +3,11 @@ using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using Mle.Util;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Mle.MusicPimp.Network {
     /// <summary>
@@ -43,13 +45,14 @@ namespace Mle.MusicPimp.Network {
             headers.Accept.ParseAdd(mediaType);
             return client;
         }
-        
+
         protected virtual AuthenticationHeaderValue AuthorizationHeader(string username, string password) {
             return HttpUtil.BasicAuthHeaderValue(username, password);
         }
         protected Uri ToUri(string uriString) {
             return new Uri(uriString, UriKind.Absolute);
         }
+
         public void Dispose() {
             Utils.Suppress<Exception>(Client.Dispose);
             Utils.Suppress<Exception>(LongTimeoutClient.Dispose);

@@ -4,12 +4,12 @@ using Mle.Collections;
 using Mle.Concurrent;
 using Mle.Exceptions;
 using Mle.MusicPimp.Subsonic;
-using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using Newtonsoft.Json;
 using RestSharp.Contrib;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -31,6 +31,15 @@ namespace tests {
         [TestMethod]
         public void EqualsTest() {
             Assert.IsTrue("a".Equals("a"));
+        }
+        [TestMethod]
+        public void SortTest() {
+            var obs = new ObservableCollection<int>() { 3, 1, 2 };
+            var obs2 = obs.OrderBy(SortKey);
+            Assert.AreEqual(obs.Head(), obs2.Head());
+        }
+        private int SortKey(int item) {
+            return item;
         }
         [TestMethod]
         public void Substrings() {

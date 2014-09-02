@@ -14,19 +14,13 @@ namespace Mle.MusicPimp.Subsonic {
         [JsonProperty(PropertyName = "subsonic-response")]
         public T subsonicResponse { get; set; }
     }
-    public class SubsonicResponseContainer : ISubsonicResponseContainer<SubsonicResponse> {
-
-    }
-    public class SubsonicIndexesContainer : ISubsonicResponseContainer<IndexesResponse> {
-    }
-    public class SubsonicDirectoryContainer : ISubsonicResponseContainer<DirectoryResponse> {
-    }
-    public class JukeboxControlContainer : ISubsonicResponseContainer<JukeboxPlaylistResponse> {
-    }
-    public class JukeboxStatusContainer : ISubsonicResponseContainer<JukeboxStatusResponse> {
-    }
-    public class GenericSubsonicContainer<T> : ISubsonicResponseContainer<T> where T : SubsonicResponse {
-    }
+    public class SubsonicResponseContainer : ISubsonicResponseContainer<SubsonicResponse> { }
+    public class SubsonicIndexesContainer : ISubsonicResponseContainer<IndexesResponse> { }
+    public class SubsonicDirectoryContainer : ISubsonicResponseContainer<DirectoryResponse> { }
+    public class JukeboxControlContainer : ISubsonicResponseContainer<JukeboxPlaylistResponse> { }
+    public class JukeboxStatusContainer : ISubsonicResponseContainer<JukeboxStatusResponse> { }
+    public class SearchContainer : ISubsonicResponseContainer<SearchResponse> { }
+    public class GenericSubsonicContainer<T> : ISubsonicResponseContainer<T> where T : SubsonicResponse { }
     public class Error {
         public string message { get; set; }
         public int code { get; set; }
@@ -40,6 +34,13 @@ namespace Mle.MusicPimp.Subsonic {
         public override string ToString() {
             return "status: " + status + ", version: " + version + ", xmlns: " + xmlns;
         }
+    }
+    public class SearchResponse : SubsonicResponse {
+        public SearchResult searchResult2 { get; set; }
+    }
+    public class SearchResult {
+        [JsonConverter(typeof(ListOrNoListJsonConverter<Entry>))]
+        public List<Entry> song { get; set; }
     }
 
     public class IndexesResponse : SubsonicResponse {
@@ -120,13 +121,16 @@ namespace Mle.MusicPimp.Subsonic {
     }
     public class ListOrNoListJsonConverter<T> : CustomJsonConverterBase<List<T>> {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-            if (reader.TokenType == JsonToken.StartArray) {
+            if(reader.TokenType == JsonToken.StartArray) {
                 // Json contains an array of entries ...
                 return serializer.Deserialize<List<T>>(reader);
+            } else if(reader.TokenType == JsonToken.String && reader.Value == String.Empty) {
+                return new List<T>();
+            } else {
+                // ... or just a single entry (no array)
+                T item = serializer.Deserialize<T>(reader);
+                return new List<T>(new[] { item });
             }
-            // ... or just a single entry (no array)
-            T item = serializer.Deserialize<T>(reader);
-            return new List<T>(new[] { item });
         }
     }
     public abstract class CustomJsonConverterBase<T> : JsonConverter {

@@ -1,8 +1,6 @@
 ﻿using Mle.MusicPimp.Audio;
-using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Util;
 using Mle.ViewModels;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -42,11 +40,16 @@ namespace Mle.MusicPimp.ViewModels {
         public async Task Search() {
             SearchResults.Clear();
             Debug.WriteLine("Searching: " + Term);
+            // Search cancellation is not directly supported. Instead, when a search is complete, before updating the search results we ensure that the search 
+            // term has not changed. If the search term has changed meanwhile, it means we've received out-of-date data, in which case it is ignored.
+            var searchTerm = Term;
             var results = await WebAwareT(async () => {
                 return await MusicProvider.Search(Term);
             });
-            foreach(var result in results) {
-                SearchResults.Add(result);
+            if(searchTerm == Term) {
+                foreach(var result in results) {
+                    SearchResults.Add(result);
+                }
             }
         }
     }

@@ -6,7 +6,6 @@ using Mle.MusicPimp.ViewModels;
 using Mle.Util;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Mle.MusicPimp.Audio {
@@ -19,6 +18,15 @@ namespace Mle.MusicPimp.Audio {
             var t = Utils.SuppressAsync<Exception>(Ping);
         }
         public override async Task<IEnumerable<MusicItem>> Search(string term) {
+            var result = await session.Search(term, maxSearchResults);
+            // searchResult2 is occasionally null - no idea why
+            var items = result.searchResult2;
+            if(items != null) {
+                var songs = items.song;
+                if(songs != null) {
+                    return EntriesToMusicItem(songs);
+                }
+            }
             return new List<MusicItem>();
         }
         /// <summary>
@@ -119,6 +127,11 @@ namespace Mle.MusicPimp.Audio {
                 }
                 dest.Add(AudioConversions.EntryToMusicItem(item, uri));
             }
+        }
+        private IEnumerable<MusicItem> EntriesToMusicItem(List<Entry> entries) {
+            var ret = new List<MusicItem>();
+            AddAll(entries, ret);
+            return ret;
         }
     }
 
