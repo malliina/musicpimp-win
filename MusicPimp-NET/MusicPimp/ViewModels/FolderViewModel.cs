@@ -38,8 +38,11 @@ namespace Mle.MusicPimp.ViewModels {
         }
 
         private void MusicProvider_NewItemsLoaded(IEnumerable<MusicItem> newItems) {
-            if(newItems.Count() > 0) {
-                UpdateMusicItemsViews();
+            var newItemsCount = newItems.Count();
+            var hasNew = newItemsCount > 0;
+            var shouldSort = hasNew && MusicItems.Count > newItemsCount;
+            if(hasNew) {
+                UpdateMusicItemsViews(shouldSort);
             }
         }
         private string DetermineFeedbackMessage() {

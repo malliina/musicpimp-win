@@ -16,7 +16,6 @@ namespace Mle.MusicPimp.Audio {
         /// Triggers when folder from a sub-library (or the whole library) have been loaded. UIs may wish to update themselves at this point.
         /// </summary>
         public event Action<IEnumerable<MusicItem>> NewItemsLoaded;
-        public event Action<IEnumerable<MusicItem>> SortRequired;
         public Dictionary<string, IEnumerable<MusicItem>> Folders { get; private set; }
         public string RootFolderKey { get; protected set; }
         public virtual string RootEmptyMessage { get; protected set; }
@@ -90,7 +89,7 @@ namespace Mle.MusicPimp.Audio {
             } else {
                 await LoadFolderAsync2(folderId, to);
                 // saves to cache
-                Folders[folderId] = to;
+                Folders[folderId] = to.OrderBy(MusicItemFolder.SortKey);
             }
         }
         /// <summary>
@@ -100,27 +99,15 @@ namespace Mle.MusicPimp.Audio {
         /// <param name="to"></param>
         protected void AddDistinct(IEnumerable<MusicItem> from, ObservableCollection<MusicItem> to) {
             var comparer = new MusicItemComparer();
-            var shouldSort = to.Count() > 0 && from.Count() > 0;
             // 'newItems' contains the 'from' items which are not already in 'to'.
             // This is algorithmically expensive. Should be fine with <1000 items though.
             var newItems = from.Where(item => !to.Any(toItem => comparer.Equals(item, toItem))).ToList();
             foreach(var newItem in newItems) {
                 to.Add(newItem);
             }
-            if(shouldSort) {
-                OnSortRequired(to);
-            }
             OnNewItemsLoaded(newItems);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns>a sort key where directories are first, then based on name</returns>
-        private string SortKey(MusicItem item) {
-            string prefix = item.IsDir ? "a" : "b";
-            return prefix + item.Name;
-        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -148,11 +135,6 @@ namespace Mle.MusicPimp.Audio {
         protected void OnNewItemsLoaded(IEnumerable<MusicItem> items) {
             if(NewItemsLoaded != null) {
                 NewItemsLoaded(items);
-            }
-        }
-        protected void OnSortRequired(IEnumerable<MusicItem> items) {
-            if(SortRequired != null) {
-                SortRequired(items);
             }
         }
     }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Mle.MusicPimp.ViewModels {
@@ -39,7 +40,7 @@ namespace Mle.MusicPimp.ViewModels {
         }
         public object Items {
             get {
-                if (ShouldGroup) {
+                if(ShouldGroup) {
                     return groupedMusicItems;
                 } else {
                     return MusicItems;
@@ -80,7 +81,7 @@ namespace Mle.MusicPimp.ViewModels {
             return MusicItems.FirstOrDefault(i => i.Path == relativePath);
         }
         private void initGroupedItems() {
-            if (ShouldGroup) {
+            if(ShouldGroup) {
                 GroupedMusicItems = AlphaKeyGroup<MusicItem>.CreateGroups(
                     MusicItems,
                     GroupKeyOf);
@@ -89,9 +90,9 @@ namespace Mle.MusicPimp.ViewModels {
             }
         }
         private string GroupKeyOf(MusicItem item) {
-            if (item.IsDir) {
+            if(item.IsDir) {
                 var lowerCase = item.Name.ToLowerInvariant();
-                if (char.IsDigit(lowerCase, index: 0)) {
+                if(char.IsDigit(lowerCase, index: 0)) {
                     return Grouping.DigitGroupHeader;
                 } else {
                     return lowerCase.ToCharArray()[0].ToString();
@@ -100,10 +101,15 @@ namespace Mle.MusicPimp.ViewModels {
                 return Grouping.SongGroupHeader;
             }
         }
-        protected void UpdateMusicItemsViews() {
+        protected void UpdateMusicItemsViews(bool sortRequired = false) {
             OnPropertyChanged("IsEmptyAndLoading");
             OnPropertyChanged("ShowHelp");
-            UpdateMusicItemsList();
+            if(sortRequired) {
+                MusicItems = new ObservableCollection<MusicItem>(MusicItems.OrderBy(SortKey));
+                //Debug.WriteLine("Items: " + MusicItems.Count);
+            } else {
+                UpdateMusicItemsList();
+            }
         }
         protected void UpdateMusicItemsList() {
             OnPropertyChanged("ShouldGroup");
@@ -111,6 +117,15 @@ namespace Mle.MusicPimp.ViewModels {
             OnPropertyChanged("ShowFlat");
             initGroupedItems();
             OnPropertyChanged("Items");
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>a sort key where directories are first, then based on name</returns>
+        public static string SortKey(MusicItem item) {
+            string prefix = item.IsDir ? "a" : "b";
+            return prefix + item.Name;
         }
         protected override void OnIsLoadingChanged(bool loading) {
             UpdateMusicItemsViews();
