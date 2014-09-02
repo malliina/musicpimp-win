@@ -16,6 +16,7 @@ namespace Mle.MusicPimp.Audio {
         /// Triggers when folder from a sub-library (or the whole library) have been loaded. UIs may wish to update themselves at this point.
         /// </summary>
         public event Action<IEnumerable<MusicItem>> NewItemsLoaded;
+        public event Action<IEnumerable<MusicItem>> SortRequired;
         public Dictionary<string, IEnumerable<MusicItem>> Folders { get; private set; }
         public string RootFolderKey { get; protected set; }
         public virtual string RootEmptyMessage { get; protected set; }
@@ -107,7 +108,7 @@ namespace Mle.MusicPimp.Audio {
                 to.Add(newItem);
             }
             if(shouldSort) {
-                to.OrderBy(SortKey).ToList();
+                OnSortRequired(to);
             }
             OnNewItemsLoaded(newItems);
         }
@@ -147,6 +148,11 @@ namespace Mle.MusicPimp.Audio {
         protected void OnNewItemsLoaded(IEnumerable<MusicItem> items) {
             if(NewItemsLoaded != null) {
                 NewItemsLoaded(items);
+            }
+        }
+        protected void OnSortRequired(IEnumerable<MusicItem> items) {
+            if(SortRequired != null) {
+                SortRequired(items);
             }
         }
     }
