@@ -46,7 +46,7 @@
                         </Grid.RowDefinitions>
                         <Image Source="/Assets/Tiles/guitar-159x159.png"/>
                         <TextBlock Grid.Column="1" 
-                                   Text="MusicPimp 2.4.9"
+                                   Text="MusicPimp 2.5.0"
                                    Margin="12,12"
                                    Style="{StaticResource PhoneTextExtraLargeStyle}"/>
                     </Grid>

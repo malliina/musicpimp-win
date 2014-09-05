@@ -90,6 +90,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <toolkit:PhoneTextBox x:Name="searchTextBox" 
@@ -98,8 +99,13 @@
                                   Hint="track or artist..."/>
             <ctrl:LabeledProgressBar Grid.Row="1"
                                      Label="Searching..."
-                                    Visibility="{Binding IsLoading,Converter={StaticResource booleanConverter}}"/>
-            <toolkit:LongListMultiSelector Grid.Row="2"
+                                     Visibility="{Binding IsLoading,Converter={StaticResource booleanConverter}}"/>
+            <TextBlock Grid.Row="2"
+                        Text="{Binding FeedbackMessage}" 
+                        TextWrapping="Wrap"
+                        Style="{StaticResource PhoneTextLargeStyle}"
+                        Visibility="{Binding ShowFeedback,Converter={StaticResource booleanVisibility}}"/>
+            <toolkit:LongListMultiSelector Grid.Row="3"
                             x:Name="MusicItemLongListSelector"
                             Margin="0,12,-12,0"
                             LayoutMode="List"

@@ -22,6 +22,12 @@ namespace Mle.ViewModels {
                 feedback => FeedbackMessage = feedback,
                 async () => { await code(); return 42; });
         }
+        /// <summary>
+        /// Runs the given code, handling any exceptions. Does not throw.
+        /// </summary>
+        /// <typeparam name="T">result of code</typeparam>
+        /// <param name="code">computation to execute</param>
+        /// <returns>T on success, default(T) if the task fails</returns>
         protected async Task<T> WebAwareT<T>(Func<Task<T>> code) {
             return await WebAware(
                 async progressState => await OnUiThread(() => IsLoading = progressState),

@@ -121,7 +121,7 @@ namespace Mle.MusicPimp.ViewModels {
                 } else {
                     Version version;
                     Version.TryParse(serverVersionStr, out version);
-                    if(version < PimpSessionBase.MinimumServerVersion) {
+                    if(version < PimpSessionBase.SearchSupportingVersion) {
                         return true;
                     }
                 }
