@@ -3,6 +3,7 @@ namespace Mle.MusicPimp.Messaging {
     public class PageNames {
         public static readonly string
              LIBRARY = "library",
+             PLAYER="player",
              IAP = "iap",
              ALARMS = "alarms",
              ALARM_EDIT = "alarm_edit";

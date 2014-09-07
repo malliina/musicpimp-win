@@ -8,14 +8,14 @@ using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 
 namespace Mle {
-    public class NavigationHandler : INavigationHandler {
+    public abstract class NavigationHandler : INavigationHandler {
         private readonly Frame frame;
         protected Dictionary<string, Type> pageIdResolver;
 
         public NavigationHandler(Frame frame) {
             this.frame = frame;
             pageIdResolver = new Dictionary<string, Type>();
-            pageIdResolver.Add(PageNames.LIBRARY, typeof(MusicItems));
+            //pageIdResolver.Add(PageNames.LIBRARY, typeof(MusicItems));
             pageIdResolver.Add(PageNames.IAP, typeof(IapPage));
         }
 

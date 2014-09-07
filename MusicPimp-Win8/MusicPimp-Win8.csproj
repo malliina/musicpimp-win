@@ -139,9 +139,19 @@
     <Compile Include="BlankPageDoNotDelete.xaml.cs">
       <DependentUpon>BlankPageDoNotDelete.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MusicPimp\NavigationHandler8.cs" />
     <Compile Include="MusicPimp\Util\Initializer.cs" />
     <Compile Include="MusicPimp\Xaml\BlankPage1.xaml.cs">
       <DependentUpon>BlankPage1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\MusicItems.xaml.cs">
+      <DependentUpon>MusicItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Player.xaml.cs">
+      <DependentUpon>Player.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\RootPage.xaml.cs">
+      <DependentUpon>RootPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -237,6 +247,18 @@
     <Page Include="MusicPimp\Xaml\BlankPage1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\MusicItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Player.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\RootPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup />

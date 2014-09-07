@@ -14,7 +14,7 @@ namespace Mle.MusicPimp.Xaml {
     /// <summary>
     /// A root page that hosts other pages. This way the top appbar code is shared between all hosted pages.
     /// </summary>
-    public sealed partial class RootPage81 : Page {
+    public sealed partial class RootPage : Page {
         private static Type GetStartPage() {
             var pageEnum = StartSettings.Instance.StartPage;
             switch (pageEnum) {
@@ -30,10 +30,10 @@ namespace Mle.MusicPimp.Xaml {
         }
         private Type firstPage = GetStartPage();
 
-        public RootPage81() {
+        public RootPage() {
             this.InitializeComponent();
             DataContext = RootPageViewModel.Instance;
-            PageNavigationService.Instance.Register(new NavigationHandler(ContentFrame));
+            PageNavigationService.Instance.Register(new NavigationHandler81(ContentFrame));
             Loaded += async (s, e) => await LifeCycleManager.InitOnLoaded();
         }
 

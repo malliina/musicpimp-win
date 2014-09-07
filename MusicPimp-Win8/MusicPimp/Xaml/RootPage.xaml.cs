@@ -33,7 +33,7 @@ namespace Mle.MusicPimp.Xaml {
         public RootPage() {
             this.InitializeComponent();
             DataContext = RootPageViewModel.Instance;
-            PageNavigationService.Instance.Register(new NavigationHandler(ContentFrame));
+            PageNavigationService.Instance.Register(new NavigationHandler8(ContentFrame));
             Loaded += async (s, e) => await LifeCycleManager.InitOnLoaded();
         }
 

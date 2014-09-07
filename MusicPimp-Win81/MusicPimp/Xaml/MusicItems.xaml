@@ -1,0 +1,298 @@
+﻿<local:BasePage
+    x:Name="pageRoot"
+    x:Class="Mle.MusicPimp.Xaml.MusicItems"
+    DataContext="{Binding Model, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Mle.MusicPimp.Xaml"
+    xmlns:common="using:Mle.Common"
+    xmlns:ctrl="using:Mle.Xaml.Controls"
+    xmlns:rtxaml="using:WinRTXamlToolkit.Converters"
+    xmlns:rtext="using:WinRTXamlToolkit.Controls.Extensions"
+    xmlns:effects="using:Callisto.Effects"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{StaticResource AppBackgroundBrush}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <common:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+            <rtxaml:BooleanToVisibilityConverter IsInversed="True" x:Key="invertedBooleanVisibility"/>
+            <!-- Collection of items displayed by this page -->
+            <DataTemplate x:Key="MusicItemTemplate">
+                <ctrl:TapCommandControl TapCommand="{Binding DataContext.HandleMusicItemTap,ElementName=pageRoot}"
+                                    TapCommandParameter="{Binding}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="76"/>
+                            <ColumnDefinition Width="180"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="76"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Image Margin="20,20,20,20" Grid.Column="0" 
+                               Source="ms-appx:///MusicPimpLibrary/Assets/folder-open-ffcc66-48.png"
+                               Visibility="{Binding IsDir,Converter={StaticResource booleanVisibility}}"/>
+                        <Image Margin="20,20,20,20" Grid.Column="0" 
+                               Source="ms-appx:///MusicPimpLibrary/Assets/play-green-48.png"
+                               Visibility="{Binding IsDir,Converter={StaticResource invertedBooleanVisibility}}"/>
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Name}"
+                                   Style="{StaticResource ItemTextStyle}"
+                                   FontSize="20"/>
+                        <ProgressBar Grid.Row="1" Grid.Column="1"
+                                 Visibility="{Binding IsDownloading,Converter={StaticResource booleanVisibility}}"
+                                 Value="{Binding BytesReceived}"
+                                 Maximum="{Binding Size}"/>
+                    </Grid>
+                </ctrl:TapCommandControl>
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/CustomStyles.xaml"/>
+                <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightAppBarButtons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid Style="{StaticResource PimpLayoutRootStyle2}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Notifications, normally hidden -->
+        <StackPanel Grid.Row="1"
+                    Visibility="{Binding MusicFolder.IsLoading,Converter={StaticResource booleanVisibility}}">
+            <ProgressBar IsIndeterminate="True"/>
+            <TextBlock HorizontalAlignment="Center" 
+                       Text="Loading..."
+                       Style="{StaticResource SubheaderTextStyle}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Visibility="{Binding MusicFolder.ShowFeedback,Converter={StaticResource booleanVisibility}}">
+            <TextBlock x:Name="helpText" 
+                       Text="{Binding MusicFolder.FeedbackMessage}"
+                       TextWrapping="Wrap"
+                       Margin="116,0,116,46"
+                       Style="{StaticResource SubheaderTextStyle}"/>
+            <!--Margin="116,46,116,46"-->
+            <Grid Visibility="{Binding MusicFolder.ShowHelp,Converter={StaticResource booleanVisibility}}"
+                  Margin="0,46,0,46"
+                  Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <GridView x:Name="helpGridView" Margin="116,0,116,0"
+                    AutomationProperties.AutomationId="HelpGridView"
+                    AutomationProperties.Name="HelpItems"
+                    TabIndex="1"
+                    ItemsSource="{Binding Help.HelpItems}"
+                    ItemTemplate="{StaticResource MyStandard500x130ItemTemplate}"
+                    IsSwipeEnabled="false"
+                    IsItemClickEnabled="True"
+                    ItemClick="HelpItemClicked">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapGrid Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromVerticalOffset="200" />
+                        </TransitionCollection>
+                    </GridView.ItemContainerTransitions>
+                </GridView>
+            </Grid>
+
+        </StackPanel>
+        <!-- Horizontal scrolling grid used in most view states -->
+        <!-- Padding="116,136,116,46" -->
+        <!--SelectionChanged="itemGridView_SelectionChanged"-->
+        <GridView x:Name="itemGridView"
+            Grid.Row="2"
+            AutomationProperties.AutomationId="ItemsGridView"
+            AutomationProperties.Name="Items"
+            TabIndex="1"
+            Padding="116,0,116,46"
+            ItemsSource="{Binding MusicFolder.MusicItems}"
+            ItemTemplate="{StaticResource MusicItemTemplate}"
+            SelectionMode="Multiple"
+            Tapped="OnGridTapped"
+            IsSwipeEnabled="false"
+            rtext:GridViewExtensions.BindableSelection="{Binding Selected,Mode=TwoWay}">
+            <GridView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromHorizontalOffset="400"
+                                             IsStaggeringEnabled="False"/>
+
+                    <RepositionThemeTransition/>
+
+                </TransitionCollection>
+            </GridView.ItemContainerTransitions>
+        </GridView>
+        <!-- Vertical scrolling list only used when snapped -->
+        <ListView x:Name="itemListView"
+            AutomationProperties.AutomationId="ItemsListView"
+            AutomationProperties.Name="Items"
+            TabIndex="1"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Visibility="Collapsed"
+            Margin="0,-10,0,0"
+            Padding="10,0,0,60"
+            ItemsSource="{Binding MusicFolder.MusicItems}"
+            ItemTemplate="{StaticResource MusicItemTemplate}"
+            SelectionMode="Single"
+            Tapped="OnListTapped"
+            IsSwipeEnabled="false"
+            rtext:ListViewExtensions.BindableSelection="{Binding Selected,Mode=TwoWay}"/>
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <!--<ColumnDefinition Width="Auto"/>-->
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" 
+                    Click="GoBack" 
+                    IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" 
+                    Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" 
+                       Grid.Column="1" 
+                       Text="Music" 
+                       IsHitTestVisible="false" 
+                       Style="{StaticResource PageHeaderTextStyle}"/>
+            <TextBlock Grid.Column="2" 
+                       Text="{Binding MusicFolder.DisplayablePath}" 
+                       Style="{StaticResource PageSubheaderTextStyle}"
+                       Foreground="{StaticResource HyperlinkForegroundThemeBrush}"/>
+            <!--<SearchBox
+                Grid.Column="3"
+                Height="35" Width="270"  Margin="0,25,25,0" />-->
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape"/>
+                <VisualState x:Name="Filled"/>
+
+                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" 
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                    Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView" 
+                                                       Storyboard.TargetProperty="Padding">
+                            <!--Value="96,136,86,56"-->
+                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                    Value="96,0,86,56"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!--
+                    The back button and title have different styles when snapped, and the list representation is substituted
+                    for the grid displayed in all other view states
+                -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" 
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                    Value="{StaticResource SnappedBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" 
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                    Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                    Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="helpListView" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                    Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>-->
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="helpText" Storyboard.TargetProperty="Margin">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="10,46,10,46"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="helpGridView" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="refreshAndHelpAppBar" 
+                                                       Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+    <Page.BottomAppBar>
+        <!-- Not sure if TwoWay has any meaningful effect here but it is not detrimental to functionality.
+             Don't remove the appbar x:Name. -->
+        <AppBar x:Name="refreshAndHelpAppBar" 
+                Background="{StaticResource AppColor}" Padding="10,0,10,0" 
+                IsSticky="{Binding AppBar.IsAppBarOpen,Mode=TwoWay}"
+                IsOpen="{Binding AppBar.IsAppBarOpen,Mode=TwoWay}">
+            <Grid>
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left"
+                            Visibility="{Binding AppBar.IsSelectionEmpty,Converter={StaticResource invertedBooleanVisibility}}">
+                    <Button Style="{StaticResource PlaySelectedAppBarButtonStyle}"
+                            Command="{Binding PlaySelected}"/>
+                    <Button Style="{StaticResource ToPlaylistAppBarButtonStyle}"
+                            Command="{Binding AddSelected}"/>
+                    <Button Style="{StaticResource DeleteAppBarButtonStyle}"
+                            Command="{Binding DeleteSelected}"
+                            Visibility="{Binding CanDeleteSelection,Converter={StaticResource booleanVisibility}}"/>
+                    <Button Style="{StaticResource DownloadAppBarButtonStyle}"
+                            Command="{Binding DownloadSelected}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Style="{StaticResource SkipBackAppBarButtonStyle}"
+                            Command="{Binding MusicPlayer.SkipPrevious}"
+                            IsEnabled="{Binding MusicPlayer.IsSkipAndSeekSupported}"/>
+                    <Button Style="{Binding NowPlaying.PlayPauseButtonStyle}"
+                            Command="{Binding MusicPlayer.PlayOrPause}"/>
+                    <Button Style="{StaticResource SkipAheadAppBarButtonStyle}"
+                            Command="{Binding MusicPlayer.SkipNext}"
+                            IsEnabled="{Binding MusicPlayer.IsSkipAndSeekSupported}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource RefreshAppBarButtonStyle}" 
+                            Command="{Binding Refresh}"/>
+                    <Button Style="{StaticResource HelpAppBarButtonStyle}" 
+                            Command="{Binding DisplayHelp}"
+                            Visibility="{Binding MusicFolder.ShowHelp,Converter={StaticResource booleanVisibility}}"/>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+</local:BasePage>

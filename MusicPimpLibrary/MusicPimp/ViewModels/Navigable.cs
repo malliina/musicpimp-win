@@ -6,6 +6,7 @@ using Mle.Xaml;
 using Mle.Xaml.Commands;
 using System.Windows.Input;
 using Mle.Collections;
+using Mle.MusicPimp.Messaging;
 
 namespace Mle.MusicPimp.ViewModels {
     public class Navigable : ViewModelBase {
@@ -30,17 +31,17 @@ namespace Mle.MusicPimp.ViewModels {
         public Navigable() {
             string assetHome = "ms-appx:///MusicPimpLibrary/Assets/";
             HomeItem = new TitledImageItem(assetHome + "home-brown-48.png", "Home", "Go home", onClicked: GoTo<SplashPage>);
-            FolderItem = new TitledImageItem(assetHome + "folder-open-foldercolor-1024.png", "Music", "Browse the library", onClicked: GoTo<MusicItems>);
-            SmallFolderItem = new TitledImageItem(assetHome + "folder-open-ffcc66-48.png", "Music", "Browse the library", onClicked: GoTo<MusicItems>);
-            PlayerItem = new TitledImageItem(assetHome + "music-green-128.png", "Player & playlist", "Control playback", onClicked: GoTo<Player>);
-            SmallPlayerItem = new TitledImageItem(assetHome + "music-green-48.png", "Player & playlist", "Control playback", onClicked: GoTo<Player>);
+            FolderItem = new TitledImageItem(assetHome + "folder-open-foldercolor-1024.png", "Music", "Browse the library", onClicked: () => GoToNamed(PageNames.LIBRARY));
+            SmallFolderItem = new TitledImageItem(assetHome + "folder-open-ffcc66-48.png", "Music", "Browse the library", onClicked: () => GoToNamed(PageNames.LIBRARY));
+            PlayerItem = new TitledImageItem(assetHome + "music-green-128.png", "Player & playlist", "Control playback", onClicked: () => GoToNamed(PageNames.PLAYER));
+            SmallPlayerItem = new TitledImageItem(assetHome + "music-green-48.png", "Player & playlist", "Control playback", onClicked: () => GoToNamed(PageNames.PLAYER));
             SettingsItem = new TitledImageItem(assetHome + "wrench-gray-1024.png", "Settings", "Manage libraries and playback", onClicked: OpenSettings);
             DownloadsItem = new TitledImageItem(assetHome + "download-alt-lightgreen-128.png", "Downloads", "In the background", onClicked: GoTo<Downloads>);
             BeamItem = new TitledImageItem(assetHome + "upload-alt-blue-128.png", "MusicBeamer", "Stream music to another PC", onClicked: GoTo<BarcodePage>);
             TestItem = new TitledImageItem(assetHome + "play-green.png", "Test", "Run a test", onClicked: Test);
 
-            GoToLibrary = CommandTo<MusicItems>();
-            GoToPlayer = CommandTo<Player>();
+            GoToLibrary = CommandToNamed(PageNames.LIBRARY);
+            GoToPlayer = CommandToNamed(PageNames.PLAYER);
             GoToDownloads = CommandTo<Downloads>();
             GoToSplash = CommandTo<SplashPage>();
             GoToBeam = CommandTo<BarcodePage>();
@@ -62,9 +63,15 @@ namespace Mle.MusicPimp.ViewModels {
         private ICommand CommandTo<TPageType>() {
             return new UnitCommand(GoTo<TPageType>);
         }
+        private ICommand CommandToNamed(string pageName) {
+            return new UnitCommand(() => GoToNamed(pageName));
+        }
 
         protected void GoTo<TPageType>() {
             PageNavigationService.Instance.NavigateToPage(typeof(TPageType));
+        }
+        protected void GoToNamed(string pageName) {
+            PageNavigationService.Instance.Navigate(pageName);
         }
     }
 }
