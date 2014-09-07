@@ -10,7 +10,6 @@
                 <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/CustomStyles.xaml"/>
                 <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightAppBarButtons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
             <SolidColorBrush x:Key="AppBackgroundBrush" Color="Black"/>
         </ResourceDictionary>
     </Application.Resources>

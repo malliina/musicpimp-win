@@ -152,11 +152,15 @@
       <DependentUpon>BlankPageDoNotDelete.xaml</DependentUpon>
     </Compile>
     <Compile Include="MusicPimp\Http\HttpTests.cs" />
+    <Compile Include="MusicPimp\NavigationHandler81.cs" />
     <Compile Include="MusicPimp\Tiles\Tiles81.cs" />
     <Compile Include="MusicPimp\Tiles\TilesAndToastsUpdater81.cs" />
     <Compile Include="MusicPimp\Util\Initializer.cs" />
     <Compile Include="MusicPimp\Xaml\BlankPage1.xaml.cs">
       <DependentUpon>BlankPage1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\RootPage81.xaml.cs">
+      <DependentUpon>RootPage81.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -246,6 +250,10 @@
     <Page Include="MusicPimp\Xaml\BlankPage1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\RootPage81.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

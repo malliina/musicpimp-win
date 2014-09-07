@@ -17,7 +17,7 @@ namespace Mle {
     /// </summary>
     sealed partial class App : Application {
         private static readonly string DEFAULT_NAVIGATION_PARAMETER = String.Empty;
-        private static Type startPage = typeof(RootPage);
+        private static Type startPage = typeof(RootPage81);
 
         /// <summary>
         /// Initializes the singleton Application object.  This is the first line of authored code

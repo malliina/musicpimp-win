@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 namespace Mle {
     public class NavigationHandler : INavigationHandler {
         private readonly Frame frame;
-        private Dictionary<string, Type> pageIdResolver;
+        protected Dictionary<string, Type> pageIdResolver;
 
         public NavigationHandler(Frame frame) {
             this.frame = frame;
