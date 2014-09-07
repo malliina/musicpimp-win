@@ -56,6 +56,16 @@ namespace Mle.MusicPimp.ViewModels {
                 }
             }
         }
+        private string username;
+        public string Username {
+            get { return username; }
+            set { this.SetProperty(ref this.username, value); }
+        }
+        private string password;
+        public string Password {
+            get { return password; }
+            set { this.SetProperty(ref this.password, value); }
+        }
         public bool IsSourceLocal {
             get { return Source != null && !HttpUtil.IsHttp(Source); }
         }

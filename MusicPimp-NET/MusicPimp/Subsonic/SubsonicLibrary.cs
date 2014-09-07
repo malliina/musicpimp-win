@@ -125,7 +125,7 @@ namespace Mle.MusicPimp.Audio {
                 if(!item.isDir) {
                     uri = session.StreamUriFor(item.id);
                 }
-                dest.Add(AudioConversions.EntryToMusicItem(item, uri));
+                dest.Add(AudioConversions.EntryToMusicItem(item, uri, session.Username, session.Password));
             }
         }
         private IEnumerable<MusicItem> EntriesToMusicItem(List<Entry> entries) {

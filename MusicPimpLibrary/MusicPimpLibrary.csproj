@@ -244,6 +244,7 @@
     <Compile Include="MusicPimp\Network\DownloadSample.cs" />
     <Compile Include="MusicPimp\Network\PimpStoreDownloader.cs" />
     <Compile Include="MusicPimp\Network\PimpUploadRequest.cs" />
+    <Compile Include="MusicPimp\Network\AppLocalDownloader.cs" />
     <Compile Include="MusicPimp\Pimp\StorePimpLibrary.cs" />
     <Compile Include="MusicPimp\Pimp\StorePimpSession.cs" />
     <Compile Include="MusicPimp\Tiles\StoreCoverService.cs" />

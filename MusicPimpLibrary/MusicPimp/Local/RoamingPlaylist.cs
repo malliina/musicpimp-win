@@ -17,8 +17,7 @@ namespace Mle.MusicPimp.Local {
         }
 
         private Task SubmitDownload(MusicItem track) {
-            var source = StoreLibraryManager.Instance.ActiveEndpoint;
-            return PimpStoreDownloader.Instance.SubmitDownload(track, source.Username, source.Password);
+            return PimpStoreDownloader.Instance.SubmitDownload(track);
         }
 
         protected override async Task SendSkipCommand(int playlistIndex) {

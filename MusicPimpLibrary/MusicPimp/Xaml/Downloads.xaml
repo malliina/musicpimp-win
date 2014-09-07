@@ -25,19 +25,19 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding Download.RequestedUri}" 
-                           TextWrapping="Wrap"
-                           Style="{StaticResource SubheaderTextStyle}"/>
+                               TextWrapping="Wrap"
+                               Style="{StaticResource SubheaderTextStyle}"/>
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
                         <TextBlock Text="{Binding Status}"
-                               Style="{StaticResource ItemTextStyle}"/>
+                                   Style="{StaticResource ItemTextStyle}"/>
                         <TextBlock Text=": "
-                               Style="{StaticResource ItemTextStyle}"/>
+                                   Style="{StaticResource ItemTextStyle}"/>
                         <TextBlock Text="{Binding BytesReceived}" 
-                               Style="{StaticResource ItemTextStyle}"/>
+                                   Style="{StaticResource ItemTextStyle}"/>
                         <TextBlock Text="/"
-                               Style="{StaticResource ItemTextStyle}"/>
+                                   Style="{StaticResource ItemTextStyle}"/>
                         <TextBlock Text="{Binding TotalBytesToReceiveReadable}"
-                               Style="{StaticResource ItemTextStyle}"/>
+                                   Style="{StaticResource ItemTextStyle}"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -99,8 +99,15 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"/>
+            <Button x:Name="backButton" 
+                    Click="GoBack" 
+                    IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" 
+                    Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" 
+                       Grid.Column="1" 
+                       Text="{StaticResource AppName}" 
+                       IsHitTestVisible="false" 
+                       Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

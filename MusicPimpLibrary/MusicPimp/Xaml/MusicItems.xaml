@@ -163,6 +163,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <!--<ColumnDefinition Width="Auto"/>-->
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" 
                     Click="GoBack" 
@@ -177,6 +178,9 @@
                        Text="{Binding MusicFolder.DisplayablePath}" 
                        Style="{StaticResource PageSubheaderTextStyle}"
                        Foreground="{StaticResource HyperlinkForegroundThemeBrush}"/>
+            <!--<SearchBox
+                Grid.Column="3"
+                Height="35" Width="270"  Margin="0,25,25,0" />-->
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

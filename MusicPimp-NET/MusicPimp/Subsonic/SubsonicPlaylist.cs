@@ -14,7 +14,7 @@ namespace Mle.MusicPimp.Audio {
             var songId = int.Parse(song.Id);
             return session.serverAddToPlaylistAsync(songId);
         }
-        protected override  Task RemoveSongInternal(int playlistIndex) {
+        protected override Task RemoveSongInternal(int playlistIndex) {
             return session.serverRemoveFromPlaylistAsync(playlistIndex);
         }
         protected override Task SendSkipCommand(int index) {
@@ -29,11 +29,11 @@ namespace Mle.MusicPimp.Audio {
             var playlistIndex = response.jukeboxPlaylist.currentIndex;
             // entry null => playlist empty
             var entries = response.jukeboxPlaylist.entry;
-            if (entries != null) {
+            if(entries != null) {
                 var index = 0;
                 var items = new List<PlaylistMusicItem>();
-                foreach (var entry in entries) {
-                    MusicItem musicItem = AudioConversions.EntryToMusicItem(entry, session.StreamUriFor(entry.id));
+                foreach(var entry in entries) {
+                    MusicItem musicItem = AudioConversions.EntryToMusicItem(entry, session.StreamUriFor(entry.id), session.Username, session.Password);
                     items.Add(new PlaylistMusicItem(musicItem, index++));
                 }
                 SyncPlaylist(items, playlistIndex);

@@ -12,25 +12,15 @@ namespace Mle.MusicPimp.Network {
         ICommand Download { get; }
         /// <summary>
         /// Submits item for download, whether it's a track or a folder.
+        /// 
+        /// The returned task is complete once the submission is; it does not wait for the download(s) to complete.
+        /// 
+        /// Does not download anything if the items are already locally available.
         /// </summary>
         /// <param name="item">track or folder to download</param>
         /// <returns></returns>
         Task SubmitDownload(MusicItem item);
-
-        /// <summary>
-        /// Submits the track for download as a background task.
-        /// 
-        /// The returned task is complete once the submission is; it does not wait for the download to complete.
-        /// 
-        /// Does not download anything if the track is already locally available.
-        /// </summary>
-        /// <param name="track">track to download</param>
-        /// <param name="username">basic auth user</param>
-        /// <param name="password">basic auth pass</param>
-        /// <returns></returns>
-        Task SubmitDownload(MusicItem track, string username, string password);
-        Task SubmitDownloads(IEnumerable<MusicItem> tracks, string username, string password);
-
+        Task SubmitDownloads(IEnumerable<MusicItem> items);
         /// <summary>
         /// Downloads the specified track, returning the local URI to the downloaded track once it's complete.
         /// 
@@ -38,18 +28,17 @@ namespace Mle.MusicPimp.Network {
         /// </summary>
         /// <param name="track">track to download</param>
         /// <returns>the local URI to the track</returns>
-        //Task<Uri> DownloadAsync(MusicItem track);
-
+        Task<Uri> DownloadAsync(MusicItem track);
         /// <summary>
-        /// Downloads the specified track, returning the local URI to the downloaded track once it's complete.
+        /// Submits the track for download as a background task.
         /// 
-        /// Does not download anything if the track is already locally available.
+ 
         /// </summary>
         /// <param name="track">track to download</param>
         /// <param name="username">basic auth user</param>
         /// <param name="password">basic auth pass</param>
-        /// <returns>a local URI to the track</returns>
-        Task<Uri> DownloadAsync(MusicItem track, string username, string password);
-
+        /// <returns></returns>
+        //Task SubmitDownload(MusicItem track, string username, string password);
+        //Task SubmitDownloads(IEnumerable<MusicItem> tracks, string username, string password);
     }
 }

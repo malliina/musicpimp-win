@@ -62,8 +62,7 @@ namespace Mle.MusicPimp.ViewModels {
                     // that is, find out whether the response is transcoded.
                     var destination = LocalLibrary.AbsolutePathTo(track);
                     var downloadUri = MusicProvider.DownloadUriFor(track);
-                    // Only downloads tracks that are stored as MP3s, because this app does
-                    // not support other local file formats.
+                    // Only downloads tracks that are stored as MP3s, because this app does not support other local file formats.
                     if(destination.EndsWith("mp3")) {
                         var downloadable = new Downloadable(downloadUri, destination);
                         if(LoadTransfersCount() < 3) {

@@ -7,7 +7,7 @@ using System;
 
 namespace Mle.MusicPimp.Audio {
     public class AudioConversions {
-        public static MusicItem PimpTrackToMusicItem(PimpTrack track, Uri source = null) {
+        public static MusicItem PimpTrackToMusicItem(PimpTrack track, Uri source, string username, string password) {
             string path = null;
             var maybeId = track.id;
             if(maybeId != null) {
@@ -33,14 +33,14 @@ namespace Mle.MusicPimp.Audio {
                 IsDir = true
             };
         }
-        public static MusicItem EntryToMusicItem(Entry track, Uri uri) {
+        public static MusicItem EntryToMusicItem(Entry track, Uri uri, string username, string password) {
             if(track.isDir) {
                 return DirEntryToMusicItem(track);
             } else {
-                return SongEntryToMusicItem(track, uri);
+                return SongEntryToMusicItem(track, uri, username, password);
             }
         }
-        public static MusicItem SongEntryToMusicItem(Entry e, Uri uri) {
+        public static MusicItem SongEntryToMusicItem(Entry e, Uri uri, string username, string password) {
             return new MusicItem() {
                 Id = "" + e.id,
                 Name = e.title,
@@ -67,7 +67,7 @@ namespace Mle.MusicPimp.Audio {
                 IsDir = true
             };
         }
-        public static MusicItem playTrack2musicItem(PlaylistTrack track) {
+        public static MusicItem playTrack2musicItem(PlaylistTrack track, string username, string password) {
             return new MusicItem() {
                 Id = track.Path,
                 Name = track.Title,

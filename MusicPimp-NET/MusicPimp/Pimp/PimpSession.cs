@@ -40,7 +40,7 @@ namespace Mle.MusicPimp.Pimp {
         private async Task DownloadIfNecessary(MusicItem track) {
             var maybeLocalUri = await LocalLibrary.LocalUriIfExists(track);
             if(maybeLocalUri == null) {
-                await BackgroundDownloader.DownloadAsync(track, Username, Password);
+                await BackgroundDownloader.DownloadAsync(track);
             }
         }
         //protected UploadRequest BuildUploadRequest(MusicItem song) {

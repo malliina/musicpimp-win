@@ -64,7 +64,7 @@ namespace Mle.MusicPimp.Util {
                 //await BackgroundTaskManager.RegisterBackgroundTask();
                 await Singletons.BackgroundTasks.RegisterBackgroundTask();
                 // awaiting this would await the completion of all background downloads of this app
-                var downloadsTask = Utils.SuppressAsync<Exception>(PimpStoreDownloader.Instance.FollowActiveDownloadsAsync);
+                var downloadsTask = Utils.SuppressAsync<Exception>(PimpStoreDownloader.Instance.Utils.FollowActiveDownloadsAsync);
                 //try {
                 //    // awaiting this would await the completion of all background downloads of this app
                 //    var t = PimpStoreDownloader.Instance.FollowActiveDownloadsAsync();

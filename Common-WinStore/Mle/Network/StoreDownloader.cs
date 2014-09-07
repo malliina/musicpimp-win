@@ -1,6 +1,7 @@
 ﻿using Mle.IO;
 using Mle.ViewModels;
 using Mle.Xaml.Commands;
+using Mle.MusicPimp.Network;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 
 namespace Mle.Network {
-    public abstract class StoreDownloader : ViewModelBase {
+    public class StoreDownloader : ViewModelBase {
 
         public ObservableCollection<BindableDownloadOperation> ActiveDownloads { get; private set; }
 
@@ -46,24 +47,20 @@ namespace Mle.Network {
             }
             return await Task.WhenAll(tasks);
         }
-        protected Task<Uri> Download(Uri source, string username, string password, StorageFile dest) {
+        public async Task<Uri> Download(Uri source, string username, string password, string destination) {
+            var destinationFile = await FileTo(destination);
+            return await Download(source, username, password, destinationFile);
+        }
+        public Task<Uri> Download(Uri source, string username, string password, StorageFile dest) {
             var downloader = new BackgroundDownloader();
             downloader.SetRequestHeader(HttpUtil.Authorization, HttpUtil.BasicAuthHeader(username, password));
-            //downloader.ServerCredential = new Windows.Security.Credentials.PasswordCredential() {
-            //    UserName = username,
-            //    Password = password
-            //};
             return Download(source, dest, downloader);
         }
         private Task<Uri> Download(Uri source, StorageFile dest, BackgroundDownloader downloader) {
             var download = downloader.CreateDownload(source, dest);
             return StartDownload(download);
         }
-        protected async Task<Uri> Download(Uri source, string username, string password, string destination) {
-            var destinationFile = await FileTo(destination);
-            return await Download(source, username, password, destinationFile);
-        }
-        protected async Task<StorageFile> FileTo(string path) {
+        public async Task<StorageFile> FileTo(string path) {
             var rootFolder = FileUtils.Folder;
             var destPath = StoreFileUtils.WindowsSeparators(path);
             // todo: Change ReplaceExisting to Fail, check existence before
@@ -72,8 +69,7 @@ namespace Mle.Network {
         /// <summary>
         /// Starts the download operation and awaits its completion.
         /// 
-        /// This method only works if the download destination 
-        /// resides inside the app local storage.
+        /// This method only works if the download destination resides inside the app local storage.
         /// </summary>
         /// <param name="download">operation to start</param>
         /// <returns>the uri to the downloaded file</returns>

@@ -36,7 +36,7 @@ namespace Mle.MusicPimp.Audio {
             if(index < 0)
                 return null;
             var track = playlist.entry[index];
-            return AudioConversions.EntryToMusicItem(track, session.StreamUriFor(track.id));
+            return AudioConversions.EntryToMusicItem(track, session.StreamUriFor(track.id), session.Username, session.Password);
         }
         private TimeSpan position(JukeboxPlaylist playlist) {
             return TimeSpan.FromSeconds(playlist.position);
@@ -59,7 +59,7 @@ namespace Mle.MusicPimp.Audio {
             var status = await session.serverStatus();
             var playlist = await GetPlaylist();
             var musicEntries = playlist.entry;
-            var playlistTracks = musicEntries != null ? playlist.entry.Select(e => AudioConversions.SongEntryToMusicItem(e, session.StreamUriFor(e.id))).ToList() : new List<MusicItem>();
+            var playlistTracks = musicEntries != null ? playlist.entry.Select(e => AudioConversions.SongEntryToMusicItem(e, session.StreamUriFor(e.id), session.Username, session.Password)).ToList() : new List<MusicItem>();
             return new PlaybackStatus(
                 currentPlaylistTrack(playlist),
                 position(playlist),

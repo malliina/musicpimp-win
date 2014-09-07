@@ -12,6 +12,8 @@ namespace Mle.MusicPimp.Audio {
         public string Path { get; private set; }
         public long Size { get; set; }
         public double DurationSeconds { get; set; }
+        //public string Username { get; set; }
+        //public string Password { get; set; }
 
         public PlaylistTrack(Uri source, string title, string artist, string album, string path, long sizeBytes, double durationSeconds) {
             Source = source;

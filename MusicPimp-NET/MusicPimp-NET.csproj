@@ -79,6 +79,7 @@
     <Compile Include="MusicPimp\Audio\WebSocketPlayer.cs" />
     <Compile Include="MusicPimp\Beam\BeamBarcodeHandler.cs" />
     <Compile Include="MusicPimp\Beam\PersistentBeamPlaylist.cs" />
+    <Compile Include="MusicPimp\Network\BaseDownloader.cs" />
     <Compile Include="MusicPimp\Network\EndpointScanner.cs" />
     <Compile Include="MusicPimp\Pimp\IAlarmClient.cs" />
     <Compile Include="MusicPimp\Pimp\SimpleAlarmClient.cs" />

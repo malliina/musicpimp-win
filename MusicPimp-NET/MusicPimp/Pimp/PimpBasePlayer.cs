@@ -19,7 +19,7 @@ namespace Mle.MusicPimp.Pimp {
 
         public static PlaybackStatus ToPlaybackStatus(StatusPimpResponse status) {
             var playlist = status.playlist
-                .Select(track => AudioConversions.PimpTrackToMusicItem(track))
+                .Select(track => AudioConversions.PimpTrackToMusicItem(track, null, null, null))
                 .ToList();
             return new PlaybackStatus(
                 fromStatus(status),
@@ -39,13 +39,13 @@ namespace Mle.MusicPimp.Pimp {
             return status.state != "NoMedia" && status.state != PlayerState.Closed.ToString();
         }
         private static MusicItem fromStatus(StatusPimpResponse status) {
-            if (!hasTrack(status)) {
+            if(!hasTrack(status)) {
                 return null;
             }
-            return AudioConversions.PimpTrackToMusicItem(status.track);
+            return AudioConversions.PimpTrackToMusicItem(status.track, null, null, null);
         }
         private static TimeSpan position(StatusPimpResponse status) {
-            if (!hasTrack(status)) {
+            if(!hasTrack(status)) {
                 return TimeSpan.FromSeconds(0);
             } else {
                 return TimeSpan.FromSeconds(status.position);

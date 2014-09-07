@@ -54,9 +54,7 @@ namespace Mle.MusicPimp.Pimp {
         }
 
         public MusicItem TrackToMusicItem(PimpTrack track, Uri uri) {
-            var t = AudioConversions.PimpTrackToMusicItem(track);
-            t.Source = uri;
-            return t;
+            return AudioConversions.PimpTrackToMusicItem(track, uri, session.Username, session.Password);
         }
         public override async Task Upload(MusicItem song, string resource, PimpSession destSession) {
             var targetUri = destSession.BaseUri + resource;

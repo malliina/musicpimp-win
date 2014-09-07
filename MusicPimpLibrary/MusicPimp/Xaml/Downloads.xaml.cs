@@ -1,5 +1,6 @@
 ﻿using Mle.Common;
 using Mle.MusicPimp.Network;
+using Mle.Network;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
@@ -13,8 +14,8 @@ namespace Mle.MusicPimp.Xaml {
     /// </summary>
     public sealed partial class Downloads : LayoutAwarePage {
 
-        public PimpStoreDownloader DownloadsViewModel {
-            get { return PimpStoreDownloader.Instance; }
+        public StoreDownloader DownloadsViewModel {
+            get { return PimpStoreDownloader.Instance.Utils; }
         }
 
         public Downloads() {

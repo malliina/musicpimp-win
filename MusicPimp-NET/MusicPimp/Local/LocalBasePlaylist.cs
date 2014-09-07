@@ -10,10 +10,10 @@ namespace Mle.MusicPimp.Local {
         public override async Task LoadData() {
             // might return null but I don't know why
             var playlistInfo = await LoadPlaylist();
-            if (playlistInfo != null) {
+            if(playlistInfo != null) {
                 var tracks = playlistInfo.Tracks;
                 List<MusicItem> items = playlistInfo.Tracks
-                    .Select(AudioConversions.playTrack2musicItem)
+                    .Select(i => AudioConversions.playTrack2musicItem(i, null, null))
                     .ToList();
                 Sync(items, playlistInfo.CurrentIndex);
             }

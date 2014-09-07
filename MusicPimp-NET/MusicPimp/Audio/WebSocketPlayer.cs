@@ -23,8 +23,10 @@ namespace Mle.MusicPimp.Audio {
     public abstract class WebSocketPlayer : BasePlayer {
         protected PimpWebSocket webSocket;
         protected SimplePimpSession session;
+        public SimplePimpSession Session { get; private set; }
 
         public WebSocketPlayer(SimplePimpSession session, PimpWebSocket webSocket) {
+            Session = session;
             this.webSocket = webSocket;
             this.session = session;
             // the lifetime of this player is the same as the websocket

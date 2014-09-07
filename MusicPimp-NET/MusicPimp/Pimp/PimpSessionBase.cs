@@ -56,7 +56,7 @@ namespace Mle.MusicPimp.Pimp {
         }
         public async Task<IEnumerable<MusicItem>> Search(string term) {
             return (await ToJson<IEnumerable<PimpTrack>>("/search?term=" + term + "&limit=100"))
-                .Select(item => AudioConversions.PimpTrackToMusicItem(item, PlaybackUriFor(item.id)))
+                .Select(item => AudioConversions.PimpTrackToMusicItem(item, PlaybackUriFor(item.id), Username, Password))
                 .ToList();
         }
         public Task<VersionResponse> PingAuth(CancellationToken token) {

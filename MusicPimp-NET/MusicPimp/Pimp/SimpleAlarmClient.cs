@@ -29,7 +29,7 @@ namespace Mle.MusicPimp.Pimp {
             return MapList<AlarmModel, MusicAlarm>(alarmsResource, ToModel);
         }
         public Task<IEnumerable<MusicItem>> Tracks() {
-            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item));
+            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password));
         }
         private async Task<IEnumerable<T>> MapList<T, U>(string resource, Func<U, T> mapper) {
             IEnumerable<U> items = await Session.ToJson<IEnumerable<U>>(resource);
@@ -73,7 +73,7 @@ namespace Mle.MusicPimp.Pimp {
                 IsOn = json.enabled,
                 Time = time,
                 EnabledDays = new ObservableCollection<object>(days),
-                Track = AudioConversions.PimpTrackToMusicItem(json.job.track)
+                Track = AudioConversions.PimpTrackToMusicItem(json.job.track, null, Session.Username, Session.Password)
             };
         }
         private MusicAlarm ToJson(AlarmModel model) {

@@ -15,6 +15,9 @@ using System;
 
 namespace Mle.MusicPimp.Util {
     public class WinStoreProvider : Provider {
+        public IDownloader Downloader {
+            get { return PimpStoreDownloader.Instance; }
+        }
         public MusicItemsBase MusicItemsBase {
             get { return MusicItemsModel.Instance; }
         }
