@@ -20,6 +20,7 @@ namespace Mle.Messaging {
         /// <param name="idParam"></param>
         /// <returns></returns>
         bool NavigateWithId(string pageId, string idParam);
+        bool NavigateWithParam(string pageId, string navParam);
         bool NavigateWithQuery(string pageId, IDictionary<string, string> queryParams);
     }
 }

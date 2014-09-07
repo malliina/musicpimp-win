@@ -1,9 +1,9 @@
-﻿using Mle.Messaging;
+﻿using Mle.Collections;
+using Mle.Messaging;
 using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
-using Mle.Collections;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace Mle.MusicPimp.Messaging {
     public class PhoneNavigationHandler : INavigationHandler {
@@ -52,8 +52,14 @@ namespace Mle.MusicPimp.Messaging {
             return frame.Navigate(pageIdResolver[pageId]);
         }
         public bool NavigateWithId(string pageId, string id) {
-            var uri = new Uri(pageIdResolver[pageId].OriginalString + "?" + PageParams.ID + "=" + id, UriKind.Relative);
-            return frame.Navigate(uri);
+            var dict = new Dictionary<string, string>();
+            dict.Add(PageParams.ID, id);
+            return NavigateWithQuery(pageId, dict);
+        }
+        public bool NavigateWithParam(string pageId, string navParam) {
+            var dict = new Dictionary<string, string>();
+            dict.Add(PageParams.P, navParam);
+            return NavigateWithQuery(pageId, dict);
         }
         public bool NavigateWithQuery(string pageId, IDictionary<string, string> queryParams) {
             string queryString = queryParams.Select(kv => kv.Key + "=" + kv.Value).MkString("&");

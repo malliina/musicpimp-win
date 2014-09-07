@@ -1,10 +1,10 @@
-﻿using Mle.Messaging;
+﻿using Mle.Collections;
+using Mle.Messaging;
 using Mle.MusicPimp.Messaging;
 using Mle.MusicPimp.Xaml;
-using Mle.Collections;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 
 namespace Mle {
@@ -40,7 +40,10 @@ namespace Mle {
             return NavigateToPage(pageIdResolver[pageId]);
         }
         public bool NavigateWithId(string pageId, string idParam) {
-            return Navigate(pageIdResolver[pageId], "?id=" + idParam);
+            return NavigateWithParam(pageId, "?id=" + idParam);
+        }
+        public bool NavigateWithParam(string pageId, string navParam) {
+            return Navigate(pageIdResolver[pageId], navParam);
         }
         public bool NavigateWithQuery(string pageId, IDictionary<string, string> queryParams) {
             var queryString = queryParams.Select(kv => kv.Key + "=" + kv.Value).MkString("&");

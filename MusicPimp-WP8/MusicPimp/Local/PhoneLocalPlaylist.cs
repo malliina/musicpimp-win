@@ -82,7 +82,7 @@ namespace Mle.MusicPimp.Local {
                 // awaits completion of submission, not download
                 // even submitting a download takes fucking long,
                 // so TaskEx.Run hopefully runs the stuff on another thread
-                await TaskEx.Run(async () => await Downloader.SubmitDownloads(songs, source.Username, source.Password));
+                await TaskEx.Run(async () => await Downloader.SubmitDownloads(songs));
             } catch(BackgroundTransferException) {
                 // thrown if the transfer request cannot be added, for example if there are 25 other requests already pending
                 // TODO fix: add request to persistent storage, make transfer service load from storage when capable

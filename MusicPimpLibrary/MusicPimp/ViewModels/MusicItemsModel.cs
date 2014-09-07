@@ -26,12 +26,8 @@ namespace Mle.MusicPimp.ViewModels {
         public override MusicLibrary MusicProvider {
             get { return StoreLibraryManager.Instance.MusicProvider; }
         }
-        public StoreNowPlaying NowPlaying {
-            get { return StoreNowPlaying.Instance; }
-        }
-
+        public StoreNowPlaying NowPlaying { get { return StoreNowPlaying.Instance; } }
         public AppBarController AppBar { get; private set; }
-
         private ObservableCollection<MusicItem> selected;
         public ObservableCollection<MusicItem> Selected {
             get { return selected; }

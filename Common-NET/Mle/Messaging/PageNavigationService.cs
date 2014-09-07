@@ -16,6 +16,7 @@ namespace Mle.Messaging {
         public event Func<string, bool> OnSamePageNavigate;
         public event Func<string, bool> OnNavigate;
         public event Func<string, string, bool> OnNavigateWithId;
+        public event Func<string, string, bool> OnNavigateWithParam;
         public event Func<string, IDictionary<string, string>, bool> OnNavigateWithQuery;
 
         protected PageNavigationService() {
@@ -28,6 +29,7 @@ namespace Mle.Messaging {
             OnNavigate += handler.Navigate;
             OnNavigateWithId += handler.NavigateWithId;
             OnNavigateWithQuery += handler.NavigateWithQuery;
+            OnNavigateWithParam += handler.NavigateWithParam;
         }
 
         public void NavigateToPage(Type pageType) {
@@ -48,6 +50,11 @@ namespace Mle.Messaging {
         public void Navigate(string pageId, string paramId) {
             if(OnNavigateWithId != null) {
                 OnNavigateWithId(pageId, paramId);
+            }
+        }
+        public void NavigateWithParam(string pageId, string navParam) {
+            if(OnNavigateWithId != null) {
+                OnNavigateWithParam(pageId, navParam);
             }
         }
         public void NavigateWithQuery(string pageId, IDictionary<string, string> queryParams) {

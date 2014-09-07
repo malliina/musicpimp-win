@@ -248,6 +248,7 @@
     <Compile Include="MusicPimp\Util\Singletons.cs" />
     <Compile Include="MusicPimp\Util\WinStoreProvider.cs" />
     <Compile Include="MusicPimp\ViewModels\HelpModel.cs" />
+    <Compile Include="MusicPimp\ViewModels\MusicActions.cs" />
     <Compile Include="MusicPimp\ViewModels\MusicItemsModel.cs" />
     <Compile Include="MusicPimp\ViewModels\Navigable.cs" />
     <Compile Include="MusicPimp\ViewModels\RootPageViewModel.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="MusicPimp\ViewModels\StoreLibraryManager.cs" />
     <Compile Include="MusicPimp\ViewModels\StoreNowPlaying.cs" />
     <Compile Include="MusicPimp\ViewModels\StorePlayerManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\StoreSearch.cs" />
     <Compile Include="MusicPimp\Xaml\AddEndpointPopup.xaml.cs">
       <DependentUpon>AddEndpointPopup.xaml</DependentUpon>
     </Compile>

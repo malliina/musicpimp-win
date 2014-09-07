@@ -8,6 +8,7 @@ namespace Mle.MusicPimp {
             : base(frame) {
             pageIdResolver.Add(PageNames.LIBRARY, typeof(MusicItems));
             pageIdResolver.Add(PageNames.PLAYER, typeof(Player));
+            pageIdResolver.Add(PageNames.SEARCH, typeof(Search));
         }
     }
 }

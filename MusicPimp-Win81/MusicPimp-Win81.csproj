@@ -159,6 +159,9 @@
     <Compile Include="MusicPimp\Xaml\BlankPage1.xaml.cs">
       <DependentUpon>BlankPage1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MusicPimp\Xaml\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MusicPimp\Xaml\MusicItems.xaml.cs">
       <DependentUpon>MusicItems.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
     <Page Include="MusicPimp\Xaml\BlankPage1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Search.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MusicPimp\Xaml\MusicItems.xaml">
       <Generator>MSBuild:Compile</Generator>

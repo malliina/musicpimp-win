@@ -1,13 +1,11 @@
 ﻿using Mle.Messaging;
 using Mle.MusicPimp.Messaging;
 using Mle.MusicPimp.ViewModels;
-using Mle.Util;
 using Mle.ViewModels;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation;
 
 // The Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234233
 
@@ -16,14 +14,14 @@ namespace Mle.MusicPimp.Xaml {
     /// A page that displays a collection of item previews.  In the Split Application this page
     /// is used to display and select one of the available groups.
     /// </summary>
-    public sealed partial class MusicItems : BasePage {
+    public sealed partial class Search : BasePage {
 
-        public MusicItemsModel Model { get; private set; }
+        public SearchVM Model { get; private set; }
 
-        public MusicItems() {
-            Model = MusicItemsModel.Instance;
+        public Search() {
+            Model = new StoreSearch();
             this.InitializeComponent();
-            Loaded += (s, e) => NavigateToRememberedPosition();
+            //Loaded += (s, e) => NavigateToRememberedPosition();
         }
         /// <summary>
         /// Populates the page with content passed during navigation.  Any saved state is also
@@ -35,16 +33,18 @@ namespace Mle.MusicPimp.Xaml {
         /// <param name="pageState">A dictionary of state preserved by this page during an earlier
         /// session. This will be null the first time a page is visited.</param>
         protected override async void LoadState(Object navigationParameter, Dictionary<String, Object> pageState) {
-            var folderId = navigationParameter as string;
-            await Model.ParseAndLoad(folderId);
+            var term = navigationParameter as string;
+            Model.Term = term;
+            await Model.Search();
+            //await Model.ParseAndLoad(folderId);
         }
-        private void NavigateToRememberedPosition() {
-            var item = Model.CurrentScrollPosition();
-            if(item != null) {
-                // Might throw? Not sure, but I suppress anyway as this is merely convenience if it works.
-                Utils.Suppress<Exception>(() => itemGridView.ScrollIntoView(item, ScrollIntoViewAlignment.Leading));
-            }
-        }
+        //private void NavigateToRememberedPosition() {
+        //    var item = Model.CurrentScrollPosition();
+        //    if(item != null) {
+        //        // Might throw? Not sure, but I suppress anyway as this is merely convenience if it works.
+        //        Utils.Suppress<Exception>(() => itemGridView.ScrollIntoView(item, ScrollIntoViewAlignment.Leading));
+        //    }
+        //}
 
         private void OnGridTapped(object sender, TappedRoutedEventArgs e) {
             itemGridView.SelectedItem = null;
