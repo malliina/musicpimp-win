@@ -367,8 +367,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\win8\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="WinRTXamlToolkit">
-      <HintPath>..\packages\winrtxamltoolkit.1.6.1.3\lib\netcore45\WinRTXamlToolkit.dll</HintPath>
+    <Reference Include="WinRTXamlToolkit, Version=1.6.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WinRTXamlToolkit.1.6.1.3\lib\netcore45\WinRTXamlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="ZXing">
       <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\windows8\ZXing.winmd</HintPath>
