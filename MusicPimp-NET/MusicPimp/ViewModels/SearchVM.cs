@@ -53,6 +53,10 @@ namespace Mle.MusicPimp.ViewModels {
             FeedbackMessage = LibraryStatus;
         }
 
+        public Task Search(string term) {
+            Term = term;
+            return Search();
+        }
         public async Task Search() {
             SearchResults.Clear();
             var status = LibraryStatus;

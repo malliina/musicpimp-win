@@ -2,6 +2,7 @@
 using Mle.ViewModels;
 using Mle.Xaml;
 using Mle.Xaml.Commands;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -32,5 +33,22 @@ namespace Mle.MusicPimp.ViewModels {
             AppBar.Update(Selected);
             OnPropertyChanged("CanDeleteSelection");
         }
+        //protected void DeleteAll(IEnumerable<MusicItem> items) {
+        //    foreach(var item in items) {
+        //        Delete(item);
+        //    }
+        //}
+        //protected void Delete(MusicItem song) {
+        //    try {
+        //        var shouldRemove = song.IsSourceLocal;
+        //        LocalLibrary.Delete(song.Path);
+        //        // refreshes the items in the current view
+        //        if(shouldRemove) {
+        //            MusicFolder.MusicItems.Remove(song);
+        //        }
+        //    } catch(Exception e) {
+        //        Send("Unable to delete. Perhaps the file is in use. " + e.Message);
+        //    }
+        //}
     }
 }
