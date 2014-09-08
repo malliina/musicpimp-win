@@ -16,12 +16,13 @@ namespace Mle.MusicPimp.Xaml {
     /// </summary>
     public sealed partial class Search : BasePage {
 
-        public StoreSearch Model { get; private set; }
+        public StoreSearch SearchModel { get; private set; }
 
         public Search() {
             this.InitializeComponent();
-            Model = new StoreSearch();
-            DataContext = Model;
+            SearchModel = new StoreSearch();
+            // datacontext set in xaml
+            DataContext = SearchModel;
             //Loaded += (s, e) => NavigateToRememberedPosition();
         }
         /// <summary>
@@ -35,7 +36,7 @@ namespace Mle.MusicPimp.Xaml {
         /// session. This will be null the first time a page is visited.</param>
         protected override async void LoadState(Object navigationParameter, Dictionary<String, Object> pageState) {
             var term = navigationParameter as string;
-            await Model.Search(term);
+            await SearchModel.Search(term);
         }
         //private void NavigateToRememberedPosition() {
         //    var item = Model.CurrentScrollPosition();
@@ -46,13 +47,11 @@ namespace Mle.MusicPimp.Xaml {
         //}
 
         private void OnGridTapped(object sender, TappedRoutedEventArgs e) {
-            Model.Model.Selected.Clear();
-            //itemGridView.SelectedItem = null;
+            SearchModel.Actions.ClearSelection();
         }
 
         private void OnListTapped(object sender, TappedRoutedEventArgs e) {
-            Model.Model.Selected.Clear();
-            //itemListView.SelectedItem = null;
+            SearchModel.Actions.ClearSelection();
         }
 
         private void HelpItemClicked(object sender, ItemClickEventArgs e) {

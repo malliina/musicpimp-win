@@ -4,6 +4,7 @@ using Mle.ViewModels;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
 
 namespace Mle.MusicPimp.ViewModels {
     public class SearchVM : WebAwareLoading {
@@ -74,6 +75,10 @@ namespace Mle.MusicPimp.ViewModels {
                     foreach(var result in results) {
                         SearchResults.Add(result);
                     }
+                    if(results.Count() == 0) {
+                        FeedbackMessage = "No results for: " + Term;
+                    }
+
                 }
             } else {
                 FeedbackMessage = status;

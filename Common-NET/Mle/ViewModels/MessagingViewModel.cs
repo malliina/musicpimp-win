@@ -31,8 +31,7 @@ namespace Mle.ViewModels {
             return WithExceptionEvents(() => TaskEx.Run(code));
         }
         /// <summary>
-        /// Implementation note: By requiring a Func<Task> as opposed to
-        /// an Action, any exceptions caught in the async lambda
+        /// Implementation note: By requiring a Func<Task> as opposed to an Action, any exceptions caught in the async lambda 
         /// are caught by the try-catch.
         /// </summary>
         /// <param name="code"></param>

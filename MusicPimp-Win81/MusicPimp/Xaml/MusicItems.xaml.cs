@@ -47,11 +47,11 @@ namespace Mle.MusicPimp.Xaml {
         }
 
         private void OnGridTapped(object sender, TappedRoutedEventArgs e) {
-            itemGridView.SelectedItem = null;
+            Model.Selected.Clear();
         }
 
         private void OnListTapped(object sender, TappedRoutedEventArgs e) {
-            itemListView.SelectedItem = null;
+            Model.Selected.Clear();
         }
 
         private void HelpItemClicked(object sender, ItemClickEventArgs e) {
