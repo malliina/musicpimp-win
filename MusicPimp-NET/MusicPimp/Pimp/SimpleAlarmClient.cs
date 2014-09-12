@@ -13,6 +13,7 @@ namespace Mle.MusicPimp.Pimp {
         private static readonly string
             alarmsResource = "/alarms",
             tracksResource = "/tracks",
+            searchResource = "/search",
             save = "save",
             delete = "delete",
             start = "start",
@@ -30,6 +31,9 @@ namespace Mle.MusicPimp.Pimp {
         }
         public Task<IEnumerable<MusicItem>> Tracks() {
             return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password));
+        }
+        public Task<IEnumerable<MusicItem>> Search(string term) {
+            return MapList<MusicItem, PimpTrack>(searchResource + "?term=" + term, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password));
         }
         private async Task<IEnumerable<T>> MapList<T, U>(string resource, Func<U, T> mapper) {
             IEnumerable<U> items = await Session.ToJson<IEnumerable<U>>(resource);

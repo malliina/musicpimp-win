@@ -14,8 +14,8 @@ namespace Mle.MusicPimp.Pimp {
 
         public static readonly Version MinimumServerVersion = new Version(1, 8, 0);
         public static readonly Version HttpsSupportingVersion = new Version(2, 1, 0);
-        public static readonly Version AlarmsSupportingVersion = new Version(2, 3, 5);
         public static readonly Version SearchSupportingVersion = new Version(2, 5, 0);
+        public static readonly Version AlarmsSupportingVersion = new Version(2, 5, 3);
 
         public PimpSessionBase(MusicEndpoint settings, bool acceptCompression = true)
             : base(settings, acceptCompression) {

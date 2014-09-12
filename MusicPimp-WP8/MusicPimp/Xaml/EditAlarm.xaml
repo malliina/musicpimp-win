@@ -60,10 +60,14 @@
                                Style="{StaticResource PhoneTextSubtleStyle}"
                                Margin="12,12,12,0"/>
                         <toolkit:AutoCompleteBox 
+                            x:Name="AutoComp"
                             ItemsSource="{Binding Tracks}"
                             Text="{Binding TrackName, Mode=TwoWay}"
                             FilterMode="Contains"
-                            ValueMemberPath="Name">
+                            ValueMemberPath="Name"
+                            MinimumPrefixLength="3"
+                            MinimumPopulateDelay="200"
+                            Populating="AutoComp_Populating">
                             <toolkit:AutoCompleteBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,7">

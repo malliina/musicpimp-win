@@ -16,6 +16,7 @@ namespace Mle.MusicPimp.Pimp {
         Task StopPlayback();
         Task<IEnumerable<AlarmModel>> Alarms();
         Task<IEnumerable<MusicItem>> Tracks();
+        Task<IEnumerable<MusicItem>> Search(string term);
         /// <summary>
         /// Adds or updates the supplied schedule. The server will interpret
         /// a schedule with a non-null id member as an update, otherwise add.

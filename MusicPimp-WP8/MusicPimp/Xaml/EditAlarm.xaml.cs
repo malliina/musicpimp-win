@@ -4,6 +4,7 @@ using Mle.MusicPimp.ViewModels;
 using Mle.Pages;
 using Mle.Util;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Navigation;
 
@@ -38,7 +39,7 @@ namespace Mle.MusicPimp.Xaml {
                     await viewModel.Fill(alarmId);
                 }
                 await viewModel.InstallPlayer();
-                await viewModel.LoadTracks();
+                //await viewModel.LoadTracks();
             }
         }
         protected async override void OnNavigatedFrom(NavigationEventArgs e) {
@@ -74,6 +75,17 @@ namespace Mle.MusicPimp.Xaml {
                 }
             }
             return PhonePlayerManager.Instance.ActiveEndpoint;
+        }
+        /// <summary>
+        /// The "Populating" event is called at each key press.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void AutoComp_Populating(object sender, Microsoft.Phone.Controls.PopulatingEventArgs e) {
+            //Debug.WriteLine("Searching: " + viewModel.TrackName);
+            e.Cancel = true;
+            await viewModel.PerformSearch();
+            AutoComp.PopulateComplete();
         }
     }
 }

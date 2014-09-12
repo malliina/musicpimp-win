@@ -190,6 +190,15 @@ namespace Mle.MusicPimp.ViewModels {
                 Tracks = ts;
             });
         }
+        public Task PerformSearch() {
+            return Search(TrackName);
+        }
+        public Task Search(string term) {
+            // if we use WebAware(...) here, the "loading..." thing appears at every keypress, annoying.
+            return Utils.SuppressAsync<Exception>(async () => {
+                Tracks = await client.Search(term);
+            });
+        }
         public async Task<bool> Save() {
             var wasSaved = false;
             await WebAware(async () => {
