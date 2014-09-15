@@ -153,9 +153,11 @@
                        Foreground="{StaticResource HyperlinkForegroundThemeBrush}"/>
             <SearchBox x:Name="SearchField" Grid.Column="3" Height="35" Width="270" Margin="0,25,25,0" 
                        PlaceholderText="track or artist..."
-                       QueryText="{Binding Term, Mode=TwoWay}"
-                       QuerySubmitted="SearchBox_QuerySubmitted"
-                       FocusOnKeyboardInput="True"/>
+                       QueryText="{Binding Term}"
+                       QuerySubmitted="SearchBox_QuerySubmitted"/>
+            <!--FocusOnKeyboardInput="True"-->
+            <!--PrepareForFocusOnKeyboardInput="PrepareForFocus"-->
+            <!--LostFocus="OnLostFocus"-->
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
