@@ -151,9 +151,11 @@
                        Text="{Binding Term}" 
                        Style="{StaticResource PageSubheaderTextStyle}"
                        Foreground="{StaticResource HyperlinkForegroundThemeBrush}"/>
-            <SearchBox Grid.Column="3" Height="35" Width="270" Margin="0,25,25,0" 
+            <SearchBox x:Name="SearchField" Grid.Column="3" Height="35" Width="270" Margin="0,25,25,0" 
                        PlaceholderText="track or artist..."
-                       QuerySubmitted="SearchBox_QuerySubmitted"/>
+                       QueryText="{Binding Term, Mode=TwoWay}"
+                       QuerySubmitted="SearchBox_QuerySubmitted"
+                       FocusOnKeyboardInput="True"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

@@ -37,6 +37,7 @@ namespace Mle.MusicPimp.Xaml {
         protected override async void LoadState(Object navigationParameter, Dictionary<String, Object> pageState) {
             var term = navigationParameter as string;
             await SearchModel.Search(term);
+            SearchField.Focus(Windows.UI.Xaml.FocusState.Keyboard);
         }
         //private void NavigateToRememberedPosition() {
         //    var item = Model.CurrentScrollPosition();

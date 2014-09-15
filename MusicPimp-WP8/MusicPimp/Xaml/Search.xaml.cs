@@ -26,7 +26,6 @@ namespace Mle.MusicPimp.Xaml {
         public void InitAppBar() {
             appBars.multiSelectButtons.ForEach(btn => ApplicationBar.Buttons.Add(btn));
         }
-
         void Search_Loaded(object sender, RoutedEventArgs e) {
             searchTextBox.Focus();
         }

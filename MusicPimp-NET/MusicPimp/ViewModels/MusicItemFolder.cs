@@ -92,6 +92,7 @@ namespace Mle.MusicPimp.ViewModels {
         private string GroupKeyOf(MusicItem item) {
             if(item.IsDir) {
                 var lowerCase = item.Name.ToLowerInvariant();
+                // crashes if item.Name.Length == 0
                 if(char.IsDigit(lowerCase, index: 0)) {
                     return Grouping.DigitGroupHeader;
                 } else {

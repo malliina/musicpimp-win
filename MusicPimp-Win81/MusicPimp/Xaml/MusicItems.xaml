@@ -180,7 +180,8 @@
                        Foreground="{StaticResource HyperlinkForegroundThemeBrush}"/>
             <SearchBox Grid.Column="3" Height="35" Width="270" Margin="0,25,25,0" 
                        PlaceholderText="track or artist..."
-                       QuerySubmitted="SearchBox_QuerySubmitted"/>
+                       QuerySubmitted="SearchBox_QuerySubmitted"
+                       FocusOnKeyboardInput="True"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
