@@ -170,8 +170,9 @@ namespace Mle.MusicPimp.ViewModels {
         }
         public async Task AddToPlaylistRecursively(IEnumerable<MusicItem> items) {
             await UsageControlled(async () => {
+                var itemsList = items.ToList();
                 var allTracks = new List<MusicItem>();
-                foreach(var item in items) {
+                foreach(var item in itemsList) {
                     var tracks = await GetSongsRecursively(item);
                     allTracks.AddRange(tracks);
                 }
