@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 #if DEBUG
 using MockIAPLib;
+using Store = MockIAPLib;
 #else
 using Windows.ApplicationModel.Store;
 #endif
