@@ -81,6 +81,7 @@ namespace Mle.MusicPimp.ViewModels {
                 if(isPremiumAvailable) {
                     if(premiumInfo.HasPremium()) {
                         FeedbackMessage = HasPremiumMessage;
+                        UsageController.Instance.EnablePremium();
                     } else {
                         FeedbackMessage = PleasePurchaseMessage + " MusicPimp Premium is available for " + info.FormattedPrice + ".";
                     }
