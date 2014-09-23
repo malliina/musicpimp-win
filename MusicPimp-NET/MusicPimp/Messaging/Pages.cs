@@ -7,7 +7,8 @@ namespace Mle.MusicPimp.Messaging {
              IAP = "iap",
              ALARMS = "alarms",
              ALARM_EDIT = "alarm_edit",
-             SEARCH = "search";
+             SEARCH = "search",
+             PLAYLIST = "playlist";
 
     }
     public class PageParams {

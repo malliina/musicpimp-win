@@ -15,11 +15,13 @@ namespace Mle.MusicPimp.Audio {
             session = s;
             RootFolderKey = "-1";
             RootEmptyMessage = "Successfully connected to Subsonic at " + session.Describe + ", however the music library is empty. Follow the Subsonic server documentation to add MP3s to the library. Refresh the library of this app when you're done.";
+            ServerSupportsPlaylists = true;
             var t = Utils.SuppressAsync<Exception>(Ping);
         }
         public override async Task<IEnumerable<MusicItem>> Search(string term) {
             var result = await session.Search(term, maxSearchResults);
             // searchResult2 is occasionally null - no idea why
+            // update: searchResult2 should no longer be null, ever
             var items = result.searchResult2;
             if(items != null) {
                 var songs = items.song;
@@ -28,6 +30,17 @@ namespace Mle.MusicPimp.Audio {
                 }
             }
             return new List<MusicItem>();
+        }
+        public override async Task<List<SavedPlaylistMeta>> LoadPlaylists() {
+            var result = await session.Playlists();
+            return result.playlists.playlist;
+        }
+        public override async Task<List<MusicItem>> LoadPlaylist(string playlistID) {
+            var result = await session.Playlist(playlistID);
+            return EntriesToMusicItem(result.playlist.entry);
+        }
+        public override async Task DeletePlaylist(string playlistID) {
+            await session.DeletePlaylist(playlistID);
         }
         /// <summary>
         /// We cannot use the 'download' functionality of Subsonic, because it does not
@@ -128,7 +141,7 @@ namespace Mle.MusicPimp.Audio {
                 dest.Add(AudioConversions.EntryToMusicItem(item, uri, session.Username, session.Password));
             }
         }
-        private IEnumerable<MusicItem> EntriesToMusicItem(List<Entry> entries) {
+        private List<MusicItem> EntriesToMusicItem(List<Entry> entries) {
             var ret = new List<MusicItem>();
             AddAll(entries, ret);
             return ret;

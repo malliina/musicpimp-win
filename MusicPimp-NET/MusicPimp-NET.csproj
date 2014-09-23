@@ -128,6 +128,7 @@
     <Compile Include="MusicPimp\Pimp\PimpWebPlaylist.cs" />
     <Compile Include="MusicPimp\Beam\TimeBasedPlaylist.cs" />
     <Compile Include="MusicPimp\Pimp\WebPlaylistBase.cs" />
+    <Compile Include="MusicPimp\Audio\SavedPlaylistMeta.cs" />
     <Compile Include="MusicPimp\Subsonic\SubsonicBase.cs" />
     <Compile Include="MusicPimp\Subsonic\SubsonicException.cs" />
     <Compile Include="MusicPimp\Subsonic\SubsonicJson.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="MusicPimp\ViewModels\BaseViewModel.cs" />
     <Compile Include="MusicPimp\ViewModels\PlayerManager.cs" />
     <Compile Include="MusicPimp\ViewModels\PlaylistMusicItem.cs" />
+    <Compile Include="MusicPimp\ViewModels\PlaylistsVM.cs" />
     <Compile Include="MusicPimp\ViewModels\SearchVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Mle.MusicPimp.Audio;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -20,6 +21,8 @@ namespace Mle.MusicPimp.Subsonic {
     public class JukeboxControlContainer : ISubsonicResponseContainer<JukeboxPlaylistResponse> { }
     public class JukeboxStatusContainer : ISubsonicResponseContainer<JukeboxStatusResponse> { }
     public class SearchContainer : ISubsonicResponseContainer<SearchResponse> { }
+    public class PlaylistsContainer : ISubsonicResponseContainer<PlaylistsResponse> { }
+    public class PlaylistContainer : ISubsonicResponseContainer<PlaylistResponse> { }
     public class GenericSubsonicContainer<T> : ISubsonicResponseContainer<T> where T : SubsonicResponse { }
     public class Error {
         public string message { get; set; }
@@ -36,6 +39,7 @@ namespace Mle.MusicPimp.Subsonic {
         }
     }
     public class SearchResponse : SubsonicResponse {
+        [JsonConverter(typeof(MaybeSearchResultsConverter))]
         public SearchResult searchResult2 { get; set; }
     }
     public class SearchResult {
@@ -115,12 +119,63 @@ namespace Mle.MusicPimp.Subsonic {
     public class JukeboxStatusResponse : SubsonicResponse {
         public JukeboxStatus jukeboxStatus { get; set; }
     }
-
     public class DirectoryResponse : SubsonicResponse {
         public Directory directory { get; set; }
     }
+    public class PlaylistsResponse : SubsonicResponse {
+        [JsonConverter(typeof(MaybePlaylistsConverter))]
+        public Playlists playlists { get; set; }
+    }
+    public class Playlists {
+        [JsonConverter(typeof(ListOrNoListJsonConverter<SavedPlaylistMeta>))]
+        public List<SavedPlaylistMeta> playlist { get; set; }
+    }
+    public class PlaylistResponse : SubsonicResponse {
+        public Playlist playlist { get; set; }
+    }
+    public class Playlist {
+        [JsonConverter(typeof(ListOrNoListJsonConverter<Entry>))]
+        public List<Entry> entry { get; set; }
+    }
+    public class MaybeSearchResultsConverter : ItemOrEmptyStringConverter<SearchResult> {
+        public MaybeSearchResultsConverter() : base(new SearchResult() { song = new List<Entry>() }) { }
+    }
+    /// <summary>
+    /// If the "playlists" key is an empty string, parses it as if there's a JSON object with an empty "playlist" array.
+    /// 
+    /// Example input:
+    /// 
+    /// "playlists": {"playlist": [
+    /// "playlists": ""
+    /// 
+    /// </summary>
+    public class MaybePlaylistsConverter : ItemOrEmptyStringConverter<Playlists> {
+        public MaybePlaylistsConverter() : base(new Playlists() { playlist = new List<SavedPlaylistMeta>() }) { }
+    }
+    /// <summary>
+    /// Parses the JSON value as T if it's a non-empty string, or as defaultValue if it's the empty string.
+    /// 
+    /// Subsonic may return a JSON object with some collection of items under some key if there are any results, 
+    /// but simply an empty string if there are no results. This is inconvenient and I do not want to fuck around 
+    /// with nulls. If an empty string is encountered where normally more is expected, we parse it as defaultValue.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class ItemOrEmptyStringConverter<T> : CustomJsonConverterBase<T> {
+        private T defaultValue;
+        public ItemOrEmptyStringConverter(T defaultValue) {
+            this.defaultValue = defaultValue;
+        }
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+            if(reader.TokenType == JsonToken.String && reader.Value == String.Empty) {
+                return defaultValue;
+            } else {
+                return serializer.Deserialize<T>(reader);
+            }
+        }
+    }
     public class ListOrNoListJsonConverter<T> : CustomJsonConverterBase<List<T>> {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+            // Always reads a list
             if(reader.TokenType == JsonToken.StartArray) {
                 // Json contains an array of entries ...
                 return serializer.Deserialize<List<T>>(reader);

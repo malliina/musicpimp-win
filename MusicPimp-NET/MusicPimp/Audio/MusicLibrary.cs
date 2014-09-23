@@ -1,4 +1,5 @@
-﻿using Mle.MusicPimp.Pimp;
+﻿using Mle.Concurrent;
+using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,12 +25,26 @@ namespace Mle.MusicPimp.Audio {
         public abstract Task<IEnumerable<MusicItem>> Search(string term);
         public abstract Task Upload(MusicItem song, string resource, PimpSession destSession);
         protected int maxSearchResults;
+        public bool ServerSupportsPlaylists { get; protected set; }
 
         public MusicLibrary(int maxSearchResults = 100) {
             Folders = new Dictionary<string, IEnumerable<MusicItem>>();
             RootEmptyMessage = "the library is empty";
             RootFolderKey = String.Empty;
             this.maxSearchResults = maxSearchResults;
+            ServerSupportsPlaylists = false;
+        }
+        public virtual Task<List<SavedPlaylistMeta>> LoadPlaylists() {
+            return EmptyTaskList<SavedPlaylistMeta>();
+        }
+        public virtual Task<List<MusicItem>> LoadPlaylist(string playlistID) {
+            return EmptyTaskList<MusicItem>();
+        }
+        public virtual Task DeletePlaylist(string playlistID) {
+            return AsyncTasks.Noop();
+        }
+        private Task<List<T>> EmptyTaskList<T>() {
+            return TaskEx.FromResult<List<T>>(new List<T>());
         }
         /// <summary>
         /// Non-recursively loads the user-selected folder or the root folder if no folder is selected.

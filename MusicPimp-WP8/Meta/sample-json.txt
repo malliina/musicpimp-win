@@ -4,7 +4,126 @@
 
 Subsonic:
 
-No hits:
+Playlists - no items:
+
+{"subsonic-response": {
+ "status": "ok",
+ "playlists": "",
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.9.0"
+}}
+
+Playlists - one item:
+
+{"subsonic-response": {
+ "status": "ok",
+ "playlists": {"playlist": {
+  "id": 0,
+  "duration": 499,
+  "songCount": 2,
+  "created": "2014-09-23T21:55:19",
+  "name": "Sep 23, 2014 9:55 PM",
+  "owner": "admin",
+  "public": false
+ }},
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.9.0"
+}}
+
+Playlists - multiple items:
+
+{"subsonic-response": {
+ "status": "ok",
+ "playlists": {"playlist": [
+  {
+   "id": 0,
+   "duration": 499,
+   "songCount": 2,
+   "created": "2014-09-23T21:55:19",
+   "name": "Sep 23, 2014 9:55 PM",
+   "owner": "admin",
+   "public": false
+  },
+  {
+   "id": 1,
+   "duration": 464,
+   "songCount": 2,
+   "created": "2014-09-23T22:01:47",
+   "name": "Sep 23, 2014 10:01 PM",
+   "owner": "admin",
+   "public": false
+  }
+ ]},
+ "xmlns": "http://subsonic.org/restapi",
+ "version": "1.9.0"
+}}
+
+Specific playlist:
+
+{"subsonic-response": {
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "playlist": {
+  "id": 0,
+  "duration": 499,
+  "songCount": 2,
+  "created": "2014-09-23T21:55:19",
+  "entry": [
+   {
+    "genre": "Pop",
+    "albumId": 176,
+    "album": "This Is The Life",
+    "track": 5,
+    "parent": 2408,
+    "contentType": "audio/mpeg",
+    "isDir": false,
+    "type": "music",
+    "suffix": "mp3",
+    "isVideo": false,
+    "size": 5467349,
+    "id": 2424,
+    "title": "Run",
+    "duration": 227,
+    "artistId": 114,
+    "created": "2013-04-03T11:59:03",
+    "path": "Amy Macdonald/Amy Macdonald - This is the life/05  Amy MacDonald - Run.mp3",
+    "year": 2007,
+    "artist": "Amy MacDonald",
+    "bitRate": 192,
+    "coverArt": 2408
+   },
+   {
+    "genre": "Rock",
+    "albumId": 216,
+    "album": "Billy Talent II",
+    "track": 10,
+    "parent": 73,
+    "contentType": "audio/mpeg",
+    "isDir": false,
+    "type": "music",
+    "suffix": "mp3",
+    "isVideo": false,
+    "size": 10882760,
+    "id": 2936,
+    "title": "The Navy Song",
+    "duration": 272,
+    "artistId": 134,
+    "created": "2012-05-13T16:03:58",
+    "path": "Billy Talent/Billy Talent - 10 - The Navy Song.mp3",
+    "year": 2006,
+    "artist": "Billy Talent",
+    "bitRate": 320,
+    "coverArt": 73
+   }
+  ],
+  "name": "Sep 23, 2014 9:55 PM",
+  "owner": "admin",
+  "public": false
+ },
+ "version": "1.9.0"
+}}
+
+Search - no hits:
 
 {"subsonic-response": {
  "status": "ok",
@@ -13,7 +132,7 @@ No hits:
  "version": "1.9.0"
 }}
 
-Hits:
+Search - hits:
 
 {"subsonic-response": {
  "status": "ok",

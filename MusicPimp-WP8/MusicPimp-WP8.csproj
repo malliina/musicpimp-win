@@ -224,6 +224,12 @@
     <Compile Include="MusicPimp\Xaml\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MusicPimp\Xaml\Playlists.xaml.cs">
+      <DependentUpon>Playlists.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MusicPimp\Xaml\Playlist.xaml.cs">
+      <DependentUpon>Playlist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MusicPimp\Xaml\TemplatePage.xaml.cs">
       <DependentUpon>TemplatePage.xaml</DependentUpon>
     </Compile>
@@ -360,6 +366,14 @@
     <Page Include="MusicPimp\Xaml\Search.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Playlists.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MusicPimp\Xaml\Playlist.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MusicPimp\Xaml\TemplatePage.xaml">
       <SubType>Designer</SubType>

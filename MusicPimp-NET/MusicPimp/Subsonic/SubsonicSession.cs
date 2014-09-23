@@ -35,6 +35,15 @@ namespace Mle.MusicPimp.Subsonic {
         public Task<DirectoryResponse> musicFilesAsync(int id) {
             return jsonCallAsync<DirectoryResponse, SubsonicDirectoryContainer>("getMusicDirectory", id);
         }
+        public Task<PlaylistsResponse> Playlists() {
+            return jsonCallAsync<PlaylistsResponse, PlaylistsContainer>("getPlaylists");
+        }
+        public Task<PlaylistResponse> Playlist(string id) {
+            return jsonCallAsync<PlaylistResponse, PlaylistContainer>("getPlaylist", "&id=" + id);
+        }
+        public Task DeletePlaylist(string id) {
+            return jsonCallAsync<SubsonicResponse, SubsonicResponseContainer>("deletePlaylist", "&id=" + id);
+        }
         public Task<string> serverAddToPlaylistAsync(int id) {
             return JukeboxCall("&action=add&id=" + id);
         }
