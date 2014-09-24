@@ -134,8 +134,12 @@ namespace Mle.MusicPimp.Subsonic {
         public Playlist playlist { get; set; }
     }
     public class Playlist {
+        private List<Entry> _entry = new List<Entry>();
         [JsonConverter(typeof(ListOrNoListJsonConverter<Entry>))]
-        public List<Entry> entry { get; set; }
+        public List<Entry> entry {
+            get { return _entry; }
+            set { if(value != null) _entry = value; }
+        }
     }
     public class MaybeSearchResultsConverter : ItemOrEmptyStringConverter<SearchResult> {
         public MaybeSearchResultsConverter() : base(new SearchResult() { song = new List<Entry>() }) { }

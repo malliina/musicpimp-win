@@ -29,6 +29,11 @@ namespace tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
+        public void TypeTests() {
+            var stringName = typeof(String).Name;
+            Assert.AreEqual("String", stringName);
+        }
+        [TestMethod]
         public void EqualsTest() {
             Assert.IsTrue("a".Equals("a"));
         }

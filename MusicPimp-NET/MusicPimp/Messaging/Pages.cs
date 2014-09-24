@@ -17,6 +17,9 @@ namespace Mle.MusicPimp.Messaging {
             P = "p",
             ENDPOINT = "endpoint",
             CMD = "cmd",
-            TAG = "tag";
+            TAG = "tag",
+            NAME = "name",
+            SONG_COUNT = "songCount",
+            META = "meta";
     }
 }

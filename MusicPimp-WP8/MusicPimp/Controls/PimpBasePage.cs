@@ -4,6 +4,7 @@ using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Util;
 using Mle.MusicPimp.ViewModels;
+using Mle.MusicPimp.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Mle.MusicPimp.Controls {
             public const int Settings = 3;
         }
         protected const string SharedProjectName = "MusicPimp-WP8";
-        
+
 
         public PimpViewModel AppModel {
             get { return PimpViewModel.Instance; }
@@ -43,6 +44,8 @@ namespace Mle.MusicPimp.Controls {
         protected ApplicationBarIconButton playAppBarButton;
         protected ApplicationBarIconButton pauseAppBarButton;
         protected ApplicationBarIconButton nextAppBarButton;
+        protected ApplicationBarIconButton playlistAppBarButton;
+
         protected ApplicationBarMenuItem refreshMenuItem;
 
         protected List<ApplicationBarIconButton> currentButtons;
@@ -52,7 +55,7 @@ namespace Mle.MusicPimp.Controls {
         // hack to prevent multiple page instances from triggering xaml-specified callbacks
         protected static string latestPageId;
         protected string pageId;
-       
+
         public PimpBasePage() {
             pageId = Guid.NewGuid().ToString();
             latestPageId = pageId;
@@ -163,6 +166,7 @@ namespace Mle.MusicPimp.Controls {
             playAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.play.rest.png", "play/pause", PlayPauseApplicationBar_Click);
             pauseAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.pause.rest.png", "pause", PlayPauseApplicationBar_Click);
             nextAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.transport.ff.rest.png", "next", NextApplicationBar_Click);
+            playlistAppBarButton = appBars.NewAppBarButton(appBars.assetHome + "appbar.cloud.download.png", "load", PlaylistApplicationBar_Click);
             refreshMenuItem = new ApplicationBarMenuItem("refresh");
             refreshMenuItem.Click += (sender, args) => { Refresh_Click(sender, args); };
         }
@@ -171,6 +175,11 @@ namespace Mle.MusicPimp.Controls {
             return new List<ApplicationBarIconButton>(new ApplicationBarIconButton[] { 
                 prevAppBarButton, playPauseButton, nextAppBarButton 
             });
+        }
+        protected List<ApplicationBarIconButton> PlaylistButtons() {
+            var buttons = PlayerButtons();
+            buttons.Add(playlistAppBarButton);
+            return buttons;
         }
         protected virtual List<ApplicationBarIconButton> SingleSelectButtons() {
             return PlayerButtons();
@@ -201,7 +210,7 @@ namespace Mle.MusicPimp.Controls {
                 buttons.Insert(victimIndex, replacement);
             }
         }
-        
+
 
         protected async void Refresh_Click(object sender, EventArgs e) {
             var wasUpdated = await EndpointScanner.Instance.SyncIfUnreachable(libraryManager.ActiveEndpoint);
@@ -227,7 +236,7 @@ namespace Mle.MusicPimp.Controls {
         protected void SetDefaultAppBarButtons() {
             appBars.SetAppBarButtons(SingleSelectButtons());
         }
-        
+
         protected void ManageRefreshMenuItem(int pivotIndex) {
             if(pivotIndex == Pivots.Music) {
                 if(!ApplicationBar.MenuItems.Contains(refreshMenuItem)) {
@@ -246,7 +255,7 @@ namespace Mle.MusicPimp.Controls {
             await AppModel.OnSingleMusicItemSelected(musicItem);
         }
         protected virtual async Task OnPlaylistNavigatedTo() {
-            appBars.SetAppBarButtons(PlayerButtons());
+            appBars.SetAppBarButtons(PlaylistButtons());
             if(!MusicPlayer.IsEventBased) {
                 await MusicPlayer.Playlist.Load();
             }
@@ -267,6 +276,9 @@ namespace Mle.MusicPimp.Controls {
         }
         protected void PlayPauseApplicationBar_Click(object sender, EventArgs e) {
             playButton_Click(sender, null);
+        }
+        protected void PlaylistApplicationBar_Click(object sender, EventArgs e) {
+            GoToSharedPage(typeof(Playlists).Name);
         }
         protected async void playButton_Click(object sender, RoutedEventArgs e) {
             await MusicPlayer.OnPlayOrPause();

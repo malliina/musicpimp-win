@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using Mle.Util;
 using System;
 using System.Threading.Tasks;
 
@@ -14,6 +15,26 @@ namespace Mle.Pages {
                 code(pivot.SelectedIndex);
             }
         }
+        protected void TryGoBack() {
+            if(NavigationService.CanGoBack)
+                NavigationService.GoBack();
+        }
+        protected T DeserializeQuery<T>(string key, T def) {
+            var json = DecodedQuery(key);
+            if(json != null) {
+                return Json.Deserialize<T>(json);
+            } else {
+                return def;
+            }
+        }
+        protected string DecodedQuery(string key) {
+            var encoded = Query(key);
+            if(encoded != null) {
+                return Strings.decode(encoded);
+            } else {
+                return null;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -24,5 +45,6 @@ namespace Mle.Pages {
             NavigationContext.QueryString.TryGetValue(key, out value);
             return value;
         }
+        
     }
 }

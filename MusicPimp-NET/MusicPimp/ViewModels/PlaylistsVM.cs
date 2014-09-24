@@ -7,38 +7,34 @@ using Mle.Xaml.Commands;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
+using Mle.Util;
 
 namespace Mle.MusicPimp.ViewModels {
-    public class PlaylistsVM : WebAwareLoading {
-        private IEnumerable<SavedPlaylistMeta> playlists;
-        public IEnumerable<SavedPlaylistMeta> Playlists {
+    public class PlaylistsVM : PlaylistBase {
+        private IList<SavedPlaylistMeta> playlists;
+        public IList<SavedPlaylistMeta> Playlists {
             get { return playlists; }
             set { SetProperty(ref playlists, value); }
         }
         public ICommand NavigateToPlaylist { get; private set; }
-        public ICommand Play { get; private set; }
-        public ICommand Delete { get; private set; }
-        public ProviderService Provider { get { return ProviderService.Instance; } }
-        public BasePlayer Player { get { return Provider.PlayerManager.Player; } }
-        public MusicLibrary Library { get { return Provider.LibraryManager.MusicProvider; } }
         public PlaylistsVM() {
             Playlists = new List<SavedPlaylistMeta>();
             NavigateToPlaylist = new DelegateCommand<SavedPlaylistMeta>(playlist => {
                 var queryParams = new Dictionary<string, string>();
-                queryParams.Add(PageParams.ID, playlist.Id);
+                var encodedJson = Strings.encode(Json.SerializeToString(playlist));
+                queryParams.Add(PageParams.META, encodedJson);
                 PageNavigationService.Instance.NavigateWithQuery(PageNames.PLAYLIST, queryParams);
             });
-            Play = new AsyncDelegateCommand<SavedPlaylistMeta>(PlayPlaylist);
-            Delete = new AsyncDelegateCommand<SavedPlaylistMeta>(playlist => Library.DeletePlaylist(playlist.Id));
         }
-        public async Task PlayPlaylist(SavedPlaylistMeta playlist) {
-            var tracks = await Library.LoadPlaylist(playlist.Id);
-            await Player.PlayPlaylist(tracks);
-        }
-        public Task Update() {
-            return WebAware(async () => {
+        public override async Task Update() {
+            await WebAware(async () => {
                 Playlists = await Library.LoadPlaylists();
             });
+
+            if(FeedbackMessage == null && Playlists.Count == 0) {
+                FeedbackMessage = "no saved playlists";
+            }
         }
     }
 }

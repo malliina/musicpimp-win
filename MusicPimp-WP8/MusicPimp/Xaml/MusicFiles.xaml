@@ -179,14 +179,6 @@
     </local:PimpMainPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
-        <!--<Grid.Background>
-            -->
-        <!--Opacity="0.1"-->
-        <!--
-            <ImageBrush ImageSource="{Binding PictureBackground}"
-                        Stretch="UniformToFill"/>
-        </Grid.Background>-->
-        <!--Pivot Control-->
         <phone:Pivot x:Name="musicPivot" 
                      Title="MUSICPIMP"
                      Tag="{Binding PlaybackDevices.Player.NetworkStatus}"

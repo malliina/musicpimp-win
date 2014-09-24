@@ -100,6 +100,7 @@ namespace Mle.MusicPimp.Audio {
         public ICommand PlayOrPause { get; private set; }
         public ICommand SkipNext { get; private set; }
         public ICommand PlayPlaylistItem { get; private set; }
+        public ICommand PlayTrack { get; private set; }
 
         public BasePlayer() {
             IsEventBased = false;
@@ -112,6 +113,7 @@ namespace Mle.MusicPimp.Audio {
                 await PlayIndex(item.Index);
             });
             ToggleMute = new AsyncUnitCommand(async () => await HandleToggleMute(!IsMute));
+            PlayTrack = new AsyncDelegateCommand<MusicItem>(PlaySong);
         }
         public virtual async Task TryToConnect() {
             try {

@@ -9,5 +9,8 @@ namespace Mle.MusicPimp.Audio {
             Name = name;
             SongCount = songCount;
         }
+        public static SavedPlaylistMeta Empty() {
+            return new SavedPlaylistMeta("0", "nonexistent", 0);
+        }
     }
 }

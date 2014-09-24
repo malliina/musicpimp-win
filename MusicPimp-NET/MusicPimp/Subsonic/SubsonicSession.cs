@@ -10,6 +10,7 @@ namespace Mle.MusicPimp.Subsonic {
     /// TOOD: fix this code.
     /// </summary>
     public class SubsonicSession : SubsonicBase {
+        private Random rnd = new Random();
 
         public SubsonicSession(MusicEndpoint settings)
             : base(settings) {
@@ -36,7 +37,8 @@ namespace Mle.MusicPimp.Subsonic {
             return jsonCallAsync<DirectoryResponse, SubsonicDirectoryContainer>("getMusicDirectory", id);
         }
         public Task<PlaylistsResponse> Playlists() {
-            return jsonCallAsync<PlaylistsResponse, PlaylistsContainer>("getPlaylists");
+            var randomNoise = rnd.Next(1, 1000000);
+            return jsonCallAsync<PlaylistsResponse, PlaylistsContainer>("getPlaylists", randomNoise);
         }
         public Task<PlaylistResponse> Playlist(string id) {
             return jsonCallAsync<PlaylistResponse, PlaylistContainer>("getPlaylist", "&id=" + id);

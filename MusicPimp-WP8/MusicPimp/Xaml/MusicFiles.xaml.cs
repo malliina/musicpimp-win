@@ -18,7 +18,7 @@ namespace MusicPimp.Xaml {
             InitializeMultiSelectButtons();
             appBars.Init(MusicItemLongListSelector, ApplicationBar);
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs args) {
+        protected override void OnNavigatedTo(NavigationEventArgs args) {
             AppModel.FolderLoaded += AppModel_FolderLoaded;
             base.OnNavigatedTo(args);
         }
@@ -92,13 +92,16 @@ namespace MusicPimp.Xaml {
             GoToSharedPage(typeof(AboutFeedback).Name);
         }
         private void Settings_Click(object sender, EventArgs e) {
-            GoToProjectPage("MusicPimp-WP8", typeof(MainSettingsPage).Name);
+            GoToWP8(typeof(MainSettingsPage));
         }
         private void Search_Click(object sender, EventArgs e) {
-            GoToProjectPage("MusicPimp-WP8", typeof(Search).Name);
+            GoToWP8(typeof(Search));
         }
         private void Beam_Click(object sender, EventArgs e) {
-            GoToProjectPage("MusicPimp-WP8", typeof(BarcodePage).Name);
+            GoToWP8(typeof(BarcodePage));
+        }
+        private void GoToWP8(Type page) {
+            GoToProjectPage("MusicPimp-WP8", page.Name);
         }
     }
 }

@@ -39,8 +39,8 @@ namespace Mle.MusicPimp.Audio {
             var result = await session.Playlist(playlistID);
             return EntriesToMusicItem(result.playlist.entry);
         }
-        public override async Task DeletePlaylist(string playlistID) {
-            await session.DeletePlaylist(playlistID);
+        public override Task DeletePlaylist(string playlistID) {
+            return session.DeletePlaylist(playlistID);
         }
         /// <summary>
         /// We cannot use the 'download' functionality of Subsonic, because it does not

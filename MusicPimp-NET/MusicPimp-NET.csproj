@@ -162,8 +162,10 @@
     <Compile Include="MusicPimp\ViewModels\PimpDownloadManager.cs" />
     <Compile Include="MusicPimp\ViewModels\BaseViewModel.cs" />
     <Compile Include="MusicPimp\ViewModels\PlayerManager.cs" />
+    <Compile Include="MusicPimp\ViewModels\PlaylistBase.cs" />
     <Compile Include="MusicPimp\ViewModels\PlaylistMusicItem.cs" />
     <Compile Include="MusicPimp\ViewModels\PlaylistsVM.cs" />
+    <Compile Include="MusicPimp\ViewModels\PlaylistVM.cs" />
     <Compile Include="MusicPimp\ViewModels\SearchVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

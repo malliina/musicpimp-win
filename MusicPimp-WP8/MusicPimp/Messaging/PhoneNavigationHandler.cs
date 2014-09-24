@@ -1,5 +1,7 @@
 ﻿using Mle.Collections;
 using Mle.Messaging;
+using Mle.MusicPimp.Xaml;
+using MusicPimp.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +17,15 @@ namespace Mle.MusicPimp.Messaging {
         public PhoneNavigationHandler(Frame rootFrame) {
             frame = rootFrame;
             pageIdResolver = new Dictionary<string, Uri>();
-            // TODO remove fragility
-            AddRoute(PageNames.LIBRARY, "/MusicPimp/Xaml/MusicFiles.xaml");
-            AddRoute(PageNames.IAP, "/MusicPimp-WP8;component/MusicPimp/Xaml/IapPage.xaml");
-            AddRoute(PageNames.ALARM_EDIT, "/MusicPimp/Xaml/EditAlarm.xaml");
-            AddRoute(PageNames.ALARMS, "/MusicPimp/Xaml/AlarmClock.xaml");
+            AddPimpRoute(PageNames.LIBRARY, typeof(MusicFiles));
+            AddPimpRoute(PageNames.IAP, typeof(IapPage));
+            AddPimpRoute(PageNames.ALARM_EDIT, typeof(EditAlarm));
+            AddPimpRoute(PageNames.ALARMS, typeof(AlarmClock));
+            AddPimpRoute(PageNames.PLAYLIST, typeof(Playlist));
             viewModelResolver = new Dictionary<Type, Uri>();
+        }
+        private void AddPimpRoute(string key, Type pageType) {
+            AddRoute(key, "/MusicPimp/Xaml/" + pageType.Name + ".xaml");
         }
         private void AddRoute(string id, string uriString) {
             pageIdResolver.Add(id, new Uri(uriString, UriKind.Relative));

@@ -57,10 +57,7 @@ namespace Mle.MusicPimp.Xaml {
             }
             TryGoBack();
         }
-        private void TryGoBack() {
-            if(NavigationService.CanGoBack)
-                NavigationService.GoBack();
-        }
+        
         /// <summary>
         /// If the query parameter key contains an endpoint ID, returns that endpoint, otherwise
         /// returns the active playback endpoint.

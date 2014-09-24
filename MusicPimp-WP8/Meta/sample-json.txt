@@ -58,7 +58,24 @@ Playlists - multiple items:
  "version": "1.9.0"
 }}
 
-Specific playlist:
+Specific playlist - no entries:
+
+{"subsonic-response": {
+ "status": "ok",
+ "xmlns": "http://subsonic.org/restapi",
+ "playlist": {
+  "id": 6,
+  "duration": 0,
+  "songCount": 0,
+  "created": "2014-09-24T14:16:54",
+  "name": "Sep 24, 2014 2:16 PM",
+  "owner": "admin",
+  "public": false
+ },
+ "version": "1.9.0"
+}}
+
+Specific playlist - entries:
 
 {"subsonic-response": {
  "status": "ok",

@@ -407,6 +407,8 @@
   <ItemGroup>
     <Content Include="Assets\AppBar\add.png" />
     <Content Include="Assets\AppBar\appbar.delete.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.cloud.download.light.png" />
+    <Content Include="Assets\AppBar\WP7\appbar.cloud.download.png" />
     <Content Include="Assets\AppBar\WP7\feature.search.png" />
     <Content Include="Assets\AppBar\save.png" />
     <Content Include="Assets\Icons\add.png" />

@@ -11,17 +11,17 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
     toolkit:TiltEffect.IsTiltEnabled="True">
     <phone:PhoneApplicationPage.Resources>
         <DataTemplate x:Key="PlaylistItemTemplate">
             <ctrl:TapCommandControl 
-                TapCommand="{Binding DataContext.NavigateToAlarm, ElementName=PlaylistSelector}"
+                TapCommand="{Binding DataContext.Play, ElementName=PlaylistSelector}"
                 TapCommandParameter="{Binding}">
                 <StackPanel Margin="0,0,0,17">
-                    <TextBlock Text="{Binding Name}" 
+                    <TextBlock Text="{Binding Name}"
                            TextWrapping="NoWrap" 
                            Margin="12,0,0,0" 
                            Style="{StaticResource PhoneTextExtraLargeStyle}"/>
@@ -36,6 +36,9 @@
                     </StackPanel>
                     <toolkit:ContextMenuService.ContextMenu>
                         <toolkit:ContextMenu>
+                            <toolkit:MenuItem Header="view tracks" 
+                                        Command="{Binding DataContext.NavigateToPlaylist, ElementName=PlaylistSelector}" 
+                                        CommandParameter="{Binding}"/>
                             <toolkit:MenuItem Header="delete playlist" 
                                         Command="{Binding DataContext.Delete, ElementName=PlaylistSelector}" 
                                         CommandParameter="{Binding}"/>
@@ -72,8 +75,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ctrl:LabeledProgressBar Visibility="{Binding IsEmptyAndLoading, Converter={StaticResource booleanVisibility}}"
-                                     Label="Loading..."/>
+                <ctrl:LabeledProgressBar Visibility="{Binding IsLoading, Converter={StaticResource booleanVisibility}}"
+                                     Label="Loading playlists..."/>
                 <TextBlock Grid.Row="1"  
                                Text="{Binding FeedbackMessage}" 
                                TextWrapping="Wrap"
@@ -81,8 +84,9 @@
                                Visibility="{Binding ShowFeedback,Converter={StaticResource booleanVisibility}}"/>
                 <phone:LongListSelector Grid.Row="2"
                                         x:Name="PlaylistSelector"
-                                        ItemsSource="{Binding RemoteEndpoints}" 
+                                        ItemsSource="{Binding Playlists}" 
                                         ItemTemplate="{StaticResource PlaylistItemTemplate}"
+                                        Visibility="{Binding IsLoading, Converter={StaticResource invertedBooleanVisibility}}"
                                         SelectionChanged="PlaylistSelector_SelectionChanged"/>
             </Grid>
         </Grid>
