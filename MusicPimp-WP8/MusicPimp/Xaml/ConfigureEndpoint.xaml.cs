@@ -9,11 +9,13 @@ using System.Windows.Navigation;
 
 namespace MusicPimp.Xaml {
     public partial class ConfigureEndpoint : AsyncPhoneApplicationPage {
+        private EndpointEditorViewModel vm;
         public ConfigureEndpoint() {
             InitializeComponent();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            DataContext = BuildDataContext();
+            vm = BuildDataContext();
+            DataContext = vm;
             base.OnNavigatedTo(e);
         }
         private EndpointEditorViewModel BuildDataContext() {
@@ -45,8 +47,11 @@ namespace MusicPimp.Xaml {
                 MessageBox.Show("An error occurred. Please try again later.");
             }
         }
-        private void PhoneTextBox_TextChanged_1(object sender, System.Windows.Controls.TextChangedEventArgs e) {
-            update(nameTextBox);
+        private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+            update(NameTextBox);
+        }
+        private void CloudTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+            update(CloudTextBox);
         }
         private void userTextBox_TextChanged_1(object sender, TextChangedEventArgs e) {
             update(userTextBox);
@@ -62,5 +67,19 @@ namespace MusicPimp.Xaml {
             var be = passwordTextBox.GetBindingExpression(PasswordBox.PasswordProperty);
             be.UpdateSource();
         }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e) {
+            //if(vm != null) {
+            //    vm.Update();
+            //}
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e) {
+            if(vm != null) {
+                vm.Update();
+            }
+        }
+
+        
     }
 }

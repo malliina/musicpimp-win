@@ -18,6 +18,7 @@
             <common:EndpointEnumConverter x:Key="endpointConverter"/>
             <common:ProtocolEnumConverter x:Key="protocolConverter"/>
             <common:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+            <common:InvertedBooleanToVisibilityConverter x:Key="invertedBooleanVisibility"/>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/CustomStyles.xaml"/>
@@ -30,7 +31,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="White"
-          VerticalAlignment="Center" HorizontalAlignment="Stretch">
+          VerticalAlignment="Center" 
+          HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -76,12 +78,19 @@
                 <!-- Need to use group names because there are multiple radio groups on this page -->
                 <RadioButton Content="MusicPimp"
                              GroupName="EndType"
-                            IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}" 
-                            Style="{StaticResource FlyoutRadioButton}"/>
+                             IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}" 
+                             Style="{StaticResource FlyoutRadioButton}"
+                             Checked="RadioButton_Checked"/>
+                <RadioButton Content="Cloud"
+                             GroupName="EndType"
+                             IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=PimpCloud, Mode=TwoWay}" 
+                             Style="{StaticResource FlyoutRadioButton}"
+                             Checked="RadioButton_Checked"/>
                 <RadioButton Content="Subsonic"
                              GroupName="EndType"
-                            IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=Subsonic, Mode=TwoWay}" 
-                            Style="{StaticResource FlyoutRadioButton}"/>
+                             IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource endpointConverter}, ConverterParameter=Subsonic, Mode=TwoWay}" 
+                             Style="{StaticResource FlyoutRadioButton}"
+                             Checked="RadioButton_Checked"/>
             </StackPanel>
             <TextBlock Text="Description"
                        Style="{StaticResource LightBasicTextStyle}" 
@@ -94,12 +103,27 @@
                                                   WatermarkColor="Gray"/>
                 </i:Interaction.Behaviors>
             </TextBox>
+            <TextBlock Text="Cloud server ID"
+                       Style="{StaticResource LightBasicTextStyle}"
+                       Margin="3,0,0,0"
+                       Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
+            <TextBox Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay}"
+                    Style="{StaticResource LightTextBoxStyle}"
+                    Margin="3,0,0,0"
+                     Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}">
+                <i:Interaction.Behaviors>
+                    <julbeh:WatermarkTextBehavior WatermarkText="cloud ID" 
+                                                  WatermarkColor="Gray"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
             <TextBlock Text="IP address or hostname" 
                        Style="{StaticResource LightBasicTextStyle}"
-                       Margin="3,0,0,0"/>
+                       Margin="3,0,0,0"
+                       Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
             <TextBox Text="{Binding EndpointItem.Server, Mode=TwoWay}"
                     Style="{StaticResource LightTextBoxStyle}"
-                    Margin="3,0,0,0">
+                    Margin="3,0,0,0"
+                     Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}">
                 <i:Interaction.Behaviors>
                     <julbeh:WatermarkTextBehavior WatermarkText="192.168.0.1" 
                                                   WatermarkColor="Gray"/>
@@ -107,11 +131,13 @@
             </TextBox>
             <TextBlock Text="Port" 
                     Style="{StaticResource LightBasicTextStyle}" 
-                       Margin="3,0,0,0"/>
+                       Margin="3,0,0,0"
+                       Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
             <TextBox Text="{Binding EndpointItem.Port, Mode=TwoWay}"
                      InputScope="NumberFullWidth" 
                      Style="{StaticResource LightTextBoxStyle}"
-                     Margin="3,0,0,0"/>
+                     Margin="3,0,0,0"
+                     Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
             <TextBlock Text="Username" 
                     Style="{StaticResource LightBasicTextStyle}"
                        Margin="3,0,0,0"/>
@@ -126,8 +152,10 @@
                          Style="{StaticResource LightPasswordBoxStyle}"/>
             <TextBlock Text="Protocol"
                        Style="{StaticResource LightBasicTextStyle}"
-                       Margin="3,0,0,0"/>
-            <StackPanel Orientation="Horizontal">
+                       Margin="3,0,0,0"
+                       Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}">
                 <RadioButton Content="HTTP"
                              GroupName="Proto"
                             IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=http, Mode=TwoWay}" 

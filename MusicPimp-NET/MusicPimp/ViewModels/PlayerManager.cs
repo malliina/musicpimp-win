@@ -25,13 +25,17 @@ namespace Mle.MusicPimp.ViewModels {
         private static readonly string webPlayerPrefix = "clients of ";
         // TODO remove musicSource parameter from the player
         protected virtual BasePlayer NewPimpPlayer(MusicEndpoint e, Func<MusicEndpoint> musicSource) {
-            return new PimpPlayer(Provider.NewPimpSession(e), musicSource, NewPimpSocket(e, PimpPlayer.webSocketResource));
+            var session = Provider.NewPimpSession(e);
+            return new PimpPlayer(session, musicSource, NewPimpSocket(session));
         }
         protected virtual BasePlayer NewSubsonicPlayer(MusicEndpoint e) {
             return new SubsonicPlayer(new SubsonicSession(e));
         }
+        protected virtual BasePlayer NewCloudPlayer(MusicEndpoint e) {
+            return NoUploadsPimpPlayer(new CloudSession(e));
+        }
         public BasePlayer NoUploadsPimpPlayer(SimplePimpSession s) {
-            var socket = NewPimpSocket(s.Endpoint, PimpPlayer.webSocketResource);
+            var socket = NewPimpSocket(s);
             var playlist = new SimplePimpPlaylist(s, socket);
             return new PimpPlayer(s, socket, playlist);
         }
@@ -53,13 +57,6 @@ namespace Mle.MusicPimp.ViewModels {
                 return endpointNames;
             }
         }
-        //public List<MusicEndpoint> PimpEndpoints {
-        //    get {
-        //        var endpoints = EndpointsData.Endpoints;
-        //        var pimps = endpoints.Where(e => e.EndpointType == EndpointTypes.MusicPimp).ToList();
-        //        return pimps;
-        //    }
-        //}
         private BasePlayer player;
         public BasePlayer Player {
             get { return player; }
@@ -120,10 +117,11 @@ namespace Mle.MusicPimp.ViewModels {
             }
             Index = PlayerEndpoints.IndexOf(name);
         }
-        protected PimpWebSocket NewPimpSocket(MusicEndpoint e, string resource) {
+        protected PimpWebSocket NewPimpSocket(SimplePimpSession session) {
+            var e = session.Endpoint;
             var protocolPart = e.Protocol == Protocols.https ? "wss://" : "ws://";
-            var uri = new Uri(protocolPart + e.Server + ":" + e.Port + resource);
-            var ws = Provider.NewWebSocket(uri, e.Username, e.Password, SimplePimpSession.JSONv18);
+            var uri = new Uri(protocolPart + e.Server + ":" + e.Port + session.SocketResource);
+            var ws = Provider.NewWebSocket(uri, session.AuthHeader(e), SimplePimpSession.JSONv18);
             return new PimpWebSocket(ws);
         }
         /// <summary>
@@ -170,17 +168,21 @@ namespace Mle.MusicPimp.ViewModels {
             switch(e.EndpointType) {
                 case EndpointTypes.Local:
                     return Provider.LocalPlayer;
+                case EndpointTypes.PimpCloud:
+                    return NewCloudPlayer(e);
                 case EndpointTypes.MusicPimp:
                     switch(playbackMode) {
                         case PlaybackMode.server:
                             return NewPimpPlayer(e, () => LibraryManager.ActiveEndpoint);
                         case PlaybackMode.web:
-                            return new PimpWebPlayer(Provider.NewPimpSession(e), NewPimpSocket(e, PimpWebPlayer.webSocketResource));
+                            var s = Provider.NewPimpSession(e);
+                            return new PimpWebPlayer(s, NewPimpSocket(s));
                         default:
                             throw new NotImplementedException("Invalid playback mode: " + playbackMode);
                     }
                 case EndpointTypes.Beam:
-                    return Provider.NewBeamPlayer(Provider.NewBeamSession(e), NewPimpSocket(e, BeamPlayer.webSocketResource));
+                    var s2 = Provider.NewBeamSession(e);
+                    return Provider.NewBeamPlayer(s2, NewPimpSocket(s2));
                 case EndpointTypes.Subsonic:
                     return NewSubsonicPlayer(e);
                 default:

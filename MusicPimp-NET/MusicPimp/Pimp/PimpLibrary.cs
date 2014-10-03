@@ -9,9 +9,9 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Mle.MusicPimp.Pimp {
-    public abstract class PimpLibrary : MusicLibrary {
+    public class PimpLibrary : MusicLibrary {
         private PimpSessionBase session;
-        public PimpLibrary(PimpSessionBase s, bool useCredentialsInQueryParam) {
+        public PimpLibrary(PimpSessionBase s) {
             session = s;
             RootEmptyMessage = "Successfully connected to MusicPimp at " + session.Describe + ", however the server-side music library is empty. To use it as a music source, you need to add folders containing MP3s in the Manage section of MusicPimp for your PC. Refresh the library of this app when you're done.";
         }
@@ -22,9 +22,9 @@ namespace Mle.MusicPimp.Pimp {
         public override Uri DownloadUriFor(MusicItem track) {
             return session.DownloadUriFor(track);
         }
-        public override string DirectoryIdentifier(MusicItem musicDir) {
-            return "" + musicDir.Id;
-        }
+        //public override string DirectoryIdentifier(MusicItem musicDir) {
+        //    return "" + musicDir.Id;
+        //}
         protected async override Task<IEnumerable<MusicItem>> LoadFolderAsync(string folder) {
             FoldersPimpResponse response = null;
             if(folder == RootFolderKey) {
@@ -54,7 +54,7 @@ namespace Mle.MusicPimp.Pimp {
         }
 
         public MusicItem TrackToMusicItem(PimpTrack track, Uri uri) {
-            return AudioConversions.PimpTrackToMusicItem(track, uri, session.Username, session.Password);
+            return AudioConversions.PimpTrackToMusicItem(track, uri, session.Username, session.Password, session.CloudServerID);
         }
         public override async Task Upload(MusicItem song, string resource, PimpSession destSession) {
             var targetUri = destSession.BaseUri + resource;

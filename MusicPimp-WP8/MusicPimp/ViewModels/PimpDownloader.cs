@@ -118,7 +118,6 @@ namespace Mle.MusicPimp.ViewModels {
                 AddMessage("Unable to submit all tracks for download. A file path was too long.");
             }
         }
-
         /// <summary>
         /// Keeps the download progress properties of the music items up-to-date
         /// so that the progress can be displayed under each item in the UI.
@@ -147,7 +146,6 @@ namespace Mle.MusicPimp.ViewModels {
                 item.Song.IsDownloading = isDownloading;
             }
         }
-
         public override void AddTransfer(Uri remoteUri, string destination) {
             try {
                 base.AddTransfer(remoteUri, destination);
@@ -162,12 +160,10 @@ namespace Mle.MusicPimp.ViewModels {
                 AddMessage("Error while processing completed transfer. " + e.Message);
             }
         }
-
         protected override void OnTransferCompletedWithErrors(BackgroundTransferRequest transfer) {
             var destFileName = Path.GetFileName(transfer.Tag);
             AddMessage("Download of " + destFileName + " failed: " + transfer.TransferError.Message);
         }
-
         public async Task ValidateThenSubmitDownload(MusicItem item) {
             try {
                 if(item.IsDir) {
@@ -216,7 +212,6 @@ namespace Mle.MusicPimp.ViewModels {
 
         // rely on the credentials in the query string because the background downloader
         // in WP doesn't support custom HTTP headers
-
         public Task<Uri> DownloadAsync(MusicItem track, string username, string password) {
             return DownloadAsync(track);
         }

@@ -19,7 +19,7 @@ namespace Mle.MusicPimp.Pimp {
 
         public static PlaybackStatus ToPlaybackStatus(StatusPimpResponse status) {
             var playlist = status.playlist
-                .Select(track => AudioConversions.PimpTrackToMusicItem(track, null, null, null))
+                .Select(track => AudioConversions.PimpTrackToMusicItem(track, null, null, null, null))
                 .ToList();
             return new PlaybackStatus(
                 fromStatus(status),
@@ -42,7 +42,7 @@ namespace Mle.MusicPimp.Pimp {
             if(!hasTrack(status)) {
                 return null;
             }
-            return AudioConversions.PimpTrackToMusicItem(status.track, null, null, null);
+            return AudioConversions.PimpTrackToMusicItem(status.track, null, null, null, null);
         }
         private static TimeSpan position(StatusPimpResponse status) {
             if(!hasTrack(status)) {

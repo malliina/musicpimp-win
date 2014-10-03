@@ -8,7 +8,13 @@ using System.Windows.Input;
 
 namespace Mle.MusicPimp.ViewModels {
     public abstract class EndpointEditorViewModel : ClosingViewModel {
-        public MusicEndpoint EndpointItem { get; protected set; }
+        //protected MusicEndpoint CloudEndpoint { get; protected set; }
+        //protected MusicEndpoint NonCloudEndpoint { get; protected set; }
+        private MusicEndpoint endpointItem;
+        public MusicEndpoint EndpointItem {
+            get { return endpointItem; }
+            protected set { SetProperty(ref endpointItem, value); }
+        }
         public void CancelEndpoint(MusicEndpoint endpoint) { }
         public abstract Task AddOrUpdate(MusicEndpoint endpoint);
         public Provider Provider { get { return ProviderService.Instance; } }
@@ -19,8 +25,9 @@ namespace Mle.MusicPimp.ViewModels {
         private bool makeActiveLibrary;
         public bool MakeActiveLibrary {
             get { return makeActiveLibrary; }
-            set { this.SetProperty(ref this.makeActiveLibrary, value); }
+            set { SetProperty(ref this.makeActiveLibrary, value); }
         }
+        public bool IsCloud { get { return EndpointItem.EndpointType == EndpointTypes.PimpCloud; } }
         public ICommand Add { get; private set; }
         public ICommand Cancel { get; private set; }
         public ICommand DisplayHelp { get; private set; }
@@ -30,6 +37,27 @@ namespace Mle.MusicPimp.ViewModels {
             Add = new AsyncUnitCommand(AddEndpoint);
             Cancel = new UnitCommand(Close);
             DisplayHelp = new UnitCommand(() => Send(MusicItemsBase.AppHelpHeader, MusicItemsBase.AppHelpMessage));
+        }
+        public void Update() {
+            OnPropertyChanged("IsCloud");
+            var wasPreviouslyCloud = EndpointItem.Server == CloudEndpoint.SERVER;
+            if(IsCloud) {
+                Cloudify(EndpointItem);
+            } else {
+                if(wasPreviouslyCloud) {
+                    UnCloudify(EndpointItem);
+                }
+            }
+        }
+        private void Cloudify(MusicEndpoint endpoint) {
+            endpoint.Server = CloudEndpoint.SERVER;
+            endpoint.Port = CloudEndpoint.PORT;
+            endpoint.Protocol = CloudEndpoint.PROTOCOL;
+        }
+        private void UnCloudify(MusicEndpoint endpoint) {
+            endpoint.Server = MusicEndpoint.DEFAULT_SERVER;
+            endpoint.Port = MusicEndpoint.DEFAULT_PORT;
+            endpoint.Protocol = MusicEndpoint.DEFAULT_PROTOCOL;
         }
         public virtual async Task SubmitEndpoint(MusicEndpoint endpoint) {
             await AddOrUpdate(endpoint);

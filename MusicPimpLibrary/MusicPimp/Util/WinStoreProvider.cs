@@ -1,5 +1,4 @@
 ﻿using Mle.Iap;
-using Mle.IO;
 using Mle.IO.Local;
 using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Beam;
@@ -10,8 +9,8 @@ using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using Mle.Util;
-using Mle.ViewModels;
 using System;
+using System.Net.Http.Headers;
 
 namespace Mle.MusicPimp.Util {
     public class WinStoreProvider : Provider {
@@ -52,7 +51,7 @@ namespace Mle.MusicPimp.Util {
             get { return PimpIapUtils.Instance; }
         }
         public MusicLibrary NewPimpLibrary(MusicEndpoint e) {
-            return new StorePimpLibrary(new StorePimpSession(e));
+            return new PimpLibrary(new StorePimpSession(e));
         }
         public BasePlayer NewBeamPlayer(PimpSession session, PimpWebSocket socket) {
             return new StoreBeamPlayer(session, socket);
@@ -63,11 +62,12 @@ namespace Mle.MusicPimp.Util {
         public PimpSession NewBeamSession(MusicEndpoint e) {
             return new StorePimpSession(e);
         }
-        public WebSocketBase NewWebSocket(Uri uri, string userName, string password, string mediaType) {
-            return new SimpleWebSocket(uri, userName, password, mediaType);
+        public WebSocketBase NewWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType) {
+            return new SimpleWebSocket(uri, authHeader, mediaType);
         }
         public AbstractOAuthBase NewOAuthBase() {
             return new OAuthBase();
         }
+        public Platforms Platform { get { return Platforms.WinStore; } }
     }
 }

@@ -43,7 +43,7 @@ namespace Mle.MusicPimp.Xaml {
             // push notifications have query parameters
             MusicEndpoint endpoint = ResolveEndpoint(PageParams.TAG, def: provider.PlayerManager.ActiveEndpoint);
             var shouldStop = Query(PageParams.CMD) == STOP && endpoint != null;
-            if(endpoint != null && endpoint.EndpointType == EndpointTypes.MusicPimp) {
+            if(endpoint != null && (endpoint.EndpointType == EndpointTypes.MusicPimp || endpoint.EndpointType == EndpointTypes.PimpCloud)) {
                 await vm.UpdateUI(endpoint);
             } else {
                 var item = PlayerList.SelectedItem;

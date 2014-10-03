@@ -73,7 +73,7 @@ namespace Mle.Network {
         /// </summary>
         /// <param name="download">operation to start</param>
         /// <returns>the uri to the downloaded file</returns>
-        protected Task<Uri> StartDownload(DownloadOperation download) {
+        public Task<Uri> StartDownload(DownloadOperation download) {
             return HandleDownload(download, alreadyStarted: false);
         }
         protected Task<Uri> AttachProgressFollower(DownloadOperation download) {

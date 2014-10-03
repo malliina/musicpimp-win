@@ -96,7 +96,7 @@ namespace Mle.MusicPimp.Network {
                     case TRACK_CHANGED:
                         var tce = Deserialize<TrackChangedEvent>(msg);
                         // todo set track source
-                        MusicItem item = AudioConversions.PimpTrackToMusicItem(tce.track, null, Socket.UserName, Socket.Password);
+                        MusicItem item = ToItem(tce.track);
                         OnTrackChanged(item);
                         break;
                     case VOLUME_CHANGED:
@@ -109,7 +109,7 @@ namespace Mle.MusicPimp.Network {
                         break;
                     case PLAYLIST_MODIFIED:
                         var pme = Deserialize<PlaylistModifiedEvent>(msg);
-                        var playlist = pme.playlist.Select(item2 => AudioConversions.PimpTrackToMusicItem(item2, null, Socket.UserName, Socket.Password)).ToList();
+                        var playlist = pme.playlist.Select(ToItem).ToList();
                         OnPlaylistModified(playlist);
                         break;
                     case PLAYLIST_INDEX_CHANGED:
@@ -129,6 +129,9 @@ namespace Mle.MusicPimp.Network {
                         break;
                 }
             }
+        }
+        private MusicItem ToItem(PimpTrack track) {
+            return AudioConversions.PimpTrackToMusicItem(track, null, null,null, null);
         }
         public static PlayerState FromName(string stateName) {
             switch(stateName) {

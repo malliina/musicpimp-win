@@ -66,8 +66,13 @@ namespace Mle.MusicPimp.ViewModels {
             get { return password; }
             set { this.SetProperty(ref this.password, value); }
         }
+        private string cloudServer;
+        public string CloudServer {
+            get { return cloudServer; }
+            set { SetProperty(ref cloudServer, value); }
+        }
         public bool IsSourceLocal {
-            get { return Source != null && !HttpUtil.IsHttp(Source); }
+            get { return Source != null && !HttpUtil.IsHttpOrHttps(Source); }
         }
         private bool isDownloading = false;
         public bool IsDownloading {

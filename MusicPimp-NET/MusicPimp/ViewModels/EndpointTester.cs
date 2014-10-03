@@ -1,6 +1,7 @@
 ﻿using Mle.Exceptions;
 using Mle.MusicPimp.Exceptions;
 using Mle.MusicPimp.Network.Http;
+using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.Subsonic;
 using Mle.MusicPimp.Util;
 using Mle.Util;
@@ -33,6 +34,9 @@ namespace Mle.MusicPimp.ViewModels {
                     case EndpointTypes.MusicPimp:
                         session = ProviderService.Instance.NewPimpSession(endpoint);
                         break;
+                    case EndpointTypes.PimpCloud:
+                        session = new CloudSession(endpoint);
+                        break;
                     case EndpointTypes.Subsonic:
                         session = new SubsonicSession(endpoint);
                         break;
@@ -59,7 +63,7 @@ namespace Mle.MusicPimp.ViewModels {
                 userFeedback = sre.Message;
             } catch(HttpRequestException) {
                 userFeedback = GetFeedback(endpoint, session);
-            } catch(Exception) {
+            } catch(Exception e) {
                 userFeedback = "Something went wrong. Please check that all the fields are filled in properly.";
             }
 
@@ -68,10 +72,10 @@ namespace Mle.MusicPimp.ViewModels {
             }
         }
         private string GetFeedback(MusicEndpoint e, RemoteBase s) {
-            string userFeedback = s != null ? "Unable to connect to " + s.BaseUri : "Unable to connect";
+            string userFeedback = s != null && e.EndpointType != EndpointTypes.PimpCloud ? "Unable to connect to " + s.BaseUri + "." : "Unable to connect.";
             var extraInfo = "";
-            if(e.Protocol == Protocols.https) {
-                extraInfo = ". Perhaps the certificate validation failed? Untrusted SSL certificates are not accepted.";
+            if(e.Protocol == Protocols.https && e.EndpointType != EndpointTypes.PimpCloud) {
+                extraInfo = " Perhaps the certificate validation failed? Untrusted SSL certificates are not accepted.";
             }
             userFeedback += extraInfo;
             return userFeedback;

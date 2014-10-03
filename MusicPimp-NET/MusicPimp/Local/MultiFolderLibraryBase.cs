@@ -40,7 +40,7 @@ namespace Mle.MusicPimp.Local {
                 try {
                     var libItems = await lib.LoadFolderIfExists(id);
                     if(libItems.Count() > 0) {
-                        AddDistinct(libItems, to);
+                        AddAndRemoveExistingWithSameName(libItems, to);
                     }
                 } catch(Exception) {
                     // May throw if the sublibrary does not contain a folder with

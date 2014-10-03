@@ -7,11 +7,11 @@ using System;
 
 namespace Mle.MusicPimp.Audio {
     public class AudioConversions {
-        public static MusicItem PimpTrackToMusicItem(PimpTrack track, Uri source, string username, string password) {
+        public static MusicItem PimpTrackToMusicItem(PimpTrack track, Uri source, string username, string password, string cloudServer) {
             string path = null;
             var maybeId = track.id;
             if(maybeId != null) {
-                path = FileUtilsBase.UnixSeparators(WebUtility.UrlDecode(maybeId));
+                path = Decode(maybeId);
             }
             return new MusicItem() {
                 Id = maybeId,
@@ -22,16 +22,22 @@ namespace Mle.MusicPimp.Audio {
                 Duration = TimeSpan.FromSeconds(track.duration),
                 IsDir = false,
                 Size = track.size,
-                Source = source
+                Source = source,
+                Username = username,
+                Password = password,
+                CloudServer = cloudServer
             };
         }
         public static MusicItem FolderToMusicItem(PimpFolder folder) {
             return new MusicItem() {
                 Id = folder.id,
                 Name = folder.title,
-                Path = FileUtilsBase.UnixSeparators(WebUtility.UrlDecode(folder.id)),
+                Path = Decode(folder.id),
                 IsDir = true
             };
+        }
+        private static string Decode(string id) {
+            return FileUtilsBase.UnixSeparators(WebUtility.UrlDecode(id));
         }
         public static MusicItem EntryToMusicItem(Entry track, Uri uri, string username, string password) {
             if(track.isDir) {

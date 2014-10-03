@@ -118,7 +118,6 @@
     <Compile Include="MusicPimp\Messaging\PhoneNavigationHandler.cs" />
     <Compile Include="MusicPimp\Network\Downloader.cs" />
     <Compile Include="MusicPimp\Network\PhoneUploadRequest.cs" />
-    <Compile Include="MusicPimp\Pimp\PhonePimpLibrary.cs" />
     <Compile Include="MusicPimp\Pimp\PhonePimpSession.cs" />
     <Compile Include="MusicPimp\Pimp\PushClient.cs" />
     <Compile Include="MusicPimp\Tiles\Tiles.cs" />

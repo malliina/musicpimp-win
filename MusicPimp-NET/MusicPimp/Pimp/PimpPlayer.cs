@@ -8,8 +8,7 @@ namespace Mle.MusicPimp.Audio {
     public class PimpPlayer : PimpBasePlayer {
         public override BasePlaylist Playlist { get; protected set; }
 
-        public static readonly string webSocketResource = "/ws/playback";
-        public static readonly string postResource = "/playback";
+        //public static readonly string postResource = "/playback";
 
         public PimpPlayer(SimplePimpSession s, PimpWebSocket webSocket, BasePlaylist playlist)
             : base(s, webSocket) {
@@ -17,7 +16,6 @@ namespace Mle.MusicPimp.Audio {
         }
         public PimpPlayer(PimpSession s, Func<MusicEndpoint> musicSource, PimpWebSocket webSocket)
             : this(s, webSocket, new PimpPlaylist(s, musicSource, webSocket)) {
-            //Playlist = new PimpPlaylist(s, musicSource, webSocket);
         }
         public override async Task play() {
             // if no track is set, inits the player with a track from the playlist 

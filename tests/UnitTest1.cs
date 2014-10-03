@@ -29,6 +29,34 @@ namespace tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
+        public void UrlEncoding() {
+            //var test = "A B";
+            var expected = "A+B";
+            var result = WebUtility.HtmlEncode(expected);
+            Assert.AreEqual(expected, result);
+            //var result2 = WebUtility.HtmlEncode(test);
+            //Assert.AreEqual(expected, result2);
+        }
+        public class A {
+            public int Value { get; protected set; }
+            public A() {
+                Value = GetValue();
+            }
+            protected virtual int GetValue() {
+                return 1;
+            }
+        }
+        public class B : A {
+            override protected int GetValue() {
+                return 2;
+            }
+        }
+        [TestMethod]
+        public void ConstSubCallTest() {
+            var b = new B();
+            Assert.AreEqual(2, b.Value);
+        }
+        [TestMethod]
         public void TypeTests() {
             var stringName = typeof(String).Name;
             Assert.AreEqual("String", stringName);

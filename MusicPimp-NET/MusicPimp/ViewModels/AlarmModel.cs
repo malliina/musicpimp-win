@@ -152,6 +152,7 @@ namespace Mle.MusicPimp.ViewModels {
                 player.PlayerStateChanged += p_PlayerStateChanged;
                 EnsureTrackIsUpdated();
                 await player.Subscribe();
+                var tmp = 0;
             });
         }
         public Task UninstallPlayer() {
@@ -181,7 +182,7 @@ namespace Mle.MusicPimp.ViewModels {
             return new AlarmModel(BuildClient(endpoint, helper));
         }
         public static IAlarmClient BuildClient(MusicEndpoint endpoint, IDateTimeHelper timeHelper) {
-            var session = new SimplePimpSession(endpoint);
+            var session = SimpleAlarmClient.BuildSession(endpoint);
             return new SimpleAlarmClient(session, timeHelper);
         }
         public Task LoadTracks() {

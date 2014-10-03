@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Mle.Network {
@@ -11,16 +12,18 @@ namespace Mle.Network {
     public abstract class WebSocketBase {
 
         public Uri ServerUri { get; private set; }
-        public string UserName { get; private set; }
-        public string Password { get; private set; }
+        public AuthenticationHeaderValue AuthHeader { get; private set; }
+        //public string Username { get; private set; }
+        //public string Password { get; private set; }
         public string MediaType { get; private set; }
         public bool IsConnected { get; set; }
         protected IList<KeyValuePair<string, string>> headers;
 
-        public WebSocketBase(Uri uri, string userName, string password, string mediaType) {
+        public WebSocketBase(Uri uri, AuthenticationHeaderValue authHeader, string mediaType) {
             ServerUri = uri;
-            UserName = userName;
-            Password = password;
+            AuthHeader = authHeader;
+            //Username = username;
+            //Password = password;
             MediaType = mediaType;
             IsConnected = false;
         }

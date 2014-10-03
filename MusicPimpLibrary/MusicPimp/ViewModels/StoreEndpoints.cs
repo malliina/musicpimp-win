@@ -91,6 +91,7 @@ namespace Mle.MusicPimp.ViewModels {
                         Name = e.Name,
                         Server = e.Server,
                         Port = e.Port,
+                        CloudServerID = e.CloudServerID,
                         EndpointType = e.EndpointType,
                         Protocol = e.Protocol
                     });

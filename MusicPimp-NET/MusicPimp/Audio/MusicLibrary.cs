@@ -14,7 +14,7 @@ namespace Mle.MusicPimp.Audio {
     /// </summary>
     public abstract class MusicLibrary : NetworkedViewModel {
         /// <summary>
-        /// Triggers when folder from a sub-library (or the whole library) have been loaded. UIs may wish to update themselves at this point.
+        /// Triggers when items from a sub-library (or the whole library) have been loaded. UIs may wish to update themselves at this point.
         /// </summary>
         public event Action<IEnumerable<MusicItem>> NewItemsLoaded;
         public Dictionary<string, IEnumerable<MusicItem>> Folders { get; private set; }
@@ -35,15 +35,15 @@ namespace Mle.MusicPimp.Audio {
             ServerSupportsPlaylists = false;
         }
         public virtual Task<List<SavedPlaylistMeta>> LoadPlaylists() {
-            return EmptyTaskList<SavedPlaylistMeta>();
+            return EmptyListTask<SavedPlaylistMeta>();
         }
         public virtual Task<List<MusicItem>> LoadPlaylist(string playlistID) {
-            return EmptyTaskList<MusicItem>();
+            return EmptyListTask<MusicItem>();
         }
         public virtual Task DeletePlaylist(string playlistID) {
             return AsyncTasks.Noop();
         }
-        private Task<List<T>> EmptyTaskList<T>() {
+        private Task<List<T>> EmptyListTask<T>() {
             return TaskEx.FromResult<List<T>>(new List<T>());
         }
         /// <summary>
@@ -58,7 +58,7 @@ namespace Mle.MusicPimp.Audio {
         /// <returns>subfolders and tracks in the given folder</returns>
         public virtual async Task LoadFolderAsync2(string folderId, ObservableCollection<MusicItem> to) {
             var items = await LoadFolderAsync(folderId);
-            AddDistinct(items, to);
+            AddAndRemoveExistingWithSameName(items, to);
         }
         public virtual string DirectoryIdentifier(MusicItem musicDir) {
             return musicDir.Id;
@@ -100,7 +100,7 @@ namespace Mle.MusicPimp.Audio {
         }
         public virtual async Task LoadFolder(string folderId, ObservableCollection<MusicItem> to) {
             if(IsFolderLoaded(folderId)) {
-                AddDistinct(Folders[folderId], to);
+                AddAndRemoveExistingWithSameName(Folders[folderId], to);
             } else {
                 await LoadFolderAsync2(folderId, to);
                 // saves to cache
@@ -112,15 +112,42 @@ namespace Mle.MusicPimp.Audio {
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        protected void AddDistinct(IEnumerable<MusicItem> from, ObservableCollection<MusicItem> to) {
-            var comparer = new MusicItemComparer();
-            // 'newItems' contains the 'from' items which are not already in 'to'.
-            // This is algorithmically expensive. Should be fine with <1000 items though.
-            var newItems = from.Where(item => !to.Any(toItem => comparer.Equals(item, toItem))).ToList();
-            foreach(var newItem in newItems) {
-                to.Add(newItem);
+        //protected void AddDistinctPreferRemoteOld(IEnumerable<MusicItem> from, ObservableCollection<MusicItem> to) {
+        //    var comparer = new MusicItemComparer();
+        //    // 'newItems' contains the 'from' items which are not already in 'to'.
+        //    // This is algorithmically expensive. Should be fine with <1000 items though.
+        //    var newItems = from.Where(item => !to.Any(toItem => comparer.Equals(item, toItem))).ToList();
+        //    foreach(var newItem in newItems) {
+        //        to.Add(newItem);
+        //    }
+        //    OnNewItemsLoaded(newItems);
+        //}
+
+        /// <summary>
+        /// Adds from to to. Replaces any items in to with the item from from, if two items have the same name.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        protected void AddAndRemoveExistingWithSameName(IEnumerable<MusicItem> from, ObservableCollection<MusicItem> to) {
+            // Inefficient
+
+            //foreach(var item in from) {
+            //    to.Add(item);
+            //}
+            //var localDuplicates = to.Where(item => item.IsSourceLocal).Where(local => to.Any(item => !item.IsSourceLocal && item.Name == local.Name)).ToList();
+            //foreach(var local in localDuplicates) {
+            //    to.Remove(local);
+            //}
+
+            // Good enough approximation, ignores locality checks
+            var victims = to.Where(item => from.Any(f => f.Name == item.Name)).ToList();
+            foreach(var victim in victims) {
+                to.Remove(victim);
             }
-            OnNewItemsLoaded(newItems);
+            foreach(var item in from) {
+                to.Add(item);
+            }
+            OnNewItemsLoaded(from);
         }
 
         /// <summary>

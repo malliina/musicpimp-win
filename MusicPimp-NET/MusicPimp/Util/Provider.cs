@@ -9,6 +9,7 @@ using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using Mle.Util;
 using System;
+using System.Net.Http.Headers;
 
 namespace Mle.MusicPimp.Util {
     public class ProviderService : Provider {
@@ -47,13 +48,14 @@ namespace Mle.MusicPimp.Util {
         public PimpSession NewBeamSession(MusicEndpoint e) {
             return impl.NewBeamSession(e);
         }
-        public WebSocketBase NewWebSocket(Uri uri, string userName, string password, string mediaType) {
-            return impl.NewWebSocket(uri, userName, password, mediaType);
+        public WebSocketBase NewWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType) {
+            return impl.NewWebSocket(uri, authHeader, mediaType);
         }
         public AbstractOAuthBase NewOAuthBase() {
             return impl.NewOAuthBase();
         }
         public IDownloader Downloader { get { return impl.Downloader; } }
+        public Platforms Platform { get { return impl.Platform; } }
     }
     public interface Provider {
         MusicItemsBase MusicItemsBase { get; }
@@ -71,7 +73,8 @@ namespace Mle.MusicPimp.Util {
         BasePlayer NewBeamPlayer(PimpSession session, PimpWebSocket socket);
         PimpSession NewPimpSession(MusicEndpoint e);
         PimpSession NewBeamSession(MusicEndpoint e);
-        WebSocketBase NewWebSocket(Uri uri, string userName, string password, string mediaType);
+        WebSocketBase NewWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType);
         AbstractOAuthBase NewOAuthBase();
+        Platforms Platform { get; }
     }
 }

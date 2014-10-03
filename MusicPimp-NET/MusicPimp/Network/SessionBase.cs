@@ -31,7 +31,7 @@ namespace Mle.MusicPimp.Network {
         public virtual Uri DownloadUriFor(MusicItem track) {
             return track.Source;
         }
-        private HttpClient NewHttpClient(MusicEndpoint e) {
+        protected HttpClient NewHttpClient(MusicEndpoint e) {
             var handler = new HttpClientHandler();
             if(UseCompression && handler.SupportsAutomaticDecompression) {
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -41,9 +41,12 @@ namespace Mle.MusicPimp.Network {
             var client = new HttpClient(handler);
             client.BaseAddress = new Uri(e.Protocol + "://" + e.Server + ":" + e.Port);
             var headers = client.DefaultRequestHeaders;
-            headers.Authorization = AuthorizationHeader(e.Username, e.Password);
+            headers.Authorization = AuthHeader(e);
             headers.Accept.ParseAdd(mediaType);
             return client;
+        }
+        public virtual AuthenticationHeaderValue AuthHeader(MusicEndpoint e) {
+            return AuthorizationHeader(e.Username, e.Password);
         }
 
         protected virtual AuthenticationHeaderValue AuthorizationHeader(string username, string password) {

@@ -1,6 +1,7 @@
 ﻿using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Exceptions;
 using Mle.MusicPimp.Local;
+using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.Subsonic;
 using Mle.MusicPimp.Util;
 using Mle.Util;
@@ -44,6 +45,8 @@ namespace Mle.MusicPimp.ViewModels {
                 case EndpointTypes.MusicPimp:
                 case EndpointTypes.MusicPimpWeb:
                     return new MasterChildLibrary(Provider.NewPimpLibrary(source), Provider.LocalLibrary);
+                case EndpointTypes.PimpCloud:
+                    return new MasterChildLibrary(new PimpLibrary(new CloudSession(source)), Provider.LocalLibrary);
                 case EndpointTypes.Subsonic:
                     return new SubsonicLibrary(new SubsonicSession(source));
                 default:

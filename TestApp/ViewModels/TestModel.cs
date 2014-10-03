@@ -64,15 +64,13 @@ namespace Mle.ViewModels {
             Server = "desktop",
             Port = 8456,
             Username = "admin",
-            Password = "mle"
+            Password = "test"
         };
         public ICommand RunTest { get; private set; }
         public ICommand Close { get; private set; }
         public ICommand WithGzip { get; private set; }
         public ICommand WithoutGzip { get; private set; }
         public ICommand Upload { get; private set; }
-        SimpleWebSocket ws = new SimpleWebSocket(new Uri("ws://desktop:9000/ws/open"), "admin", "test","application/json");
-        SimpleWebSocket beamWs = new SimpleWebSocket(new Uri("ws://desktop:9001/ws/control"), "d30f4e3c-818f-4513-934f-9bc828b42221", "beam", "application/json");
         WebSocket4Net.WebSocket webSocket;
 
         public ObservableCollection<string> Days {
@@ -182,15 +180,6 @@ namespace Mle.ViewModels {
         private void TestClose() {
             webSocket.Close();
         }
-        private async Task TestWebSocketsWrapper() {
-            ws.Closed += ws_Closed;
-            ws.Error += ws_Error;
-            ws.MessageReceived += ws_MessageReceived;
-            Output = "Opening...";
-            await ws.Connect();
-            Output = "Opened";
-        }
-
         private async void ws_MessageReceived(string msg) {
             await SetOutput("Got msg: " + msg);
         }

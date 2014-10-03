@@ -1,11 +1,15 @@
-﻿using Mle.MusicPimp.Audio;
+﻿using Mle.Concurrent;
+using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Local;
+using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.ViewModels;
+using Mle.Network;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 
 namespace Mle.MusicPimp.Network {
@@ -45,20 +49,31 @@ namespace Mle.MusicPimp.Network {
                 await SubmitDownload(track);
             }
         }
-        public override async Task SubmitDownload(MusicItem track) {
-            var info = await GetDownloadInfo(track);
-            if(info != null) {
-                // does intentionally not await completion of download
-                var t = Utils.Download(info.Source, track.Username, track.Password, info.Destination);
-            }
+        public override Task SubmitDownload(MusicItem track) {
+            // does intentionally not await completion of download
+            var t = DownloadAsync(track);
+            return AsyncTasks.Noop();
         }
 
         public override async Task<Uri> DownloadAsync(MusicItem track) {
-            return await DownloadIfNotExists(track, () => {
-                // removes query parameters from the uri, which may contain credentials
-                // the credentials are set in the headers for Windows Store downloads
-                return Utils.Download(track.Source, track.Username, track.Password, PathTo(track));
-            });
+            var info = await GetDownloadInfo(track);
+            if(info != null) {
+                return await StartDownload(track, info);
+            } else {
+                return null;
+            }
+        }
+        private async Task<Uri> StartDownload(MusicItem track, DownloadParameters info) {
+            var op = ToDownloader(track).CreateDownload(info.Source, info.Destination);
+            return await Utils.StartDownload(op);
+        }
+        private BackgroundDownloader ToDownloader(MusicItem track) {
+            var downloader = new BackgroundDownloader();
+            downloader.SetRequestHeader(HttpUtil.Authorization, HttpUtil.BasicAuthHeader(track.Username, track.Password));
+            if(track.CloudServer != null) {
+                downloader.SetRequestHeader(CloudSession.SERVER_KEY, track.CloudServer);
+            }
+            return downloader;
         }
         public async Task SubmitAll(IEnumerable<MusicItem> items) {
             var e = StoreLibraryManager.Instance.ActiveEndpoint;
@@ -80,13 +95,13 @@ namespace Mle.MusicPimp.Network {
             }
         }
 
-        private async Task<Uri> DownloadIfNotExists(MusicItem track, Func<Task<Uri>> performDownload) {
-            var maybeLocalUri = await LocalLibrary.LocalUriIfExists(track);
-            if(maybeLocalUri != null) {
-                return maybeLocalUri;
-            }
-            return await performDownload();
-        }
+        //private async Task<Uri> DownloadIfNotExists(MusicItem track, Func<Task<Uri>> performDownload) {
+        //    var maybeLocalUri = await LocalLibrary.LocalUriIfExists(track);
+        //    if(maybeLocalUri != null) {
+        //        return maybeLocalUri;
+        //    }
+        //    return await performDownload();
+        //}
         /// <summary>
         /// Prepares a download. A return value of null indicates that the download shall
         /// not proceed. This may be the case if the track already exists locally, or some

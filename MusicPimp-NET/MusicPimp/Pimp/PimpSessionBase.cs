@@ -33,20 +33,24 @@ namespace Mle.MusicPimp.Pimp {
         /// </summary>
         /// <param name="trackId"></param>
         /// <returns></returns>
-        public Uri TrackUri(string trackId, bool useCredentialsInQueryParam, string subPath) {
-            var encodedTrack = WebUtility.UrlEncode(trackId);
-            var credQueryParam = useCredentialsInQueryParam ? ("?u=" + Username + "&p=" + Password) : String.Empty;
+        private Uri TrackUri(string track, bool useCredentialsInQueryParam, string subPath) {
+            //var encodedTrack = WebUtility.UrlEncode(track);
+            var credQueryParam = useCredentialsInQueryParam ? QueryCredentials() : String.Empty;
             // "/tracks/"
-            return new Uri(BaseUri + subPath + encodedTrack + credQueryParam, UriKind.Absolute);
+            return new Uri(BaseUri + subPath + track + credQueryParam, UriKind.Absolute);
+        }
+
+        protected virtual string QueryCredentials() {
+            return "?u=" + Username + "&p=" + Password;
         }
         public override Uri DownloadUriFor(MusicItem track) {
-            return DownloadUriFor(track.Id);
+            return DownloadUriFor(track);
         }
-        public Uri DownloadUriFor(string trackId, bool useCredentialsInQueryParam = true) {
-            return TrackUri(trackId, useCredentialsInQueryParam, "/downloads/");
+        public Uri DownloadUriFor(string track, bool useCredentialsInQueryParam = true) {
+            return TrackUri(track, useCredentialsInQueryParam, "/downloads/");
         }
-        public Uri PlaybackUriFor(string trackId, bool useCredentialsInQueryParam = true) {
-            return TrackUri(trackId, useCredentialsInQueryParam, "/tracks/");
+        public Uri PlaybackUriFor(string track, bool useCredentialsInQueryParam = true) {
+            return TrackUri(track, useCredentialsInQueryParam, "/tracks/");
         }
         public Task<FoldersPimpResponse> RootContentAsync() {
             return ToJson<FoldersPimpResponse>("/folders");
@@ -55,8 +59,9 @@ namespace Mle.MusicPimp.Pimp {
             return ToJson<FoldersPimpResponse>("/folders/" + folderId);
         }
         public async Task<IEnumerable<MusicItem>> Search(string term) {
-            return (await ToJson<IEnumerable<PimpTrack>>("/search?term=" + term + "&limit=100"))
-                .Select(item => AudioConversions.PimpTrackToMusicItem(item, PlaybackUriFor(item.id), Username, Password))
+            var jsonResponse = await ToJson<IEnumerable<PimpTrack>>("/search?term=" + term + "&limit=100");
+            return jsonResponse
+                .Select(item => AudioConversions.PimpTrackToMusicItem(item, PlaybackUriFor(item.id), Username, Password, CloudServerID))
                 .ToList();
         }
         public Task<VersionResponse> PingAuth(CancellationToken token) {

@@ -13,6 +13,7 @@ namespace Mle.MusicPimp.Network.Http {
         public int Port { get; private set; }
         public string Username { get; private set; }
         public string Password { get; private set; }
+        public string CloudServerID { get; private set; }
         public string BaseUri { get; private set; }
         public string Describe { get; private set; }
 
@@ -23,6 +24,7 @@ namespace Mle.MusicPimp.Network.Http {
             Port = settings.Port;
             Username = settings.Username;
             Password = settings.Password;
+            CloudServerID = settings.CloudServerID;
             BaseUri = settings.Uri().OriginalString;
             Describe = Server + ":" + Port;
         }

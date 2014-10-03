@@ -36,7 +36,7 @@ namespace Mle.Network {
         /// </summary>
         /// <param name="uri"></param>
         /// <returns>true if the URI has the http or https scheme, false otherwise</returns>
-        public static bool IsHttp(Uri uri) {
+        public static bool IsHttpOrHttps(Uri uri) {
             // .Scheme throws invalidopex for relative URIs
             return uri.IsAbsoluteUri && (uri.Scheme == Http || uri.Scheme == Https);
         }

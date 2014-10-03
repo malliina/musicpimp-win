@@ -20,6 +20,7 @@
     <pages:AsyncPhoneApplicationPage.Resources>
         <src:EnumBooleanConverter x:Key="enumConverter"/>
         <src:BooleanToVisibilityConverter x:Key="booleanVisibility"/>
+        <src:InvertedBooleanToVisibilityConverter x:Key="invertedBooleanVisibility"/>
     </pages:AsyncPhoneApplicationPage.Resources>
     <pages:AsyncPhoneApplicationPage.Background>
         <ImageBrush Stretch="Uniform" 
@@ -54,34 +55,55 @@
                     <StackPanel Orientation="Horizontal"
                                 toolkit:TurnstileFeatherEffect.FeatheringIndex="3">
                         <RadioButton Content="MusicPimp"
-                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}"/>
+                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}"
+                                     Checked="RadioButton_Checked"
+                                     Click="RadioButton_Click"/>
+                        <RadioButton Content="Cloud"
+                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=PimpCloud, Mode=TwoWay}"
+                                     Checked="RadioButton_Checked"
+                                     Click="RadioButton_Click"/>
                         <RadioButton Content="Subsonic"
-                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=Subsonic, Mode=TwoWay}"/>
+                                     IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=Subsonic, Mode=TwoWay}"
+                                     Checked="RadioButton_Checked"
+                                     Click="RadioButton_Click"/>
                     </StackPanel>
                     <TextBlock Text="Description" 
                                Style="{StaticResource PhoneTextNormalStyle}"
                                toolkit:TurnstileFeatherEffect.FeatheringIndex="4"/>
-                    <toolkit:PhoneTextBox x:Name="nameTextBox"
+                    <toolkit:PhoneTextBox x:Name="NameTextBox"
                                           Text="{Binding EndpointItem.Name, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
-                                          TextChanged="PhoneTextBox_TextChanged_1"
+                                          TextChanged="NameTextBox_TextChanged"
                                           Hint="my audio computer"
                                           toolkit:TurnstileFeatherEffect.FeatheringIndex="5"/>
+                    <TextBlock Text="Cloud server ID"
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="6"
+                               Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
+                    <toolkit:PhoneTextBox x:Name="CloudTextBox" 
+                                          Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
+                                          TextChanged="CloudTextBox_TextChanged"
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="6"
+                                          Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
                     <TextBlock Text="IP address or hostname" 
                                Style="{StaticResource PhoneTextNormalStyle}"
-                               toolkit:TurnstileFeatherEffect.FeatheringIndex="6"/>
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="6"
+                               Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
                     <toolkit:PhoneTextBox x:Name="serverTextBox"
                                           Text="{Binding EndpointItem.Server, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
                                           Hint="192.168.1.2"
                                           TextChanged="serverTextBox_TextChanged_1"
-                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="7"/>
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="7"
+                                          Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
                     <TextBlock Text="Port" 
                                Style="{StaticResource PhoneTextNormalStyle}"
-                               toolkit:TurnstileFeatherEffect.FeatheringIndex="8"/>
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="8"
+                               Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
                     <toolkit:PhoneTextBox x:Name="portTextBox"
                                           Text="{Binding EndpointItem.Port, Mode=TwoWay}" 
                                           InputScope="Digits"
                                           Hint="8456"
-                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="9"/>
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="9"
+                                          Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
                     <TextBlock Text="Username" 
                                Style="{StaticResource PhoneTextNormalStyle}"
                                toolkit:TurnstileFeatherEffect.FeatheringIndex="10"/>
@@ -99,9 +121,11 @@
                                  toolkit:TurnstileFeatherEffect.FeatheringIndex="13"/>
                     <TextBlock Text="Protocol" 
                                Style="{StaticResource PhoneTextNormalStyle}"
-                               toolkit:TurnstileFeatherEffect.FeatheringIndex="14"/>
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="14"
+                               Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
                     <StackPanel Orientation="Horizontal"
-                                toolkit:TurnstileFeatherEffect.FeatheringIndex="15">
+                                toolkit:TurnstileFeatherEffect.FeatheringIndex="15"
+                                Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}">
                         <RadioButton Content="HTTP"
                                      IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource enumConverter}, ConverterParameter=http, Mode=TwoWay}"/>
                         <RadioButton Content="HTTPS"

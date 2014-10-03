@@ -67,7 +67,6 @@ namespace Mle.MusicPimp.Audio {
         }
         private void DisableMaster() {
             Libraries = new ObservableCollection<MusicLibrary> { child };
-            //MessagingService.Instance.Send("Unable to connect to the music source. Only local tracks will be shown in the library. Check your settings.");
             IsOnline = false;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Mle.Network;
+﻿using Mle.Concurrent;
+using Mle.Network;
 using Mle.Util;
 using Mle.ViewModels;
 using Mle.Xaml.Commands;
@@ -29,27 +30,28 @@ namespace Mle {
         public ICommand CloseCommand { get; private set; }
 
         //Uri uri = new Uri("ws://desktop:9000/ws/open");
-        SimpleWebSocket ws = new SimpleWebSocket(new Uri("ws://desktop:9000/ws/open"), "admin", "test", "application/json");
+        //SimpleWebSocket ws = new SimpleWebSocket(new Uri("ws://desktop:9000/ws/open"), "admin", "test", "application/json");
 
         public TestViewModel() {
             RunTest = new AsyncUnitCommand(Test);
             CloseCommand = new UnitCommand(CloseTest);
         }
-        public async Task Test() {
-            await TestWebSocketsWrapper();
+        public Task Test() {
+            //await TestWebSocketsWrapper();
+            return AsyncTasks.Noop();
         }
         public void CloseTest() {
-            ws.Close();
+            //ws.Close();
         }
-        public async Task TestWebSocketsWrapper() {
-            await ws.Connect();
-            ws.Opened += () => SetOutput("Opened!");
-            ws.MessageReceived += msg => SetOutput("Got msg: " + msg);
-            ws.Closed += reason => SetOutput("Closed. " + reason);
-            Output = "Connected.";
-            //await ws.Send(@"{""cmd"":""status""}");
-            //Output = "Sent message";
-        }
+        //public async Task TestWebSocketsWrapper() {
+        //    await ws.Connect();
+        //    ws.Opened += () => SetOutput("Opened!");
+        //    ws.MessageReceived += msg => SetOutput("Got msg: " + msg);
+        //    ws.Closed += reason => SetOutput("Closed. " + reason);
+        //    Output = "Connected.";
+        //    //await ws.Send(@"{""cmd"":""status""}");
+        //    //Output = "Sent message";
+        //}
         private async void SetOutput(string msg) {
             await StoreUtil.OnUiThread(() => Output = msg);
         }

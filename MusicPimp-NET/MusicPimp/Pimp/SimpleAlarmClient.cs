@@ -25,15 +25,23 @@ namespace Mle.MusicPimp.Pimp {
             TimeHelper = timeHelper;
         }
         public SimpleAlarmClient(MusicEndpoint pimpEndpoint, IDateTimeHelper timeHelper) :
-            this(new SimplePimpSession(pimpEndpoint), timeHelper) { }
+            this(BuildSession(pimpEndpoint), timeHelper) { }
+
+        public static SimplePimpSession BuildSession(MusicEndpoint endpoint) {
+            if(endpoint.EndpointType == EndpointTypes.PimpCloud) {
+                return new CloudSession(endpoint);
+            } else {
+                return new SimplePimpSession(endpoint);
+            }
+        }
         public Task<IEnumerable<AlarmModel>> Alarms() {
             return MapList<AlarmModel, MusicAlarm>(alarmsResource, ToModel);
         }
         public Task<IEnumerable<MusicItem>> Tracks() {
-            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password));
+            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password, Session.CloudServerID));
         }
         public Task<IEnumerable<MusicItem>> Search(string term) {
-            return MapList<MusicItem, PimpTrack>(searchResource + "?term=" + term, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password));
+            return MapList<MusicItem, PimpTrack>(searchResource + "?term=" + term, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password, Session.CloudServerID));
         }
         private async Task<IEnumerable<T>> MapList<T, U>(string resource, Func<U, T> mapper) {
             IEnumerable<U> items = await Session.ToJson<IEnumerable<U>>(resource);
@@ -77,7 +85,7 @@ namespace Mle.MusicPimp.Pimp {
                 IsOn = json.enabled,
                 Time = time,
                 EnabledDays = new ObservableCollection<object>(days),
-                Track = AudioConversions.PimpTrackToMusicItem(json.job.track, null, Session.Username, Session.Password)
+                Track = AudioConversions.PimpTrackToMusicItem(json.job.track, null, Session.Username, Session.Password, Session.CloudServerID)
             };
         }
         private MusicAlarm ToJson(AlarmModel model) {

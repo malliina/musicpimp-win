@@ -20,8 +20,16 @@ namespace Mle.MusicPimp.Xaml.Controls {
         private async void EndpointChanged(object sender, RoutedEventArgs e) {
             await SaveChanges();
         }
+        private async void ServerTypeChanged(object sender, RoutedEventArgs e) {
+            ViewModel.Update();
+            await SaveChanges();
+        }
         private async Task SaveChanges() {
             await ViewModel.SubmitChanges();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e) {
+            ViewModel.Update();
         }
     }
 }

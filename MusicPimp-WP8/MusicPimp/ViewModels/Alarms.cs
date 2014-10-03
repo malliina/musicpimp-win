@@ -96,7 +96,7 @@ namespace Mle.MusicPimp.ViewModels {
         }
         public void UpdateEndpoints() {
             PimpEndpoints = provider.EndpointsData.Endpoints
-                    .Where(e => e.EndpointType == EndpointTypes.MusicPimp)
+                    .Where(e => e.EndpointType == EndpointTypes.MusicPimp || e.EndpointType == EndpointTypes.PimpCloud)
                     .ToList();
         }
         private async void UpdateUI2(MusicEndpoint endpoint) {

@@ -2,6 +2,7 @@
 using Mle.Util;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebSocket4Net;
 
@@ -10,28 +11,29 @@ namespace Mle.Network {
 
         private WebSocket ws;
 
-        public SimpleWebSocket(Uri uri, string userName, string password, string mediaType)
-            : base(uri, userName, password, mediaType) {
-        }
-
-        public override async Task Connect() {
+        public SimpleWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType)
+            : base(uri, authHeader, mediaType) {
             // ServerCredentials property does not work
-            var authHeader = new KeyValuePair<string, string>(HttpUtil.Authorization, HttpUtil.BasicAuthHeader(UserName, Password));
+            var authHeaderPair = new KeyValuePair<string, string>(HttpUtil.Authorization, authHeader.Scheme + " " + authHeader.Parameter);
             var acceptHeader = new KeyValuePair<string, string>(HttpUtil.Accept, MediaType);
-            var headers = new List<KeyValuePair<string, string>>() { authHeader, acceptHeader };
+            var headers = new List<KeyValuePair<string, string>>() { authHeaderPair, acceptHeader };
             ws = new WebSocket(ServerUri.OriginalString, customHeaderItems: headers);
+        }
+        public override async Task Connect() {
             ws.MessageReceived += async (s, args) => {
                 await PhoneUtil.OnUiThread(() => OnMessageReceived(args.Message));
             };
             ws.Closed += (s, e) => OnClosed(String.Empty);
             ws.Error += (s, e) => OnError();
-            //Debug.WriteLine("Attempting to connect to: " + ServerUri + " as user: " + UserName + " with password: " + Password);
             await ws.OpenAsync();
             OnOpened();
         }
+        //public virtual string AuthHeader(){
+        //    return HttpUtil.BasicAuthHeader(Username, Password);
+        //}
 
         public override Task Send(string content) {
-            if(ws != null && IsConnected && ws.State == WebSocketState.Open) {
+            if(IsConnected && ws.State == WebSocketState.Open) {
                 ws.Send(content);
             }
             return AsyncTasks.Noop();
@@ -39,13 +41,7 @@ namespace Mle.Network {
 
         protected override void CloseSocket() {
             IsConnected = false;
-            try {
-                if(ws != null) {
-                    //ws.Close(1000, "Closed by client.");
-                    //await ws.CloseAsync();
-                    Utils.Suppress<Exception>(ws.Close);
-                }
-            } catch(Exception) { }
+            Utils.Suppress<Exception>(ws.Close);
         }
     }
 }

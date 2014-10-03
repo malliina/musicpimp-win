@@ -1,4 +1,5 @@
-﻿using Mle.MusicPimp.Network;
+﻿using Mle.MusicPimp.Audio;
+using Mle.MusicPimp.Network;
 using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using System.Threading;
@@ -6,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Mle.MusicPimp.Pimp {
     public class SimplePimpSession : SessionBase {
+        public static readonly string PlaybackSocketResource = "/ws/playback";
         public const string JSONv18 = "application/vnd.musicpimp.v18+json";
+        public string SocketResource { get; protected set; }
 
         public SimplePimpSession(MusicEndpoint settings, bool acceptCompression = true)
             : base(settings, JSONv18, acceptCompression) {
+                SocketResource = PlaybackSocketResource;
         }
         public override Task TestConnectivity() {
             return TestPing();
@@ -43,12 +47,8 @@ namespace Mle.MusicPimp.Pimp {
         public Task<T> ToJson<T>(string resource) {
             return Client.GetJson<T>(resource);
         }
-        public async Task<StatusPimpResponse> StatusCall() {
-            var ret = await ToJson<StatusPimpResponse>("/playback");
-            //foreach(var item in ret.playlist) {
-            //    item.
-            //}
-            return ret;
+        public Task<StatusPimpResponse> StatusCall() {
+            return ToJson<StatusPimpResponse>("/playback");
         }
         public Task<VersionResponse> PingAuth() {
             return ToJson<VersionResponse>("/pingauth");

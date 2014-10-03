@@ -9,6 +9,7 @@ namespace Mle.MusicPimp.ViewModels {
                 EndpointItem = new MusicEndpoint();
             }
             MakeActiveLibrary = false;
+            Update();
         }
         public override Task AddOrUpdate(MusicEndpoint endpoint) {
             return Endpoints.SaveChanges(endpoint);

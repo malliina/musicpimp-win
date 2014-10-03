@@ -1,5 +1,6 @@
 ﻿using Mle.Util;
 using System;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
@@ -9,11 +10,11 @@ namespace Mle.Network {
         private MessageWebSocket ws;
         private DataWriter writer;
 
-        public SimpleWebSocket(Uri uri, string userName, string password, string mediaType)
-            : base(uri, userName, password, mediaType) {
+        public SimpleWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType)
+            : base(uri, authHeader, mediaType) {
             ws = new MessageWebSocket();
             ws.Control.MessageType = SocketMessageType.Utf8;
-            ws.SetRequestHeader(HttpUtil.Authorization, HttpUtil.BasicAuthHeader(UserName, Password));
+            ws.SetRequestHeader(HttpUtil.Authorization, authHeader.Scheme + " " + authHeader.Parameter);
             ws.SetRequestHeader(HttpUtil.Accept, mediaType);
             ws.MessageReceived += ws_MessageReceived;
             ws.Closed += (s, args) => OnClosed(args.Reason);
