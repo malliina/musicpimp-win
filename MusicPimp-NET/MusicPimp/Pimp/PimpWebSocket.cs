@@ -27,6 +27,7 @@ namespace Mle.MusicPimp.Network {
         private const string PLAYSTATE_CHANGED = "playstate_changed";
         private const string WELCOME = "welcome";
         private const string DISCONNECTED = "disconnected";
+        private const string PING = "ping";
 
         public event Action<double> TimeUpdated;
         public event Action<PlayerState> PlayStateChanged;
@@ -123,6 +124,8 @@ namespace Mle.MusicPimp.Network {
                     case DISCONNECTED:
                         var de = Deserialize<DisconnectedEvent>(msg);
                         OnDisconnected(de.user);
+                        break;
+                    case PING:
                         break;
                     default:
                         //Debug.WriteLine("Received unknown WebSocket message: " + msg);

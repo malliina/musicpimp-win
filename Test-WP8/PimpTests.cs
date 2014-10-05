@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Mle.Concurrent;
 using Mle.Exceptions;
 using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.ViewModels;
@@ -31,6 +32,11 @@ namespace Mle {
             Username = "admin",
             Password = "HAHA"
         };
+        [TestMethod]
+        public Task Testing() {
+            Assert.AreEqual(1, 1);
+            return AsyncTasks.Noop();
+        }
         [TestMethod]
         public async Task FailPing() {
             var s = new PhonePimpSession(failEndpoint);

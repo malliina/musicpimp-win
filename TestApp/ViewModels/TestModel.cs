@@ -1,6 +1,6 @@
 ﻿using Id3;
-using Microsoft.Phone.BackgroundAudio;
-using Microsoft.Phone.Notification;
+using Microsoft.Phone.Info;
+using Mle.Concurrent;
 using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.ViewModels;
 using Mle.Network;
@@ -8,6 +8,7 @@ using Mle.Util;
 using Mle.Xaml.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
@@ -22,9 +23,6 @@ using System.Windows.Input;
 using WebSocket4Net;
 using Windows.Networking;
 using Windows.Networking.Connectivity;
-using Mle.Collections;
-using System.Collections.ObjectModel;
-using Microsoft.Phone.Info;
 
 namespace Mle.ViewModels {
     public class TestModel : ViewModelBase {
@@ -76,10 +74,17 @@ namespace Mle.ViewModels {
         public ObservableCollection<string> Days {
             get { return new ObservableCollection<string>() { "mon", "tue", "wed", "thu", "fri", "sat", "sun" }; }
         }
-        
+
 
         public TestModel() {
-            RunTest = new AsyncUnitCommand(TestAnid2);
+            RunTest = new AsyncUnitCommand(TestOutput);
+        }
+        private async Task TestOutput() {
+            var uri = new Uri("ws://169.254.80.80:9000/servers/ws");
+            var socket = new SimpleWebSocket(uri, new AuthenticationHeaderValue("Basic", "123"), SimplePimpSession.JSONv18);
+            // throws Exception with "Unauthorized"
+            await socket.Connect();
+            Output = "Connected.";
         }
         private async Task TestAnid2() {
             var anid2 = UserExtendedProperties.GetValue("ANID2") as string;

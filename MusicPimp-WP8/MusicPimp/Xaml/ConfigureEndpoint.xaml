@@ -52,7 +52,7 @@
                     <TextBlock Text="Server type" 
                                Style="{StaticResource PhoneTextNormalStyle}"
                                toolkit:TurnstileFeatherEffect.FeatheringIndex="2"/>
-                    <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Vertical"
                                 toolkit:TurnstileFeatherEffect.FeatheringIndex="3">
                         <RadioButton Content="MusicPimp"
                                      IsChecked="{Binding EndpointItem.EndpointType, Converter={StaticResource enumConverter}, ConverterParameter=MusicPimp, Mode=TwoWay}"
@@ -67,23 +67,23 @@
                                      Checked="RadioButton_Checked"
                                      Click="RadioButton_Click"/>
                     </StackPanel>
+                    <TextBlock Text="Cloud server ID"
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="4"
+                               Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
+                    <toolkit:PhoneTextBox x:Name="CloudTextBox" 
+                                          Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
+                                          TextChanged="CloudTextBox_TextChanged"
+                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="4"
+                                          Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
                     <TextBlock Text="Description" 
                                Style="{StaticResource PhoneTextNormalStyle}"
-                               toolkit:TurnstileFeatherEffect.FeatheringIndex="4"/>
+                               toolkit:TurnstileFeatherEffect.FeatheringIndex="5"/>
                     <toolkit:PhoneTextBox x:Name="NameTextBox"
                                           Text="{Binding EndpointItem.Name, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
                                           TextChanged="NameTextBox_TextChanged"
                                           Hint="my audio computer"
                                           toolkit:TurnstileFeatherEffect.FeatheringIndex="5"/>
-                    <TextBlock Text="Cloud server ID"
-                               Style="{StaticResource PhoneTextNormalStyle}"
-                               toolkit:TurnstileFeatherEffect.FeatheringIndex="6"
-                               Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
-                    <toolkit:PhoneTextBox x:Name="CloudTextBox" 
-                                          Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay,UpdateSourceTrigger=Explicit}"
-                                          TextChanged="CloudTextBox_TextChanged"
-                                          toolkit:TurnstileFeatherEffect.FeatheringIndex="6"
-                                          Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
                     <TextBlock Text="IP address or hostname" 
                                Style="{StaticResource PhoneTextNormalStyle}"
                                toolkit:TurnstileFeatherEffect.FeatheringIndex="6"

@@ -51,7 +51,11 @@ namespace MusicPimp.Xaml {
             update(NameTextBox);
         }
         private void CloudTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+            var syncName = vm.EndpointItem.CloudServerID == vm.EndpointItem.Name;
             update(CloudTextBox);
+            if(syncName) {
+                vm.EndpointItem.Name = vm.EndpointItem.CloudServerID;
+            }
         }
         private void userTextBox_TextChanged_1(object sender, TextChangedEventArgs e) {
             update(userTextBox);
