@@ -1,6 +1,5 @@
 ﻿using Mle.MusicPimp.Audio;
 using Mle.MusicPimp.Local;
-using Mle.MusicPimp.Network;
 using Mle.Util;
 using Mle.Xaml.Commands;
 using System;
@@ -115,9 +114,11 @@ namespace Mle.MusicPimp.ViewModels {
                 Send("Unable to delete. Perhaps the file is in use. " + e.Message);
             }
         }
-        public async Task<string> ParseAndLoad(string encodedFolder) {
-            FolderMeta folder = ParseFolder(encodedFolder);
-            return await LoadFolder(folder.Id, folder.Path);
+        public Task<string> ParseAndLoad(string encodedFolder) {
+            return WebAwareT<string>(async () => {
+                FolderMeta folder = ParseFolder(encodedFolder);
+                return await LoadFolder(folder.Id, folder.Path);
+            });
         }
         public async Task ResetAndRefreshRoot() {
             MusicProvider.Reset();
@@ -135,26 +136,30 @@ namespace Mle.MusicPimp.ViewModels {
         /// </summary>
         /// <param name="folder">the folder id</param>
         /// <returns>the feedback message</returns>
-        public async Task<string> LoadFolder(string folder, string path) {
-            if(MusicFolder != null) {
-                MusicFolder.FolderLoaded -= MusicFolder_FolderLoaded;
-            }
-            MusicFolder = new FolderViewModel(folder, path);
-            MusicFolder.FolderLoaded += MusicFolder_FolderLoaded;
-            await MusicFolder.Load();
-            return MusicFolder.FeedbackMessage;
+        public Task<string> LoadFolder(string folder, string path) {
+            return WebAwareT<string>(async () => {
+                if(MusicFolder != null) {
+                    MusicFolder.FolderLoaded -= MusicFolder_FolderLoaded;
+                }
+                MusicFolder = new FolderViewModel(folder, path);
+                MusicFolder.FolderLoaded += MusicFolder_FolderLoaded;
+                await MusicFolder.Load();
+                return MusicFolder.FeedbackMessage;
+            });
         }
         protected virtual void MusicFolder_FolderLoaded() {
             OnFolderLoaded();
         }
         public FolderMeta ParseFolder(string encodedJson) {
-            if(encodedJson == null || encodedJson == String.Empty) {
-                return new FolderMeta(MusicProvider.RootFolderKey, String.Empty);
-            } else {
-                var json = Strings.decode(encodedJson);
-                var coord = Json.Deserialize<FolderMeta>(json);
-                return coord;
+            if(encodedJson != null && encodedJson != String.Empty) {
+                try {
+                    var json = Strings.decode(encodedJson);
+                    var coord = Json.Deserialize<FolderMeta>(json);
+                    return coord;
+                } catch(Exception) {
+                }
             }
+            return new FolderMeta(MusicProvider.RootFolderKey, String.Empty);
         }
         public async Task<List<MusicItem>> GetSongsRecursively(MusicItem songOrDir) {
             if(!songOrDir.IsDir) {
@@ -191,20 +196,22 @@ namespace Mle.MusicPimp.ViewModels {
             });
         }
         public async Task OnSingleMusicItemSelected(MusicItem item) {
-            LibraryScrollPositions[MusicFolder.FolderId] = item;
-            //MusicFolder.LatestSelection = item;
-            if(item.IsDir) {
-                string folderPath = MusicFolder.DisplayablePath == String.Empty ? item.Name : MusicFolder.DisplayablePath + "/" + item.Name;
-                var folderIdentifier = MusicProvider.DirectoryIdentifier(item);
-                var folderJson = Json.SerializeToString(new FolderMeta(folderIdentifier, folderPath));
-                // encode the folder id so we can pass it in a uri query parameter
-                var encodedFolderId = Strings.encode(folderJson);
-                // user clicked a music directory
-                Navigator.NavigateWithinSamePage(encodedFolderId);
-            } else {
-                // user clicked a song, let's play!
-                await MusicPlayer.PlaySong(item);
-            }
+            await WithExceptionEvents(async () => {
+                LibraryScrollPositions[MusicFolder.FolderId] = item;
+                //MusicFolder.LatestSelection = item;
+                if(item.IsDir) {
+                    string folderPath = MusicFolder.DisplayablePath == String.Empty ? item.Name : MusicFolder.DisplayablePath + "/" + item.Name;
+                    var folderIdentifier = MusicProvider.DirectoryIdentifier(item);
+                    var folderJson = Json.SerializeToString(new FolderMeta(folderIdentifier, folderPath));
+                    // encode the folder id so we can pass it in a uri query parameter
+                    var encodedFolderId = Strings.encode(folderJson);
+                    // user clicked a music directory
+                    Navigator.NavigateWithinSamePage(encodedFolderId);
+                } else {
+                    // user clicked a song, let's play!
+                    await MusicPlayer.PlaySong(item);
+                }
+            });
         }
         public async Task OnMusicSourceChanged() {
             await WithExceptionEvents(async () => {

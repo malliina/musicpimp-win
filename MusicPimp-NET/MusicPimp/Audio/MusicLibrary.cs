@@ -104,7 +104,7 @@ namespace Mle.MusicPimp.Audio {
             } else {
                 await LoadFolderAsync2(folderId, to);
                 // saves to cache
-                Folders[folderId] = to.OrderBy(MusicItemFolder.SortKey);
+                Folders[folderId] = to.OrderBy(MusicItemFolder.DirOnlySortKey);
             }
         }
         /// <summary>

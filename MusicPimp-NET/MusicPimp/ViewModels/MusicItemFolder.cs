@@ -128,6 +128,9 @@ namespace Mle.MusicPimp.ViewModels {
             string prefix = item.IsDir ? "a" : "b";
             return prefix + item.Name;
         }
+        public static string DirOnlySortKey(MusicItem item) {
+            return item.IsDir ? "a" + item.Name : "b";
+        }
         protected override void OnIsLoadingChanged(bool loading) {
             UpdateMusicItemsViews();
             OnFolderLoaded();

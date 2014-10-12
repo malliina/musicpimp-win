@@ -2,10 +2,10 @@
 namespace Mle.MusicPimp.ViewModels {
     public class CloudEndpoint : MusicEndpoint {
         public static readonly string SERVER = "cloud.musicpimp.org";
-        //public static readonly string SERVER = "localhost";
         public static readonly int PORT = 443;
-        //public static readonly int PORT = 9000;
         public static readonly Protocols PROTOCOL = Protocols.https;
+        //public static readonly string SERVER = "169.254.80.80";
+        //public static readonly int PORT = 9000;
         //public static readonly Protocols PROTOCOL = Protocols.http;
         public CloudEndpoint() {
             Protocol = PROTOCOL;

@@ -161,7 +161,6 @@
     <Compile Include="MusicPimp\ViewModels\LibraryManager.cs" />
     <Compile Include="MusicPimp\ViewModels\NewEndpoint.cs" />
     <Compile Include="MusicPimp\ViewModels\NowPlayingInfo.cs" />
-    <Compile Include="MusicPimp\ViewModels\PimpDownloadManager.cs" />
     <Compile Include="MusicPimp\ViewModels\BaseViewModel.cs" />
     <Compile Include="MusicPimp\ViewModels\PlayerManager.cs" />
     <Compile Include="MusicPimp\ViewModels\PlaylistBase.cs" />

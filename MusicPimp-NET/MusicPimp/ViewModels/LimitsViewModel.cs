@@ -55,7 +55,7 @@ namespace Mle.MusicPimp.ViewModels {
             DeleteLocalCache = new AsyncUnitCommand(async () => {
                 try {
                     await LocalLibrary.DeleteAll();
-                    //LocalLibrary.MusicProvider.Reset();
+                    await Utils.SuppressAsync<Exception>(ProviderService.Instance.MusicItemsBase.ResetAndRefreshRoot);
                 } catch(Exception e) {
                     Send("Unable to delete everything. Some track may be in use. Try again later. " + e.Message);
                 }

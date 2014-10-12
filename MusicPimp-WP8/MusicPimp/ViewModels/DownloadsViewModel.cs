@@ -235,8 +235,12 @@ namespace Mle.MusicPimp.ViewModels {
 
             var maybeError = transfer.TransferError;
             if(maybeError == null) {
-                var finalDestination = MoveSuccessfullyDownloadedFile(transfer);
-                OnDownloadComplete(transfer, finalDestination);
+                if(transfer.BytesReceived == transfer.TotalBytesToReceive) {
+                    var finalDestination = MoveSuccessfullyDownloadedFile(transfer);
+                    OnDownloadComplete(transfer, finalDestination);
+                } else {
+                    TryToDeleteIfExists(transfer.DownloadLocation.OriginalString);
+                }
             } else {
                 OnTransferCompletedWithErrors(transfer);
             }
@@ -264,6 +268,15 @@ namespace Mle.MusicPimp.ViewModels {
                 isoStore.MoveFile(tempDownloadPath, finalDestination);
             }
             return finalDestination;
+        }
+        private void TryToDeleteIfExists(string file) {
+            using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication()) {
+                Utils.Suppress<Exception>(() => {
+                    if(isoStore.FileExists(file)) {
+                        isoStore.DeleteFile(file);
+                    }
+                });
+            }
         }
         protected virtual void OnDownloadComplete(BackgroundTransferRequest transfer, string localPath) {
 

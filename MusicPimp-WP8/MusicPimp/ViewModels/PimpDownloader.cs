@@ -162,7 +162,11 @@ namespace Mle.MusicPimp.ViewModels {
         }
         protected override void OnTransferCompletedWithErrors(BackgroundTransferRequest transfer) {
             var destFileName = Path.GetFileName(transfer.Tag);
-            AddMessage("Download of " + destFileName + " failed: " + transfer.TransferError.Message);
+            if(transfer.TransferError != null) {
+                AddMessage("Download of " + destFileName + " failed: " + transfer.TransferError.Message);
+            } else {
+                AddMessage("Download of " + destFileName + " failed.");
+            }
         }
         public async Task ValidateThenSubmitDownload(MusicItem item) {
             try {
