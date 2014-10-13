@@ -45,13 +45,14 @@
                                FontSize="20"
                                Style="{StaticResource ItemTextStyle}"/>
                         <ProgressBar Grid.Row="2"
-                                 Visibility="{Binding Song.IsDownloading,Converter={StaticResource booleanVisibility}}"
-                                 Value="{Binding Song.BytesReceived}"
-                                 Maximum="{Binding Song.Size}"/>
+                                     Margin="10,0,10,0"
+                                     Visibility="{Binding Song.IsDownloading,Converter={StaticResource booleanVisibility}}"
+                                     Value="{Binding Song.BytesReceived}"
+                                     Maximum="{Binding Song.Size}"/>
                     </Grid>
                 </ctrl:TapCommandControl>
             </DataTemplate>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/CustomStyles.xaml"/>
                 <ResourceDictionary Source="ms-appx:///MusicPimpLibrary/MusicPimp/Xaml/Resources/LightAppBarButtons.xaml"/>

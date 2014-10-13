@@ -38,10 +38,10 @@ namespace Mle.MusicPimp.Pimp {
             return MapList<AlarmModel, MusicAlarm>(alarmsResource, ToModel);
         }
         public Task<IEnumerable<MusicItem>> Tracks() {
-            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password, Session.CloudServerID));
+            return MapList<MusicItem, PimpTrack>(tracksResource, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password, Session.IsCloud ? Session.CloudServerID : null));
         }
         public Task<IEnumerable<MusicItem>> Search(string term) {
-            return MapList<MusicItem, PimpTrack>(searchResource + "?term=" + term, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password, Session.CloudServerID));
+            return MapList<MusicItem, PimpTrack>(searchResource + "?term=" + term, item => AudioConversions.PimpTrackToMusicItem(item, null, Session.Username, Session.Password, Session.IsCloud ? Session.CloudServerID : null));
         }
         private async Task<IEnumerable<T>> MapList<T, U>(string resource, Func<U, T> mapper) {
             IEnumerable<U> items = await Session.ToJson<IEnumerable<U>>(resource);
@@ -85,7 +85,7 @@ namespace Mle.MusicPimp.Pimp {
                 IsOn = json.enabled,
                 Time = time,
                 EnabledDays = new ObservableCollection<object>(days),
-                Track = AudioConversions.PimpTrackToMusicItem(json.job.track, null, Session.Username, Session.Password, Session.CloudServerID)
+                Track = AudioConversions.PimpTrackToMusicItem(json.job.track, null, Session.Username, Session.Password, Session.IsCloud ? Session.CloudServerID : null)
             };
         }
         private MusicAlarm ToJson(AlarmModel model) {

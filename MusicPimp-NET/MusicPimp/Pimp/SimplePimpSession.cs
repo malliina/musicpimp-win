@@ -1,5 +1,4 @@
-﻿using Mle.MusicPimp.Audio;
-using Mle.MusicPimp.Network;
+﻿using Mle.MusicPimp.Network;
 using Mle.MusicPimp.ViewModels;
 using Mle.Network;
 using System.Threading;
@@ -10,10 +9,12 @@ namespace Mle.MusicPimp.Pimp {
         public static readonly string PlaybackSocketResource = "/ws/playback";
         public const string JSONv18 = "application/vnd.musicpimp.v18+json";
         public string SocketResource { get; protected set; }
+        public bool IsCloud { get; private set; }
 
         public SimplePimpSession(MusicEndpoint settings, bool acceptCompression = true)
             : base(settings, JSONv18, acceptCompression) {
-                SocketResource = PlaybackSocketResource;
+            SocketResource = PlaybackSocketResource;
+            IsCloud = settings.EndpointType == EndpointTypes.PimpCloud;
         }
         public override Task TestConnectivity() {
             return TestPing();
