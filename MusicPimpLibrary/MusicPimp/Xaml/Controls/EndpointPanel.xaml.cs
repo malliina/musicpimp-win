@@ -31,5 +31,10 @@ namespace Mle.MusicPimp.Xaml.Controls {
         private void RadioButton_Checked(object sender, RoutedEventArgs e) {
             ViewModel.Update();
         }
+
+        private void CloudTextChanged(object sender, TextChangedEventArgs e) {
+            var updatedText = CloudBox.Text;
+            ViewModel.SyncDescriptionWithCloud(updatedText);
+        }
     }
 }

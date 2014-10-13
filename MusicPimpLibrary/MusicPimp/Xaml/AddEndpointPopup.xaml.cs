@@ -19,5 +19,9 @@ namespace Mle.MusicPimp.Xaml {
         private void RadioButton_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e) {
             vm.Update();
         }
+
+        private void CloudTextChanged(object sender, Windows.UI.Xaml.Controls.TextChangedEventArgs e) {
+            vm.SyncDescriptionWithCloud(CloudTextBox.Text);
+        }
     }
 }

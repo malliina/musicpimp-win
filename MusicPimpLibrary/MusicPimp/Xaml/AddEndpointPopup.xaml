@@ -92,29 +92,31 @@
                              Style="{StaticResource FlyoutRadioButton}"
                              Checked="RadioButton_Checked"/>
             </StackPanel>
+            <TextBlock Text="Cloud server ID"
+                       Style="{StaticResource LightBasicTextStyle}"
+                       Margin="3,0,0,0"
+                       Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
+            <TextBox Name="CloudTextBox" 
+                     Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay}"
+                     Style="{StaticResource LightTextBoxStyle}"
+                     Margin="3,0,0,0"
+                     Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"
+                     TextChanged="CloudTextChanged">
+                <i:Interaction.Behaviors>
+                    <julbeh:WatermarkTextBehavior WatermarkText="cloud ID" 
+                                                  WatermarkColor="Gray"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
             <TextBlock Text="Description"
                        Style="{StaticResource LightBasicTextStyle}" 
                        Margin="3,0,0,0"/>
             <TextBox Text="{Binding EndpointItem.Name, Mode=TwoWay}"
                      Margin="3,0,0,0" 
                      Style="{StaticResource LightTextBoxStyle}">
-                <i:Interaction.Behaviors>
+                <!--<i:Interaction.Behaviors>
                     <julbeh:WatermarkTextBehavior WatermarkText="my home computer" 
                                                   WatermarkColor="Gray"/>
-                </i:Interaction.Behaviors>
-            </TextBox>
-            <TextBlock Text="Cloud server ID"
-                       Style="{StaticResource LightBasicTextStyle}"
-                       Margin="3,0,0,0"
-                       Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
-            <TextBox Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay}"
-                    Style="{StaticResource LightTextBoxStyle}"
-                    Margin="3,0,0,0"
-                     Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}">
-                <i:Interaction.Behaviors>
-                    <julbeh:WatermarkTextBehavior WatermarkText="cloud ID" 
-                                                  WatermarkColor="Gray"/>
-                </i:Interaction.Behaviors>
+                </i:Interaction.Behaviors>-->
             </TextBox>
             <TextBlock Text="IP address or hostname" 
                        Style="{StaticResource LightBasicTextStyle}"

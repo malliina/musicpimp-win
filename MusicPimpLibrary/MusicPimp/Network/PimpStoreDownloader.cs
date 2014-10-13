@@ -69,10 +69,11 @@ namespace Mle.MusicPimp.Network {
         }
         private BackgroundDownloader ToDownloader(MusicItem track) {
             var downloader = new BackgroundDownloader();
-            downloader.SetRequestHeader(HttpUtil.Authorization, HttpUtil.BasicAuthHeader(track.Username, track.Password));
-            if(track.CloudServer != null) {
-                downloader.SetRequestHeader(CloudSession.SERVER_KEY, track.CloudServer);
-            }
+            var cloud = track.CloudServer;
+            var user = track.Username;
+            var pass = track.Password;
+            string authHeader = cloud == null ? HttpUtil.BasicAuthHeader(user, pass) : HttpUtil.Basic + " " + HttpUtil.Base64ColonSeparated(cloud, user, pass);
+            downloader.SetRequestHeader(HttpUtil.Authorization, authHeader);
             return downloader;
         }
         public async Task SubmitAll(IEnumerable<MusicItem> items) {
@@ -130,11 +131,14 @@ namespace Mle.MusicPimp.Network {
         /// <summary>
         /// This is a hack and can fail in so many ways, do not reuse outside of this class
         /// 
-        /// Removes 'u' and 'p' query params.
+        /// Removes 's', 'u' and 'p' query params.
         /// </summary>
-        /// <param name="uri"></param>
-        /// <returns></returns>
+        /// <param name="uri">original uri</param>
+        /// <returns>uri without some query parameters</returns>
         private Uri RemoveCredentialsFromQueryParams(Uri uri) {
+            return RemoveQueryKeys(uri, "s", "u", "p");
+        }
+        private Uri RemoveQueryKeys(Uri uri, params string[] keys) {
             var uriString = uri.OriginalString;
             var qStart = uriString.IndexOf('?');
             if(qStart < 0) {
@@ -145,7 +149,7 @@ namespace Mle.MusicPimp.Network {
                 q = q.Substring(1);
             }
             var kvs = q.Split('&');
-            var otherKvs = kvs.Where(kv => kv.Length > 1 && !kv.StartsWith("u=") && !kv.StartsWith("p=")).ToList();
+            var otherKvs = kvs.Where(kv => kv.Length > 1 && !keys.Any(key => kv.StartsWith(key + "="))).ToList();
             var newQuery = string.Join("&", otherKvs);
             var uriPrefix = uriString.Substring(0, qStart);
             var newQueryString = newQuery.Length > 0 ? "?" + newQuery : "";

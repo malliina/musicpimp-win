@@ -50,24 +50,27 @@
                          />
             <!--Checked="RadioButton_Checked"-->
         </StackPanel>
-        <TextBlock Text="Description" Margin="3"
-                Style="{StaticResource LightBasicTextStyle}"/>
+        <TextBlock Text="Cloud server ID"
+                Style="{StaticResource LightBasicTextStyle}"
+                Margin="3"
+                Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
+        <TextBox Name="CloudBox" Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay}"
+                 Style="{StaticResource LightTextBoxStyle}"
+                 Margin="3,0,0,0"
+                 Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"
+                 LostFocus="EndpointChanged"
+                 TextChanged="CloudTextChanged">
+        </TextBox>
+        <TextBlock Text="Description" 
+                   Margin="3"
+                   Style="{StaticResource LightBasicTextStyle}"/>
         <TextBox Text="{Binding EndpointItem.Name, Mode=TwoWay}" 
                  Margin="3"
                  Style="{StaticResource LightTextBoxStyle}"
                  LostFocus="EndpointChanged"/>
-        <TextBlock Text="Cloud server ID"
-                Style="{StaticResource LightBasicTextStyle}"
-                Margin="3,0,0,0"
-                Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}"/>
-        <TextBox Text="{Binding EndpointItem.CloudServerID, Mode=TwoWay}"
-                Style="{StaticResource LightTextBoxStyle}"
-                Margin="3,0,0,0"
-                Visibility="{Binding IsCloud,Converter={StaticResource booleanVisibility}}">
-        </TextBox>
         <TextBlock Text="IP address or hostname" 
                    Margin="3"
-                    Style="{StaticResource LightBasicTextStyle}"
+                   Style="{StaticResource LightBasicTextStyle}"
                    Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
         <TextBox Text="{Binding EndpointItem.Server, Mode=TwoWay}" 
                  Margin="3"
@@ -80,9 +83,9 @@
                    Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
         <TextBox Text="{Binding EndpointItem.Port, Mode=TwoWay}" 
                  Margin="3"
-                InputScope="NumberFullWidth" 
-                LostFocus="EndpointChanged"
-                Style="{StaticResource LightTextBoxStyle}"
+                 InputScope="NumberFullWidth" 
+                 LostFocus="EndpointChanged"
+                 Style="{StaticResource LightTextBoxStyle}"
                  Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
         <TextBlock Text="Username"  
                    Margin="3"
@@ -93,23 +96,23 @@
                  Style="{StaticResource LightTextBoxStyle}"/>
         <TextBlock Text="Password"  
                    Margin="3"
-                Style="{StaticResource LightBasicTextStyle}"
-                LostFocus="EndpointChanged"/>
+                   Style="{StaticResource LightBasicTextStyle}"
+                   LostFocus="EndpointChanged"/>
         <PasswordBox x:Name="passwordBox"  Margin="3"
                      Password="{Binding EndpointItem.Password, Mode=TwoWay}"
                      LostFocus="EndpointChanged"
                      Style="{StaticResource LightPasswordBoxStyle}"/>
         <TextBlock Text="Protocol"
-                    Style="{StaticResource LightBasicTextStyle}"
-                    Margin="3"
+                   Style="{StaticResource LightBasicTextStyle}"
+                   Margin="3"
                    Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}"/>
         <StackPanel Orientation="Horizontal"
                     Visibility="{Binding IsCloud,Converter={StaticResource invertedBooleanVisibility}}">
             <RadioButton Content="HTTP"
                          GroupName="Proto"
-                        IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=http, Mode=TwoWay}" 
-                        Style="{StaticResource FlyoutRadioButton}"
-                        Click="EndpointChanged"/>
+                         IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=http, Mode=TwoWay}" 
+                         Style="{StaticResource FlyoutRadioButton}"
+                         Click="EndpointChanged"/>
             <RadioButton Content="HTTPS"
                          GroupName="Proto"
                          IsChecked="{Binding EndpointItem.Protocol, Converter={StaticResource protocolConverter}, ConverterParameter=https, Mode=TwoWay}" 

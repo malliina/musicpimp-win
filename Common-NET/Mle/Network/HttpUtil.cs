@@ -28,8 +28,14 @@ namespace Mle.Network {
             return Basic + " " + BasicAuthEncoded(username, password);
         }
         public static string BasicAuthEncoded(string username, string password) {
-            var credBytes = Encoding.UTF8.GetBytes(String.Format("{0}:{1}", username, password));
-            return Convert.ToBase64String(credBytes);
+            return ToUtf8Base64(String.Format("{0}:{1}", username, password));
+        }
+        public static string Base64ColonSeparated(string first, string second, string third) {
+            return ToUtf8Base64(String.Format("{0}:{1}:{2}", first, second, third));
+        }
+        private static string ToUtf8Base64(string content) {
+            var bytes = Encoding.UTF8.GetBytes(content);
+            return Convert.ToBase64String(bytes);
         }
         /// <summary>
         /// 

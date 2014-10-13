@@ -49,6 +49,12 @@ namespace Mle.MusicPimp.ViewModels {
                 }
             }
         }
+        public void SyncDescriptionWithCloud(string updatedCloudID) {
+            if(EndpointItem.CloudServerID == EndpointItem.Name || (EndpointItem.CloudServerID == String.Empty && EndpointItem.Name == null)) {
+                EndpointItem.Name = updatedCloudID;
+            }
+            EndpointItem.CloudServerID = updatedCloudID;
+        }
         private void Cloudify(MusicEndpoint endpoint) {
             endpoint.Server = CloudEndpoint.SERVER;
             endpoint.Port = CloudEndpoint.PORT;
@@ -70,7 +76,7 @@ namespace Mle.MusicPimp.ViewModels {
         /// </summary>
         /// <returns></returns>
         public Task SubmitChanges() {
-            return SubmitEndpoint(EndpointItem);
+            return WithExceptionEvents(async () => await SubmitEndpoint(EndpointItem));
         }
         private async Task AddEndpoint() {
             try {
