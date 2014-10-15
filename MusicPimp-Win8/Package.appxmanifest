@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="31916SkogbergLabs.MusicPimp" Publisher="CN=F956D6BD-F615-4D77-93DB-30AB0283D47D" Version="2.1.3.21" />
+  <Identity Name="31916SkogbergLabs.MusicPimp" Publisher="CN=F956D6BD-F615-4D77-93DB-30AB0283D47D" Version="2.1.4.22" />
   <Properties>
     <DisplayName>MusicPimp</DisplayName>
     <PublisherDisplayName>Skogberg Labs</PublisherDisplayName>

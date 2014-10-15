@@ -5,6 +5,7 @@ using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Xaml;
 using Mle.Xaml;
 using Mle.Xaml.Commands;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -33,6 +34,7 @@ namespace Mle.MusicPimp.ViewModels {
             get { return selected; }
             set { SetProperty(ref selected, value); }
         }
+        public List<MusicItem> SelectedList { get { return Selected.ToList(); } }
         public bool CanDeleteSelection {
             // true if each selection is a track in app local storage
             get { return Selected.Count > 0 && !Selected.Any(i => i.IsDir || !i.IsSourceLocal || FileUtilsBase.IsLocalNonAppFile(i.Source)); }
@@ -54,11 +56,11 @@ namespace Mle.MusicPimp.ViewModels {
             StoreLibraryManager.Instance.ActiveEndpointChanged += async e => await ResetAndRefreshRoot();
             MultiFolderLibrary.Instance.Libraries.CollectionChanged += async (s, e) => await ResetAndRefreshRoot();
 
-            DeleteSelected = new UnitCommand(() => DeleteAll(Selected));
-            PlaySelected = new AsyncUnitCommand(() => PlayAll(Selected));
-            AddSelected = new AsyncUnitCommand(() => AddToPlaylistRecursively(Selected));
+            DeleteSelected = new UnitCommand(() => DeleteAll(SelectedList));
+            PlaySelected = new AsyncUnitCommand(() => PlayAll(SelectedList));
+            AddSelected = new AsyncUnitCommand(() => AddToPlaylistRecursively(SelectedList));
             AddEndpoint = new UnitCommand(() => PopupManager.Show(new AddEndpointPopup()));
-            DownloadSelected = new AsyncUnitCommand(() => PimpStoreDownloader.Instance.SubmitAll(Selected));
+            DownloadSelected = new AsyncUnitCommand(() => PimpStoreDownloader.Instance.SubmitAll(SelectedList));
             Help = new HelpModel();
         }
 
