@@ -34,6 +34,7 @@ namespace Mle.MusicPimp.ViewModels {
             get { return selected; }
             set { SetProperty(ref selected, value); }
         }
+        // Creates a list of Selected that won't get modified so it's safe to iterate over
         public List<MusicItem> SelectedList { get { return Selected.ToList(); } }
         public bool CanDeleteSelection {
             // true if each selection is a track in app local storage

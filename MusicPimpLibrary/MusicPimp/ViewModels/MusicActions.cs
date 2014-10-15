@@ -20,6 +20,7 @@ namespace Mle.MusicPimp.ViewModels {
             get { return selected; }
             set { SetProperty(ref selected, value); }
         }
+        public List<MusicItem> SelectedList { get { return Selected.ToList(); } }
         public ICommand HandleMusicItemTap { get; private set; }
         public ICommand PlaySelected { get; private set; }
         public ICommand AddSelected { get; private set; }
@@ -36,9 +37,9 @@ namespace Mle.MusicPimp.ViewModels {
             Selected = new ObservableCollection<MusicItem>();
             Selected.CollectionChanged += (s, e) => SelectionChanged();
             //DeleteSelected = new UnitCommand(() => DeleteAll(Selected));
-            PlaySelected = new AsyncUnitCommand(() => PlayAll(Selected));
-            AddSelected = new AsyncUnitCommand(() => AddToPlaylistRecursively(Selected));
-            DownloadSelected = new AsyncUnitCommand(() => PimpStoreDownloader.Instance.SubmitAll(Selected));
+            PlaySelected = new AsyncUnitCommand(() => PlayAll(SelectedList));
+            AddSelected = new AsyncUnitCommand(() => AddToPlaylistRecursively(SelectedList));
+            DownloadSelected = new AsyncUnitCommand(() => PimpStoreDownloader.Instance.SubmitAll(SelectedList));
             HandleMusicItemTap = new AsyncDelegateCommand<MusicItem>(item => {
                 return OnSingleMusicItemSelected(item);
             });

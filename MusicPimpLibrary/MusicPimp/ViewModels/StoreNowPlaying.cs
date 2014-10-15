@@ -1,6 +1,7 @@
 ﻿using Mle.Xaml;
 using Mle.Xaml.Commands;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -29,6 +30,7 @@ namespace Mle.MusicPimp.ViewModels {
             get { return selected; }
             set { SetProperty(ref selected, value); }
         }
+        public List<PlaylistMusicItem> SelectedList { get { return Selected.ToList(); } }
         public Style VolumeButtonStyle {
             get {
                 var styleName = Player.IsMute ?
@@ -59,9 +61,9 @@ namespace Mle.MusicPimp.ViewModels {
             Timer.Interval = TimeSpan.FromMilliseconds(900);
             Timer.Tick += Timer_Tick;
             Selected = new ObservableCollection<PlaylistMusicItem>();
-            Selected.CollectionChanged += (s, e) => AppBar.Update(Selected);
+            Selected.CollectionChanged += (s, e) => AppBar.Update(SelectedList);
             RemoveSelected = new AsyncUnitCommand(() => {
-                return Player.Playlist.RemoveSong(Selected.First().Index);
+                return Player.Playlist.RemoveSong(SelectedList.First().Index);
             });
             // TODO: event handler life cycles
             PlayerManager.ActiveEndpointChanged += e => InstallPlayerEventHandlers();
