@@ -21,7 +21,7 @@ namespace Mle.MusicPimp.Pimp {
         private TimeSpan DefaultDeregisterTimeout = TimeSpan.FromSeconds(3);
         public PushClient(MusicEndpoint e) {
             this.registrationId = e.Id;
-            this.session = new SimplePimpSession(e);
+            this.session = SimpleAlarmClient.BuildSession(e);
             Endpoint = e;
         }
         public Task Register(Uri uri) {

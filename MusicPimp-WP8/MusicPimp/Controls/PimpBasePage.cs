@@ -238,12 +238,13 @@ namespace Mle.MusicPimp.Controls {
         }
 
         protected void ManageRefreshMenuItem(int pivotIndex) {
+            var menuItems = ApplicationBar.MenuItems;
             if(pivotIndex == Pivots.Music) {
-                if(!ApplicationBar.MenuItems.Contains(refreshMenuItem)) {
-                    ApplicationBar.MenuItems.Insert(0, refreshMenuItem);
+                if(!menuItems.Contains(refreshMenuItem)) {
+                    menuItems.Insert(0, refreshMenuItem);
                 }
             } else {
-                ApplicationBar.MenuItems.Remove(refreshMenuItem);
+                menuItems.Remove(refreshMenuItem);
             }
         }
         // do not fucking drop s.w.i

@@ -137,7 +137,7 @@ namespace Mle {
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e) {
             var ex = e.ExceptionObject;
-            var isWebSocketLibraryCockup = ex.GetType() == typeof(NullReferenceException) && ex.Source == "System.Net";
+            var isWebSocketLibraryCockup = (ex.GetType() == typeof(NullReferenceException) && ex.Source == "System.Net") || ex.Message == "The socket is not connected!";
             if(isWebSocketLibraryCockup) {
                 return;
             }

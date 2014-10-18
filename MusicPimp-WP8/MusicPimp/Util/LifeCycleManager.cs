@@ -45,7 +45,7 @@ namespace Mle.MusicPimp.Util {
             if(!IsAppInitialized) {
                 await TryInitTiles();
                 var t = TryMaintainCacheLimit();
-                var t2 = Player.TryToConnect();
+                var t2 = Utils.SuppressAsync<Exception>(Player.TryToConnect);
                 TryInitBackgroundTask();
                 InstallNetworkChangeListener();
                 IsAppInitialized = true;

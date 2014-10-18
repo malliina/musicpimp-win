@@ -19,13 +19,13 @@ namespace Mle.MusicPimp.ViewModels {
         public ICommand OpenEmail { get; private set; }
         public ICommand OpenWebsite { get; private set; }
         public ICommand OpenMarketPlace { get; private set; }
-
+        public string NameAndVersion { get { return "MusicPimp 2.6.1"; } }
 
         public AboutViewModel() {
             OpenEmail = new DelegateCommand<string>(email => {
                 var emailTask = new EmailComposeTask() {
                     Subject = "MusicPimp Feedback",
-                    Body = "Great app!",
+                    Body = "Great app! I'm using " + NameAndVersion + " for Windows Phone.",
                     To = email
                 };
                 emailTask.Show();

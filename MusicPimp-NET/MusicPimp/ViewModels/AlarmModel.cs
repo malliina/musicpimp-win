@@ -152,7 +152,6 @@ namespace Mle.MusicPimp.ViewModels {
                 player.PlayerStateChanged += p_PlayerStateChanged;
                 EnsureTrackIsUpdated();
                 await player.Subscribe();
-                var tmp = 0;
             });
         }
         public Task UninstallPlayer() {
@@ -179,17 +178,7 @@ namespace Mle.MusicPimp.ViewModels {
             });
         }
         public static AlarmModel Build(MusicEndpoint endpoint, IDateTimeHelper helper) {
-            return new AlarmModel(BuildClient(endpoint, helper));
-        }
-        public static IAlarmClient BuildClient(MusicEndpoint endpoint, IDateTimeHelper timeHelper) {
-            var session = SimpleAlarmClient.BuildSession(endpoint);
-            return new SimpleAlarmClient(session, timeHelper);
-        }
-        public Task LoadTracks() {
-            return Utils.SuppressAsync<Exception>(async () => {
-                var ts = await client.Tracks();
-                Tracks = ts;
-            });
+            return new AlarmModel(new SimpleAlarmClient(endpoint, helper));
         }
         public Task PerformSearch() {
             return Search(TrackName);
