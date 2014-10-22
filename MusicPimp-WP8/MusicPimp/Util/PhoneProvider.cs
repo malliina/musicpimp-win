@@ -37,7 +37,7 @@ namespace Mle.MusicPimp.Util {
             return new PhonePimpSession(e);
         }
         public PimpSession NewBeamSession(MusicEndpoint e) {
-            return new PhonePimpSession(e);
+            return new PhoneBeamSession(e);
         }
         public WebSocketBase NewWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType) {
             return new SimpleWebSocket(uri, authHeader, mediaType);

@@ -60,7 +60,7 @@ namespace Mle.MusicPimp.Util {
             return new StorePimpSession(e);
         }
         public PimpSession NewBeamSession(MusicEndpoint e) {
-            return new StorePimpSession(e);
+            return new StoreBeamSession(e);
         }
         public WebSocketBase NewWebSocket(Uri uri, AuthenticationHeaderValue authHeader, string mediaType) {
             return new SimpleWebSocket(uri, authHeader, mediaType);

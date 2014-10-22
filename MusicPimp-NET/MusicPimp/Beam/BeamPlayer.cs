@@ -3,6 +3,7 @@ using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Pimp;
 using Mle.MusicPimp.Tiles;
 using Mle.MusicPimp.ViewModels;
+using Mle.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -46,8 +47,10 @@ namespace Mle.MusicPimp.Beam {
             Playlist.Songs.CollectionChanged += Songs_CollectionChanged;
         }
         protected virtual async void Songs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            SetTrackFromIndex(Playlist.Index);
-            await EnsureSongsHaveDuration(Playlist.Songs);
+            await Utils.SuppressAsync<Exception>(async () => {
+                SetTrackFromIndex(Playlist.Index);
+                await EnsureSongsHaveDuration(Playlist.Songs);
+            });
         }
         /// <summary>
         /// Searches for zero-duration songs in the playlist and attempts to resolve the duration

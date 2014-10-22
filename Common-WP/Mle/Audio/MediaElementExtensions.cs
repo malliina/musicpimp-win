@@ -27,15 +27,15 @@ namespace Mle.Audio {
                 element.MediaOpened -= handler;
                 var duration = element.NaturalDuration;
                 if (duration.HasTimeSpan) {
-                    tcs.SetResult(duration.TimeSpan);
+                    tcs.TrySetResult(duration.TimeSpan);
                 } else {
-                    tcs.SetException(new AudioException("The media element duration is not a TimeSpan."));
+                    tcs.TrySetException(new AudioException("The media element duration is not a TimeSpan."));
                 }
             };
             EventHandler<ExceptionRoutedEventArgs> errorHandler = null;
             errorHandler = (s, e) => {
                 element.MediaFailed -= errorHandler;
-                tcs.SetException(e.ErrorException);
+                tcs.TrySetException(e.ErrorException);
             };
             element.MediaOpened += handler;
             element.MediaFailed += errorHandler;

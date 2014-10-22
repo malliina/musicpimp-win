@@ -43,14 +43,5 @@ namespace Mle.MusicPimp.Pimp {
                 await BackgroundDownloader.DownloadAsync(track);
             }
         }
-        //protected UploadRequest BuildUploadRequest(MusicItem song) {
-        //    var request = NewUploadRequest();
-        //    request.AddFile(LocalPathTo(song));
-        //    request.AddHeader(TrackHeader, JsonConvert.SerializeObject(new PimpTrack(song)));
-        //    return request;
-        //}
-        //protected virtual string LocalPathTo(MusicItem song) {
-        //    return song.Path;
-        //}
     }
 }

@@ -219,6 +219,7 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="MusicPimp\Beam\StoreBeamPlayer.cs" />
     <Compile Include="MusicPimp\Beam\StoreBeamPlaylist.cs" />
+    <Compile Include="MusicPimp\Beam\StoreBeamSession.cs" />
     <Compile Include="MusicPimp\Iap\PimpIapUtils.cs" />
     <Compile Include="MusicPimp\Local\AppLocalFolderLibrary.cs" />
     <Compile Include="MusicPimp\Local\Id3Reader.cs" />
