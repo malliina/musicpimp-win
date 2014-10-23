@@ -21,7 +21,12 @@ namespace Mle.MusicPimp.Audio {
         public string RootFolderKey { get; protected set; }
         public virtual string RootEmptyMessage { get; protected set; }
         public abstract Task Ping();
-        protected abstract Task<IEnumerable<MusicItem>> LoadFolderAsync(string id);
+        /// <summary>
+        /// Loads the specified folder. Implementation: No duplicates, no caching, no sorting.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public abstract Task<IEnumerable<MusicItem>> Reload(string id);
         public abstract Task<IEnumerable<MusicItem>> Search(string term);
         public abstract Task Upload(MusicItem song, string resource, PimpSession destSession);
         protected int maxSearchResults;
@@ -34,6 +39,85 @@ namespace Mle.MusicPimp.Audio {
             this.maxSearchResults = maxSearchResults;
             ServerSupportsPlaylists = false;
         }
+        /// <summary>
+        /// LoadFolder(id,to) -> LoadAndMerge(id,to) -> GetOrLoadAndSet(id) -> Reload(id)
+        /// 
+        /// MultiLibraries should override LoadAndMerge and call GetOrLoadAndSet(id) one library at a time.
+        /// </summary>
+        /// <param name="folderId"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public async Task LoadFolder(string folderId, ObservableCollection<MusicItem> to) {
+            if(IsFolderLoaded(folderId)) {
+                AddDistinct(Folders[folderId], to);
+                //to.OrderBy(MusicItemFolder.DirOnlySortKey);
+            } else {
+                await LoadAndMerge(folderId, to);
+                // saves to cache
+                Folders[folderId] = to;
+            }
+        }
+        /// <summary>
+        /// Non-recursively loads the user-selected folder or the root folder if no folder is selected.
+        /// 
+        /// Mutates 'to' with new items as they are loaded. Uses mutation so that 'to' can be displayed to the user early and
+        /// be populated as results arrive.
+        /// 
+        /// Ensures that to only contains distinct, sorted items.
+        /// 
+        /// Does not check whether the returned tracks are locally available, so LocalUri == null for all.
+        /// 
+        /// TODO Document what must happen if a folder with that ID does not exist? Throw exception?
+        /// </summary>
+        /// <param name="id">the folder identifier; the format is implementation-dependent</param>
+        /// <param name="to">the place to put loaded music items</param>
+        /// <returns>subfolders and tracks in the given folder</returns>
+        public virtual async Task LoadAndMerge(string folderId, ObservableCollection<MusicItem> to) {
+            var items = await GetOrLoadAndSet(folderId);
+            AddDistinctAndSort(items, to);
+        }
+        /// <summary>
+        /// Gets the ordered contents of the specified folder. Uses the cache, loading and storing on a cache miss. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<MusicItem>> GetOrLoadAndSet(string id) {
+            if(IsFolderLoaded(id)) {
+                return Folders[id];
+            } else {
+                var items = await Reload(id);
+                var ordered = items.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
+                Folders[id] = ordered;
+                return ordered;
+            }
+        }
+        public int AddDistinctAndSort(IEnumerable<MusicItem> from, Collection<MusicItem> to) {
+            var newItems = from.Count();
+            if(newItems > 0) {
+                AddDistinct(from, to);
+                to.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
+            }
+            return newItems;
+        }
+        public static void Merge(IEnumerable<MusicItem> from, Collection<MusicItem> to) {
+            // Good enough approximation, ignores locality checks
+            var victims = to.Where(item => from.Any(f => f.Name == item.Name)).ToList();
+            foreach(var victim in victims) {
+                to.Remove(victim);
+            }
+            foreach(var item in from) {
+                to.Add(item);
+            }
+        }
+        /// <summary>
+        /// Adds from to to. Replaces any items in to with the item from from, if two items have the same name.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        protected void AddDistinct(IEnumerable<MusicItem> from, Collection<MusicItem> to) {
+            Merge(from, to);
+            OnNewItemsLoaded(from);
+        }
         public virtual Task<List<SavedPlaylistMeta>> LoadPlaylists() {
             return EmptyListTask<SavedPlaylistMeta>();
         }
@@ -45,20 +129,6 @@ namespace Mle.MusicPimp.Audio {
         }
         private Task<List<T>> EmptyListTask<T>() {
             return TaskEx.FromResult<List<T>>(new List<T>());
-        }
-        /// <summary>
-        /// Non-recursively loads the user-selected folder or the root folder if no folder is selected.
-        /// 
-        /// Does not check whether the returned tracks are locally available, so LocalUri == null for all.
-        /// 
-        /// TODO Document what must happen if a folder with that ID does not exist? Throw exception?
-        /// </summary>
-        /// <param name="id">the folder identifier; the format is implementation-dependent</param>
-        /// <param name="to">the place to put loaded music items</param>
-        /// <returns>subfolders and tracks in the given folder</returns>
-        public virtual async Task LoadFolderAsync2(string folderId, ObservableCollection<MusicItem> to) {
-            var items = await LoadFolderAsync(folderId);
-            AddAndRemoveExistingWithSameName(items, to);
         }
         public virtual string DirectoryIdentifier(MusicItem musicDir) {
             return musicDir.Id;
@@ -98,58 +168,6 @@ namespace Mle.MusicPimp.Audio {
         public bool IsFolderLoaded(string folderId) {
             return Folders.ContainsKey(folderId);
         }
-        public virtual async Task LoadFolder(string folderId, ObservableCollection<MusicItem> to) {
-            if(IsFolderLoaded(folderId)) {
-                AddAndRemoveExistingWithSameName(Folders[folderId], to);
-            } else {
-                await LoadFolderAsync2(folderId, to);
-                // saves to cache
-                Folders[folderId] = to.OrderBy(MusicItemFolder.DirOnlySortKey);
-            }
-        }
-        /// <summary>
-        /// Assumes 'from' contains no duplicates.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        //protected void AddDistinctPreferRemoteOld(IEnumerable<MusicItem> from, ObservableCollection<MusicItem> to) {
-        //    var comparer = new MusicItemComparer();
-        //    // 'newItems' contains the 'from' items which are not already in 'to'.
-        //    // This is algorithmically expensive. Should be fine with <1000 items though.
-        //    var newItems = from.Where(item => !to.Any(toItem => comparer.Equals(item, toItem))).ToList();
-        //    foreach(var newItem in newItems) {
-        //        to.Add(newItem);
-        //    }
-        //    OnNewItemsLoaded(newItems);
-        //}
-
-        /// <summary>
-        /// Adds from to to. Replaces any items in to with the item from from, if two items have the same name.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        protected void AddAndRemoveExistingWithSameName(IEnumerable<MusicItem> from, ObservableCollection<MusicItem> to) {
-            // Inefficient
-
-            //foreach(var item in from) {
-            //    to.Add(item);
-            //}
-            //var localDuplicates = to.Where(item => item.IsSourceLocal).Where(local => to.Any(item => !item.IsSourceLocal && item.Name == local.Name)).ToList();
-            //foreach(var local in localDuplicates) {
-            //    to.Remove(local);
-            //}
-
-            // Good enough approximation, ignores locality checks
-            var victims = to.Where(item => from.Any(f => f.Name == item.Name)).ToList();
-            foreach(var victim in victims) {
-                to.Remove(victim);
-            }
-            foreach(var item in from) {
-                to.Add(item);
-            }
-            OnNewItemsLoaded(from);
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -172,7 +190,7 @@ namespace Mle.MusicPimp.Audio {
         }
         private async Task<IEnumerable<MusicItem>> ItemsIn(MusicItem folder) {
             var folderId = DirectoryIdentifier(folder);
-            return await LoadFolderAsync(folderId);
+            return await GetOrLoadAndSet(folderId);
         }
         protected void OnNewItemsLoaded(IEnumerable<MusicItem> items) {
             if(NewItemsLoaded != null) {

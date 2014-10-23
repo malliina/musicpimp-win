@@ -2,7 +2,6 @@
 using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Pimp;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Mle.MusicPimp.Audio {
@@ -51,8 +50,10 @@ namespace Mle.MusicPimp.Audio {
             webSocket.ErrorOccurred += async () => await OnUiThread(() => IsOnline = false);
             IsEventBased = true;
         }
-        public override Task Subscribe() {
-            return OpenWebSocketAsync();
+        public override async Task Subscribe() {
+            if(!webSocket.Socket.IsConnected) {
+                await OpenWebSocketAsync();
+            }
         }
         private async Task OpenWebSocketAsync() {
             // only completes the task after the Welcome message has been received

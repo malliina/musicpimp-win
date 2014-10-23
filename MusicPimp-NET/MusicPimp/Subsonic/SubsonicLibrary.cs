@@ -79,7 +79,7 @@ namespace Mle.MusicPimp.Audio {
         /// </summary>
         /// <param name="folderId">the selected folder identifier, or -1 if no folder is selected</param>
         /// <returns></returns>
-        protected async override Task<IEnumerable<MusicItem>> LoadFolderAsync(string folderIdString) {
+        public async override Task<IEnumerable<MusicItem>> Reload(string folderIdString) {
             var folderId = -1;
             try {
                 folderId = int.Parse(folderIdString);

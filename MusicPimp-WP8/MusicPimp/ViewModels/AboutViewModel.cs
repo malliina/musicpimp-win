@@ -19,7 +19,7 @@ namespace Mle.MusicPimp.ViewModels {
         public ICommand OpenEmail { get; private set; }
         public ICommand OpenWebsite { get; private set; }
         public ICommand OpenMarketPlace { get; private set; }
-        public string NameAndVersion { get { return "MusicPimp 2.6.3"; } }
+        public string NameAndVersion { get { return "MusicPimp 2.6.4"; } }
 
         public AboutViewModel() {
             OpenEmail = new DelegateCommand<string>(email => {

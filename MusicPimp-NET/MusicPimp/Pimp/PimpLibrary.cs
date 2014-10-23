@@ -25,7 +25,7 @@ namespace Mle.MusicPimp.Pimp {
         //public override string DirectoryIdentifier(MusicItem musicDir) {
         //    return "" + musicDir.Id;
         //}
-        protected async override Task<IEnumerable<MusicItem>> LoadFolderAsync(string folder) {
+        public async override Task<IEnumerable<MusicItem>> Reload(string folder) {
             FoldersPimpResponse response = null;
             if(folder == RootFolderKey) {
                 response = await session.RootContentAsync();

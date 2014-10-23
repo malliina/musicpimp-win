@@ -43,7 +43,7 @@ namespace Mle.MusicPimp.Local {
         /// <returns></returns>
         public async Task<IEnumerable<MusicItem>> LoadFolderIfExists(string folderId) {
             if(await ContainsFolder(folderId)) {
-                return await LoadFolderAsync(folderId);
+                return await GetOrLoadAndSet(folderId);
             } else {
                 return new List<MusicItem>();
             }
@@ -83,7 +83,7 @@ namespace Mle.MusicPimp.Local {
         public string AbsolutePathTo(MusicItem track) {
             return BaseMusicPath + track.Path;
         }
-        protected override async Task<IEnumerable<MusicItem>> LoadFolderAsync(string folder) {
+        public override async Task<IEnumerable<MusicItem>> Reload(string folder) {
             var relativeFolder = "";
             if(folder != String.Empty) {
                 relativeFolder = folder + "/";

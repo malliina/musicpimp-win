@@ -22,10 +22,31 @@ namespace Mle.MusicPimp.Local {
         public MultiFolderLibraryBase(LocalLibraryBase initialLibrary)
             : this(new ObservableCollection<LocalLibraryBase>() { initialLibrary }) {
         }
-        protected override async Task<IEnumerable<MusicItem>> LoadFolderAsync(string id) {
-            var to = new ObservableCollection<MusicItem>();
-            await LoadFolderAsync2(id, to);
-            return to.ToList();
+        public override async Task<IEnumerable<MusicItem>> Reload(string id) {
+            ObservableCollection<MusicItem> items = new ObservableCollection<MusicItem>();
+            foreach(var lib in Libraries) {
+                var subItems = await lib.Reload(id);
+                if(subItems.Count() > 0) {
+                    AddDistinct(subItems, items);
+                }
+            }
+            return items;
+        }
+        public override async Task LoadAndMerge(string id, ObservableCollection<MusicItem> to) {
+            var loaded = new List<MusicItem>();
+            foreach(var lib in Libraries) {
+                try {
+                    var items = await lib.LoadFolderIfExists(id);
+                    if(AddDistinctAndSort(items, to) > 0) {
+                        loaded.AddRange(items);
+                    }
+                } catch(Exception) {
+                    // May throw if the sublibrary does not contain a folder with
+                    // the given ID. What do we want to do? For now, we suppress
+                    // and don't merge anything to the aggregate music items.
+                }
+            }
+            Folders[id] = loaded.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
         }
         public override async Task<T> WithStream<T>(MusicItem track, Func<Stream, Task<T>> op) {
             foreach(var lib in Libraries) {
@@ -34,20 +55,6 @@ namespace Mle.MusicPimp.Local {
                 }
             }
             throw new FileNotFoundException(track.Path);
-        }
-        public override async Task LoadFolderAsync2(string id, ObservableCollection<MusicItem> to) {
-            foreach(var lib in Libraries) {
-                try {
-                    var libItems = await lib.LoadFolderIfExists(id);
-                    if(libItems.Count() > 0) {
-                        AddAndRemoveExistingWithSameName(libItems, to);
-                    }
-                } catch(Exception) {
-                    // May throw if the sublibrary does not contain a folder with
-                    // the given ID. What do we want to do? For now, we suppress
-                    // and don't merge anything to the aggregate music items.
-                }
-            }
         }
         public override async Task<Uri> LocalUriIfExists(MusicItem track) {
             if(track.IsSourceLocal) {
