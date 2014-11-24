@@ -170,7 +170,7 @@ namespace Mle.MusicPimp.Subsonic {
             this.defaultValue = defaultValue;
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-            if(reader.TokenType == JsonToken.String && reader.Value == String.Empty) {
+            if(reader.TokenType == JsonToken.String && (reader.Value == null || reader.Value.ToString() == String.Empty)) {
                 return defaultValue;
             } else {
                 return serializer.Deserialize<T>(reader);
@@ -183,7 +183,7 @@ namespace Mle.MusicPimp.Subsonic {
             if(reader.TokenType == JsonToken.StartArray) {
                 // Json contains an array of entries ...
                 return serializer.Deserialize<List<T>>(reader);
-            } else if(reader.TokenType == JsonToken.String && reader.Value == String.Empty) {
+            } else if(reader.TokenType == JsonToken.String && (reader.Value == null || reader.Value.ToString() == String.Empty)) {
                 return new List<T>();
             } else {
                 // ... or just a single entry (no array)

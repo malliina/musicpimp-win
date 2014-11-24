@@ -29,6 +29,14 @@ namespace tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
+        public void ObjectVersusString() {
+            object o = "hello";
+            string other = "hello";
+            Assert.AreEqual(other, o);
+            object o2 = "";
+            Assert.AreEqual(o2.ToString(), String.Empty);
+        }
+        [TestMethod]
         public void UrlEncoding() {
             //var test = "A B";
             var expected = "A+B";

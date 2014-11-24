@@ -63,7 +63,7 @@ namespace Mle.MusicPimp.ViewModels {
                 userFeedback = sre.Message;
             } catch(HttpRequestException) {
                 userFeedback = GetFeedback(endpoint, session);
-            } catch(Exception e) {
+            } catch(Exception) {
                 userFeedback = "Something went wrong. Please check that all the fields are filled in properly.";
             }
 
