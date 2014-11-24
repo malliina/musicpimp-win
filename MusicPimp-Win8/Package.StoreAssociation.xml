@@ -358,12 +358,12 @@
     <PackageInfo>
       <OsMinVersion>6.2.1.0</OsMinVersion>
       <PackageArchitecture>neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>2.1.4.22</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>2.1.6.24</PackageMaxArchitectureVersion>
     </PackageInfo>
     <PackageInfo>
       <OsMinVersion>6.3.0.0</OsMinVersion>
       <PackageArchitecture>neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>5.1.4.37</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>5.1.6.39</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>

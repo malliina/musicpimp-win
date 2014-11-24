@@ -37,7 +37,7 @@ namespace Mle.MusicPimp.Local {
             foreach(var lib in Libraries) {
                 try {
                     var items = await lib.LoadFolderIfExists(id);
-                    if(AddDistinctAndSort(items, to) > 0) {
+                    if(AddDistinctNoSort(items, to) > 0) {
                         loaded.AddRange(items);
                     }
                 } catch(Exception) {

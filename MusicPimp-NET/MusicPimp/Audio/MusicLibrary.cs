@@ -50,11 +50,8 @@ namespace Mle.MusicPimp.Audio {
         public async Task LoadFolder(string folderId, ObservableCollection<MusicItem> to) {
             if(IsFolderLoaded(folderId)) {
                 AddDistinct(Folders[folderId], to);
-                //to.OrderBy(MusicItemFolder.DirOnlySortKey);
             } else {
                 await LoadAndMerge(folderId, to);
-                // saves to cache
-                Folders[folderId] = to;
             }
         }
         /// <summary>
@@ -74,7 +71,7 @@ namespace Mle.MusicPimp.Audio {
         /// <returns>subfolders and tracks in the given folder</returns>
         public virtual async Task LoadAndMerge(string folderId, ObservableCollection<MusicItem> to) {
             var items = await GetOrLoadAndSet(folderId);
-            AddDistinctAndSort(items, to);
+            AddDistinctNoSort(items, to);
         }
         /// <summary>
         /// Gets the ordered contents of the specified folder. Uses the cache, loading and storing on a cache miss. 
@@ -91,11 +88,12 @@ namespace Mle.MusicPimp.Audio {
                 return ordered;
             }
         }
-        public int AddDistinctAndSort(IEnumerable<MusicItem> from, Collection<MusicItem> to) {
+        public int AddDistinctNoSort(IEnumerable<MusicItem> from, Collection<MusicItem> to) {
             var newItems = from.Count();
             if(newItems > 0) {
                 AddDistinct(from, to);
-                to.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
+                // has no effect, returns a new collection
+                //to.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
             }
             return newItems;
         }

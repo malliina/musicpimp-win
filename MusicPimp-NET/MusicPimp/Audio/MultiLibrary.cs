@@ -35,7 +35,7 @@ namespace Mle.MusicPimp.Audio {
             foreach(var lib in Libraries) {
                 try {
                     var items = await lib.GetOrLoadAndSet(id);
-                    if(AddDistinctAndSort(items, to) > 0) {
+                    if(AddDistinctNoSort(items, to) > 0) {
                         loaded.AddRange(items);
                     }
                 } catch(Exception) {
@@ -44,7 +44,7 @@ namespace Mle.MusicPimp.Audio {
                     // and don't merge anything to the aggregate music items.
                 }
             }
-            Folders[id] = loaded.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
+            Folders[id] = to.OrderBy(MusicItemFolder.DirOnlySortKey).ToList();
         }
         public async Task<MusicLibrary> FindLibrary(string relativePath) {
             foreach(var lib in Libraries) {
