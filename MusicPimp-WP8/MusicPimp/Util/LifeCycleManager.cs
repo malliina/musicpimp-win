@@ -52,7 +52,7 @@ namespace Mle.MusicPimp.Util {
             }
             if(AppWasActivated) {
                 AppWasActivated = false;
-                var t3 = Player.TryToConnect();
+                var t3 = Utils.SuppressAsync<Exception>(Player.TryToConnect);
             }
         }
         private static void InstallNetworkChangeListener() {
@@ -95,12 +95,10 @@ namespace Mle.MusicPimp.Util {
                 task.Description = "Updates the live tiles with album covers if available. Also updates the lock screen background if enabled.";
                 task.ExpirationTime = DateTime.Now.AddDays(14);
                 try {
-                    if(!found) {
-                        ScheduledActionService.Add(task);
-                    } else {
+                    if(found) {
                         ScheduledActionService.Remove(BackgroundTaskName);
-                        ScheduledActionService.Add(task);
                     }
+                    ScheduledActionService.Add(task);
                 } catch(InvalidOperationException) {
                     /// If you attempt to add a periodic background agent when the device’s limit has been exceeded, 
                     /// the call to Add(ScheduledAction) will throw an InvalidOperationException. 
@@ -136,9 +134,7 @@ namespace Mle.MusicPimp.Util {
         }
 
         public static void Deactivate() {
-            try {
-                Player.Unsubscribe();
-            } catch(Exception) { }
+            Utils.Suppress<Exception>(Player.Unsubscribe);
         }
     }
 }

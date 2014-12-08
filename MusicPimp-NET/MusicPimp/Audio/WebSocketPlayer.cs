@@ -1,6 +1,7 @@
 ﻿using Mle.MusicPimp.Exceptions;
 using Mle.MusicPimp.Network;
 using Mle.MusicPimp.Pimp;
+using Mle.Util;
 using System;
 using System.Threading.Tasks;
 
@@ -30,6 +31,7 @@ namespace Mle.MusicPimp.Audio {
             this.session = session;
             // the lifetime of this player is the same as the websocket
             // so we don't care about deregistering event handlers
+            // Update: I believe the above is untrue.
             webSocket.MuteToggled += async muteOrNot => await OnUiThread(() => IsMute = muteOrNot);
             webSocket.VolumeChanged += async volume => await OnUiThread(() => Volume = volume);
             webSocket.TimeUpdated += OnTimeUpdated;
@@ -43,10 +45,14 @@ namespace Mle.MusicPimp.Audio {
             webSocket.ShortStatusUpdateReceived += async shortStatus => await UpdateShortStatus(shortStatus);
             webSocket.Welcomed += async () => {
                 await OnUiThread(() => IsOnline = true);
-                await PostSimple("status");
+                await Utils.SuppressAsync<Exception>(async () => await PostSimple("status"));
             };
             //webSocket.Disconnected += str => IsOnline = false;
-            webSocket.SocketClosed += async str => await OnUiThread(() => IsOnline = false);
+            webSocket.SocketClosed += async str => {
+                await OnUiThread(() => IsOnline = false);
+                // Tries to reconnect, once
+                await Utils.SuppressAsync<Exception>(OpenWebSocketAsync);
+            };
             webSocket.ErrorOccurred += async () => await OnUiThread(() => IsOnline = false);
             IsEventBased = true;
         }
@@ -77,7 +83,7 @@ namespace Mle.MusicPimp.Audio {
         }
         public override void Unsubscribe() {
             webSocket.Socket.Close();
-            IsOnline = false;
+            //IsOnline = false;
         }
         private Task UpdateShortStatus(ShortStatusJsonEvent ev) {
             return OnUiThread(() => {

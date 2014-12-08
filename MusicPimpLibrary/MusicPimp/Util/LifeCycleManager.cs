@@ -84,7 +84,7 @@ namespace Mle.MusicPimp.Util {
             if(!IsLoadedStageInitialized) {
                 MediaPlayerElement.Instance.Init();
                 StoreLocalPlayer.Instance.InitPlayerListeners();
-                await StorePlayerManager.Instance.Player.TryToConnect();
+                await Utils.SuppressAsync<Exception>(StorePlayerManager.Instance.Player.TryToConnect);
                 IsLoadedStageInitialized = true;
             }
         }
@@ -97,12 +97,13 @@ namespace Mle.MusicPimp.Util {
             await SuspensionManager.SaveAsync();
         }
         public static async Task SuspensionManagerRestore() {
-            try {
-                await SuspensionManager.RestoreAsync();
-            } catch(SuspensionManagerException) {
-                //Something went wrong restoring state.
-                //Assume there is no state and continue
-            }
+            await Utils.SuppressAsync<SuspensionManagerException>(SuspensionManager.RestoreAsync);
+            //try {
+            //    await SuspensionManager.RestoreAsync();
+            //} catch(SuspensionManagerException) {
+            //    //Something went wrong restoring state.
+            //    //Assume there is no state and continue
+            //}
         }
 
 

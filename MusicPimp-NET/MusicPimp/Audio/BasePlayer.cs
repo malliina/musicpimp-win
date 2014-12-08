@@ -2,6 +2,7 @@
 using Mle.Exceptions;
 using Mle.MusicPimp.Iap;
 using Mle.MusicPimp.ViewModels;
+using Mle.Util;
 using Mle.Xaml.Commands;
 using System;
 using System.Collections.Generic;
@@ -116,12 +117,12 @@ namespace Mle.MusicPimp.Audio {
             PlayTrack = new AsyncDelegateCommand<MusicItem>(PlaySong);
         }
         public virtual async Task TryToConnect() {
-            try {
+            var isOnline = false;
+            await Utils.SuppressAsync<Exception>(async () => {
                 await Subscribe();
-                IsOnline = true;
-            } catch(Exception) {
-                IsOnline = false;
-            }
+                isOnline = true;
+            });
+            await OnUiThread(() => IsOnline = isOnline);
         }
         private void PlaybackStarted() {
             UsageController.Instance.PlaybackStarted();

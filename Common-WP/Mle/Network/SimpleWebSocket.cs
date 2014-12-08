@@ -18,19 +18,17 @@ namespace Mle.Network {
             var acceptHeader = new KeyValuePair<string, string>(HttpUtil.Accept, MediaType);
             var headers = new List<KeyValuePair<string, string>>() { authHeaderPair, acceptHeader };
             ws = new WebSocket(ServerUri.OriginalString, customHeaderItems: headers);
-        }
-        public override async Task Connect() {
-            ws.MessageReceived += async (s, args) => {
-                await PhoneUtil.OnUiThread(() => OnMessageReceived(args.Message));
-            };
             ws.Closed += (s, e) => OnClosed(String.Empty);
             ws.Error += (s, e) => OnError();
+            ws.MessageReceived += async (s, args) => {
+                // Why UI thread?
+                await PhoneUtil.OnUiThread(() => OnMessageReceived(args.Message));
+            };
+        }
+        public override async Task Connect() {
             await ws.OpenAsync();
             OnOpened();
         }
-        //public virtual string AuthHeader(){
-        //    return HttpUtil.BasicAuthHeader(Username, Password);
-        //}
 
         public override Task Send(string content) {
             if(IsConnected && ws.State == WebSocketState.Open) {
@@ -40,7 +38,7 @@ namespace Mle.Network {
         }
 
         protected override void CloseSocket() {
-            IsConnected = false;
+            //IsConnected = false;
             Utils.Suppress<Exception>(ws.Close);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mle.Util;
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -13,8 +14,6 @@ namespace Mle.Network {
 
         public Uri ServerUri { get; private set; }
         public AuthenticationHeaderValue AuthHeader { get; private set; }
-        //public string Username { get; private set; }
-        //public string Password { get; private set; }
         public string MediaType { get; private set; }
         public bool IsConnected { get; set; }
         protected IList<KeyValuePair<string, string>> headers;
@@ -22,8 +21,6 @@ namespace Mle.Network {
         public WebSocketBase(Uri uri, AuthenticationHeaderValue authHeader, string mediaType) {
             ServerUri = uri;
             AuthHeader = authHeader;
-            //Username = username;
-            //Password = password;
             MediaType = mediaType;
             IsConnected = false;
         }
@@ -33,6 +30,7 @@ namespace Mle.Network {
         public event Action Error;
         public event Action<string> MessageReceived;
 
+        // We don't set IsConnected here because of the Welcome-message protocol
         protected void OnOpened() {
             if(Opened != null) {
                 Opened();
@@ -69,10 +67,7 @@ namespace Mle.Network {
         public abstract Task Connect();
         public abstract Task Send(string content);
         public void Close() {
-            IsConnected = false;
-            try {
-                CloseSocket();
-            } catch(Exception) { }
+            Utils.Suppress<Exception>(CloseSocket);
         }
         protected abstract void CloseSocket();
     }
