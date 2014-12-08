@@ -12,6 +12,11 @@ using Windows.ApplicationModel.Store;
 namespace Mle.Iap {
     public abstract class IapUtils : BaseIapUtils {
         public abstract void EnableLicense(string productId);
+        //public override bool OwnsProduct(string productId) {
+        //    return CurrentApp.LicenseInformation.ProductLicenses.Values.Any(l => l.ProductId == productId && l.IsActive);
+            //return base.OwnsProduct(productId);
+        //}
+        
         public override IEnumerable<string> OwnedProductIDs() {
             return CurrentApp.LicenseInformation.ProductLicenses.Values
                 .Where(license => license.IsActive)
@@ -33,7 +38,7 @@ namespace Mle.Iap {
         /// 
         /// </summary>
         /// <returns>the IAP products available for purchase</returns>
-        public async Task<IEnumerable<ProductListing>> GetProducts() {
+        private async Task<IEnumerable<ProductListing>> GetProducts() {
             var listing = await CurrentApp.LoadListingInformationAsync();
             return listing.ProductListings.Values;
         }
@@ -54,5 +59,6 @@ namespace Mle.Iap {
         private ProductInfo ToProductInfo(ProductListing listing) {
             return new ProductInfo(listing.Name, listing.ProductId, listing.FormattedPrice);
         }
+
     }
 }

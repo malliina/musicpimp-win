@@ -21,7 +21,7 @@ namespace Mle.Iap {
             return listing.Any(prod => prod.ProductId == productId);
         }
         public bool OwnsProduct(string productId) {
-            return OwnedProductIDs().Any(id => id == productId);
+            return OwnedProductIDs().Contains(productId);
         }
     }
 }

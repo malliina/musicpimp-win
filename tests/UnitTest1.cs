@@ -29,6 +29,11 @@ namespace tests {
     [TestClass]
     public class UnitTest1 {
         [TestMethod]
+        public void IEnumerableContains() {
+            IEnumerable<string> data = new List<string>() { "a", "bb", "ccc" };
+            Assert.IsTrue(data.Contains("bb"));
+        }
+        [TestMethod]
         public void ObjectVersusString() {
             object o = "hello";
             string other = "hello";

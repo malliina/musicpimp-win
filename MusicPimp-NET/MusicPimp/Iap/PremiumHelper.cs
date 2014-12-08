@@ -21,7 +21,6 @@ namespace Mle.MusicPimp.Iap {
         public Task<ProductInfo> PremiumInfo() {
             return iapUtils.ProductInfo(premiumProductId);
         }
-
         public Task<bool> IsPremiumAvailable() {
            return iapUtils.IsProductAvailable(premiumProductId);
         }
